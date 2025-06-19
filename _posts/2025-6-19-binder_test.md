@@ -1,4 +1,14 @@
-## 实验
+---
+layout: post
+title: "Binder学习-实践"
+date:   2025-6-19
+tags: [geek]
+comments: true
+author: braisedp
+toc : true
+---
+
+## Binder学习-实践
 
 ### 环境
 
@@ -222,7 +232,7 @@ if (((iin!=null)&&(iin instanceof com.example.mybindertest.HelloService))) {
    于是，当调用`helloService.sayHello`方法时，实际上是直接调用了在`MyService`中创建的`Stub`类型对象`mbinder`中重写的`sayHello`方法
 
 
-## 问题记录
+### 问题记录
 
 | 问题                                                                                            | 原因                                              | 解决方法                                                        |
 | --------------------------------------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------- |
