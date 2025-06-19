@@ -2,7 +2,7 @@
 layout: post
 title: "Binder学习-驱动与架构"
 date:   2025-6-17
-tags: [geek]
+tags: [Android]
 comments: true
 author: braisedp
 toc : true
