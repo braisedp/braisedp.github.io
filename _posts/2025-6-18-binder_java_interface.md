@@ -2,7 +2,7 @@
 layout: post
 title: "Binder学习-Java接口"
 date:   2025-6-18
-tags: [geek]
+tags: [Android]
 comments: true
 author: braisedp
 toc : true
