@@ -8,6 +8,8 @@ author: braisedp
 toc : true
 ---
 
+<!-- more -->
+
 ## Binder学习-驱动
 ### Binder 数据结构
 
