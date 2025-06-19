@@ -1,6 +1,18 @@
-# Binder学习-Java接口
+---
+layout: post
+title: "Binder学习-Java接口"
+date:   2025-6-18
+tags: [geek]
+comments: true
+author: braisedp
+toc : true
+---
 
-## 用于使用Binder机制的Java API
+
+
+## Binder学习-Java接口
+
+### 用于使用Binder机制的Java API
 | 接口/类        | 作用                                       | Native      | 与C++的对应  |
 | ----------- | ---------------------------------------- | ----------- | -------- |
 | IBinder     | 定义进程间调用基本接口                              |             |          |
@@ -10,7 +22,7 @@
 | BinderProxy |                                          |             | BpBinder |
 
 
-## 类图关系：
+### 类关系：
  ```mermaid
  classDiagram
 	 IInterface <|-- XXXService
