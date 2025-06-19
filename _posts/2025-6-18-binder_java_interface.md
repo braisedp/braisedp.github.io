@@ -1,4 +1,6 @@
-### Java层Binder类
+# Binder学习-Java接口
+
+## 用于使用Binder机制的Java API
 | 接口/类        | 作用                                       | Native      | 与C++的对应  |
 | ----------- | ---------------------------------------- | ----------- | -------- |
 | IBinder     | 定义进程间调用基本接口                              |             |          |
@@ -6,7 +8,9 @@
 | Stub        | 用户自定义类，继承Binder，实现其模板方法，与Java服务通信，实现服务接口 |             | BnXXX    |
 | Proxy       | 用户自定义类，实现服务接口，负责将client对服务的调用发送给binder驱动 |             | BpXXX    |
 | BinderProxy |                                          |             | BpBinder |
- 类图关系描述如下：
+
+
+## 类图关系：
  ```mermaid
  classDiagram
 	 IInterface <|-- XXXService
