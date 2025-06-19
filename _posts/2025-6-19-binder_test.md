@@ -8,6 +8,8 @@ author: braisedp
 toc : true
 ---
 
+<!-- more -->
+
 ## Binder学习-实践
 
 ### 环境
