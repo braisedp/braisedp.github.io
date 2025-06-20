@@ -93,7 +93,7 @@ public class ClientActivity extends Activity {
 
 1. 观察`ClientActivity`中`onServiceConnected`对象，查看其`service`参数类型如下：
 
-![[Pasted image 20250619113323.png]]
+![service对象](../images/2025-6-19-binder_test/BinderProxy.png)
 可以看到，接收到的是一个BinderProxy类型的对象。通过
 ``` java
 helloService = HelloService.Stub.asInterface(service);
@@ -107,7 +107,7 @@ if (((iin!=null)&&(iin instanceof com.example.mybindertest.HelloService))) {
 return new com.example.mybindertest.HelloService.Stub.Proxy(obj);
 ```
 如果没有找到一个本地的HelloService接口的实例，则返回一个`HelloService.Stub.Proxy`的对象，如下：
-![[Pasted image 20250619114646.png]]
+![helloSerivce](../images/2025-6-19-binder_test/helloService.png)
  执行`helloService.sayHello`方法：
 ```java
   public java.lang.String sayHello() throws android.os.RemoteException  
@@ -142,7 +142,7 @@ public native boolean transactNative(int code, Parcel data, Parcel reply,
 ```
 可以看到该方法为一个native方法
 2. 给MyService的sayHello方法打上断点，观察其调用栈，可以看到：
-![[Pasted image 20250619135920.png]]
+![sayHello.png](../images/2025-6-19-binder_test/sayHello.png)
 查看`Binder.execTransact`方法
 ```java
 // Entry point from android_util_Binder.cpp's onTransact.  
@@ -223,8 +223,8 @@ private final HelloService.Stub mBinder = new HelloService.Stub() {
 
 1. 删除`AndroidManifest.xml`中将`MyService`和`ClientActivity`设置到两个进程的设置
 2. 调试`onServiceConnected`方法，可以看到，传入的`service`类型变为`HelloService$Stub`类型
-   ![[Pasted image 20250619144634.png]]
-   根据`HelloService.Stub.asInterface()`方法，此时`queryLocalInterface`返回该`Stub`类型对象
+![Stub](../images/2025-6-19-binder_test/service_instance_of_Stub.png)
+根据`HelloService.Stub.asInterface()`方法，此时`queryLocalInterface`返回该`Stub`类型对象
 ```java
 android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);  
 if (((iin!=null)&&(iin instanceof com.example.mybindertest.HelloService))) {  
