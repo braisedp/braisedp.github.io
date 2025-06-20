@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Binder学习-Anroid架构"
+title: "Android学习-Android架构"
 date:   2025-6-17
 tags: [Android]
 comments: true
