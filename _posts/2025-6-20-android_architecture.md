@@ -8,7 +8,7 @@ author: braisedp
 toc : true
 ---
 
-<!--more-->
+<!-- more -->
 
 ## Android架构
 
