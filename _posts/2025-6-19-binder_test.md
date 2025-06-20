@@ -2,7 +2,7 @@
 layout: post
 title: "Binder学习-实践"
 date:   2025-6-19
-tags: [Android]
+tags: [Android, Binder]
 comments: true
 author: braisedp
 toc : true
