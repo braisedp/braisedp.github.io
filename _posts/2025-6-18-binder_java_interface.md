@@ -13,7 +13,7 @@ toc : true
 ## Binder学习-Java接口
 
 ### 用于使用Binder机制的Java API
-| 接口/类  | 作用  | Native | 与C++的对应  |
+| 接口\类  | 作用  | Native | 与C++的对应  |
 | -| - | -| - |
 | IBinder     | 定义进程间调用基本接口                              |             |          |
 | Binder      | 模板类，继承IBinder，提供一些模板方法                   | JavaBBinder | BnBinder |
