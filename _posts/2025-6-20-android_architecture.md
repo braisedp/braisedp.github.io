@@ -8,6 +8,8 @@ author: braisedp
 toc : true
 ---
 
+<!--more-->
+
 ## Android架构
 
 **Android系统架构图**
