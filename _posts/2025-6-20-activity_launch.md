@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Android学习-Activity启动流程"
-date:   2025-6-20
+date:   0--0
 tags: [Android, Activity]
 comments: true
 author: braisedp
@@ -14,43 +14,82 @@ toc : true
 
 ```mermaid
 sequenceDiagram
+    autonumber
+
     Actor User
+    box User Process
     participant Laucher
     participant Activity
     participant Instrument
     participant ActivityManagerProxy
+    end
+    box ActivityManagerService
     participant ActivityManagerService
     participant ActivityStack
     participant ApplicationThreadProxy
+    end
+    box User Process
     participant ApplicationThread
     participant ActivityThread
     participant H
+    end
 
-
-    User->>+ Laucher: 1.startActivitySafely
-    Laucher->>+ Activity: 2. startActivity
-    Activity->>Activity: 3. startActivityForResult
-    Activity->>+Instrument: 4. execStartActivity
-    Instrument->>+ActivityManagerProxy: 5. startActivity
-    ActivityManagerProxy->>+ActivityManagerService: 6. startActivity
-    ActivityManagerService->>+ActivityStack: 7. startActivityMayWait
-    ActivityStack->>+ActivityStack: 8. startActivityLocked 
-    ActivityStack->>ActivityStack: 9. startActivityUncheckedLocked 
-    ActivityStack->>ActivityStack: 10. startActivityLocked 
-    ActivityStack->>ActivityStack: 11. resumeTopActivityLocked
-    ActivityStack->>ActivityStack: 12. StartPausingLocked
-    ActivityStack->>+ApplicationThreadProxy: 13. schedulePauseActivity
-    ApplicationThreadProxy->>+ApplicationThread: 14.schedulePauseActivity
-    ApplicationThread->>+ActivityThread: 15. queryOrSendMessage
-    ActivityThread->>+ H: 16.handleMessage
-    H->>-ActivityThread: 17. handlePauseActivity
-    ActivityThread->>Laucher:18.onUserLeavingHint
-    ActivityThread->>Laucher:19.onPause
+    rect rgb(191, 223, 255)
+    note right of User: try to start Specified Activity
+    User->>+ Laucher: startActivitySafely
+    Laucher->>+ Activity: startActivity
+    Activity->>Activity: startActivityForResult
+    Activity->>+Instrument: execStartActivity
+    Instrument->>+ActivityManagerProxy: startActivity
+    ActivityManagerProxy->>+ActivityManagerService: startActivity
+    ActivityManagerService->>+ActivityStack: startActivityMayWait
+    ActivityStack->>ActivityStack: startActivityLocked 
+    ActivityStack->>ActivityStack:startActivityUncheckedLocked 
+    ActivityStack->>ActivityStack: startActivityLocked 
+    ActivityStack->>ActivityStack:  resumeTopActivityLocked
+    end
+    rect rgb(200, 150, 255)
+    note right of Instrument: pause Launcher
+    ActivityStack->>ActivityStack:  StartPausingLocked
+    ActivityStack->>+ApplicationThreadProxy:  schedulePauseActivity
+    deactivate ActivityStack
+    ApplicationThreadProxy->>+ApplicationThread: schedulePauseActivity
+    ApplicationThread->>+ActivityThread:  queryOrSendMessage
+    ActivityThread->>+ H: handleMessage
+    H->>-ActivityThread:  handlePauseActivity
+    ActivityThread->>Laucher:onUserLeavingHint
+    ActivityThread->>Laucher:onPause
     deactivate Laucher
-    ActivityThread->>ActivityThread:20.QueuedWork.waitToFinish
-    ActivityThread->>ActivityManagerProxy:21.activityPaused
-    ActivityManagerProxy->>ActivityManagerService:22.activityPaused
-    ActivityManagerService->>ActivityStack: 23. activityPaused
-    ActivityStack->>ActivityStack:24.completePauseLocked
-    ActivityStack->>ActivityStack:25.resumeTopActivityLocked
+    deactivate Activity
+    ActivityThread->>ActivityThread:0QueuedWorkwaitToFinish
+    ActivityThread->>-ActivityManagerProxy:activityPaused
+    ActivityManagerProxy->>ActivityManagerService:activityPaused
+    ActivityManagerService->>+ActivityStack:  activityPaused
+    end
+    rect rgb(191, 223, 255)
+    note right of Instrument: resume Specified Activity
+    ActivityStack->>ActivityStack:completePauseLocked
+    ActivityStack->>ActivityStack:resumeTopActivityLocked
+    ActivityStack->>ActivityStack:startSepcificActivityLocked
+    ActivityStack->>+ActivityManagerService:startProcessLocked
+    deactivate ActivityStack
+    ActivityManagerService->>ActivityManagerService:startProcessLocked
+    ActivityManagerService->>+ActivityThread:main
+    ActivityThread->>ActivityManagerProxy:attachApplication
+
+    ActivityManagerProxy->>ActivityManagerService:0attachApplication
+    ActivityManagerService->>ActivityManagerService:attachApplicationLocked
+    ActivityManagerService->>ActivityStack:realStartActivityLocked
+    deactivate ActivityManagerService
+    ActivityStack->>ApplicationThreadProxy:scheduleLaunchActivity
+    ApplicationThreadProxy->>ApplicationThread:scheduleLaunchActivity
+    ApplicationThread->>ActivityThread:queueOrSendMessage
+    ActivityThread->>H:handleMessage
+    H->>+ActivityThread:handleLaunchActivity
+    ActivityThread->>ActivityThread:performLaunchActivity
+    ActivityThread->>Activity:onCreate
+
+    ActivityThread->>ActivityThread:loop
+    deactivate ActivityThread
+    end
 ```
