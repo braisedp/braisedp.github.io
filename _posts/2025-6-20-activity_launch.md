@@ -10,7 +10,7 @@ toc : true
 
 <!-- more -->
 
-## Activity启动流程
+## 从Laucher中启动Activity的流程
 
 ```mermaid
 sequenceDiagram
@@ -93,3 +93,11 @@ sequenceDiagram
     deactivate ActivityThread
     end
 ```
+
+## 从Activity中启动同一进程中的另一Activity
+
+基本与从Laucher中启动Activity的流程相同， 不同的是：
+1. 在 **step 9** 中，由于Activity指定的进程为存在，于是
+`newTask == false`并设置`r.task = sourceRecord.task`
+2. 在 **step 10**中，在`Activity Stack`中从上至下搜索一个与当前Activity同进程的Activity的位置`i`，并设置插入位置`addPos=i+1`
+3. 在**step 26**中，
