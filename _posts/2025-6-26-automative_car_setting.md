@@ -8,7 +8,7 @@ author: braisedp
 toc : true
 ---
 
-
+<!-- more -->
 
 ## 编写一个车辆设置应用
 
