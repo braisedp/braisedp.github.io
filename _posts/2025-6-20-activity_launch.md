@@ -775,6 +775,7 @@ private final void startProcessLocked(ProcessRecord app,
     }
 ```
 ，可以看到，其创建了一个线程，并运行`invokeStaticMain`方法：
+
 ```java
 private static void invokeStaticMain(String className) {
     Class cl;
@@ -857,6 +858,7 @@ public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
     ...
 }
 ```，调用`attachApplication`方法：
+
 ```java
 public final void attachApplication(IApplicationThread thread) {
     synchronized (this) {
