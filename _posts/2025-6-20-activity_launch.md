@@ -857,8 +857,8 @@ public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
     }
     ...
 }
-```，调用`attachApplication`方法：
-
+```
+，调用`attachApplication`方法：
 ```java
 public final void attachApplication(IApplicationThread thread) {
     synchronized (this) {
@@ -967,7 +967,8 @@ public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
         }
     }
 }
-```，调用`scheduleLaunchActivity`方法:
+```
+，调用`scheduleLaunchActivity`方法:
 ```java
 public final void scheduleLaunchActivity(Intent intent, IBinder token, int ident,
         ActivityInfo info, Bundle state, List<ResultInfo> pendingResults,
@@ -1090,6 +1091,7 @@ final void attach(Context context, ActivityThread aThread,
 ```
 
 **step 41** 完成`attach`后，通过调用`Instrumentation.callActivityOnCreate`方法：
+
 ```java
 public void callActivityOnCreate(Activity activity, Bundle icicle) {
     ...
