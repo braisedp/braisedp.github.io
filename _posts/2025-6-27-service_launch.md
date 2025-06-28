@@ -30,11 +30,12 @@ sequenceDiagram
     participant ApplicationThreadProxy
     end
 
-    box Client Process
+    box Service Process
 
     participant ApplicationThread
     participant ActivityThread
     participant H
+    participant Service
 
     end
 
@@ -54,6 +55,8 @@ sequenceDiagram
     ApplicationThread->>ActivityThread: queueOrSendMessage
     ActivityThread->>H: handleMessage
     H->>ActivityThread: handleCreateService
+    ActivityThread->>Service: attach
+    ActivityThread->>Service: onCreate
 ```
 
 ### 详细过程
