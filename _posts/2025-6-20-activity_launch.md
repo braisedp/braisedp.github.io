@@ -1136,9 +1136,11 @@ public void callActivityOnCreate(Activity activity, Bundle icicle) {
 
 ```mermaid
 sequenceDiagram
+autoNumber
 
 box Launch Process
-    participant ActivityManagerProxy
+    participant Instrumentation
+    participant ActivityTaskManagerProxy
 end
 box System Server
     participant ActivityTaskManagerService
@@ -1147,6 +1149,34 @@ end
 box User Process
     participant ApplicationThread
 
-    
 end
+
+Instrumentation ->> ActivityTaskManagerProxy: startActvity
+ActivityTaskManagerProxy ->> ActivityTaskManagerService: startActivity
 ```
+**step 1** Instrument 调用ActivityTaskManagerProxy的`startActivity`方法，可以看到：
+```java
+public static IActivityTaskManager getService() {
+        return IActivityTaskManagerSingleton.get();
+}
+private static final Singleton<IActivityTaskManager> IActivityTaskManagerSingleton =
+        new Singleton<IActivityTaskManager>() {
+            @Override
+            protected IActivityTaskManager create() {
+                final IBinder b = ServiceManager.getService(Context.ACTIVITY_TASK_SERVICE);
+                return IActivityTaskManager.Stub.asInterface(b);
+        }
+};
+```
+通过`getService`方法，获取到了`ActivityTaskManagerProxy`的单例，并调用其`startActivity`方法向`ActivityTaskManagerService`发送启动`Activity`的请求
+
+**step 2** 执行`ActivityTaskManagerProxy`的`startActivity`方法：
+```java
+    int startActivity(in IApplicationThread caller, in String callingPackage, in Intent intent,
+            in String resolvedType, in IBinder resultTo, in String resultWho, int requestCode,
+            int flags, in ProfilerInfo profilerInfo, in Bundle options);
+    ... 
+```
+，在新版本中，`ActivityTaskManagerProxy`的服务由`AIDL`编写，系统自动生成了`IActivityManagerService`、`IActivityManagerService$Stub`和`IActivityManagerService$Stub$Proxy`
+
+**step 3** 
