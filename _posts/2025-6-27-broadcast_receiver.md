@@ -34,6 +34,10 @@ box System Server
 end
 
 receiver ->> ContextWrapper: registerReceiver
+ContextWrapper ->> ContextImpl: registerReceiver
+ContextImpl ->> ContextImpl : registerReceiverInternal
+ContextImpl ->> ActivityManagerProxy: registerReceiver
+ActivityManagerProxy ->> ActivityManagerService: registerReceiver
 ```
 **step 1** 想要监听某种消息的receiver调用其父类`ContextWrapper`的`registerReceiver`方法：
 ```java
@@ -42,3 +46,43 @@ public Intent registerReceiver(@Nullable BroadcastReceiver receiver, IntentFilte
 }
 ```
 ，`mBase`是一个`ContextImpl`类型的对象
+
+**step 2** 执行`ContextImpl`的`registerService`方法：
+```java
+public Intent registerReceiver(BroadcastReceiver receiver, IntentFilter filter) {
+    return registerReceiver(receiver, filter, null, null);
+}
+
+public Intent registerReceiver(BroadcastReceiver receiver, IntentFilter filter, String broadcastPermission, Handler scheduler) {
+    return registerReceiverInternal(receiver, getUserId(),
+            filter, broadcastPermission, scheduler, getOuterContext());
+}
+```
+，调用了`registerReceiverInternal`方法
+
+**step 3** 执行`registerReceiverInternal`方法：
+```java
+private Intent registerReceiverInternal(BroadcastReceiver receiver, int userId, IntentFilter filter, String broadcastPermission, Handler scheduler, Context context) {
+    IIntentReceiver rd = null;
+    if (receiver != null) {
+        if (mPackageInfo != null && context != null) {
+            ...
+            rd = mPackageInfo.getReceiverDispatcher(
+                receiver, context, scheduler,
+                mMainThread.getInstrumentation(), true);
+        }else{
+            ...
+            rd = new LoadedApk.ReceiverDispatcher(
+                receiver, context, scheduler, null, true).getIIntentReceiver();
+        }
+    }
+    try {
+        return ActivityManagerNative.getDefault().registerReceiver(
+                mMainThread.getApplicationThread(), mBasePackageName,
+                rd, filter, broadcastPermission, userId);
+    } catch (RemoteException e) {
+        return null;
+    }
+}
+```
+，首先执行`gerReceiverDispatcher`方法，获取`IIntentReceiver`作为消息分发者，然后调用`ActivityManagerNative.getDefault()`方法获取一个`ActivityManagerProxy`对象，执行其`registerReceiver`方法
