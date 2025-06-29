@@ -16,4 +16,29 @@ Anroid提供了一种消息广播机制，用于向关心相应事件的组件�
 
 ![broad_cast](../images/2025-6-27-broadcast_receiver/broadcast.svg)
 
+### 注册`BroadcastReceiver`
 
+```mermaid
+sequenceDiagram
+autoNumber
+
+box Receiver Process
+    participant receiver
+    participant ContextWrapper
+    participant ContextImpl
+    participant ActivityManagerProxy
+end
+
+box System Server
+    participant ActivityManagerService
+end
+
+receiver ->> ContextWrapper: registerReceiver
+```
+**step 1** 想要监听某种消息的receiver调用其父类`ContextWrapper`的`registerReceiver`方法：
+```java
+public Intent registerReceiver(@Nullable BroadcastReceiver receiver, IntentFilter filter) {
+    return mBase.registerReceiver(receiver, filter);
+}
+```
+，`mBase`是一个`ContextImpl`类型的对象
