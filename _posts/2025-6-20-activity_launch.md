@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Android学习-Activity启动流程"
+title: "Activity学习-Activity启动流程"
 date:   2025-6-23
 tags: [Android, Activity]
 comments: true
@@ -12,7 +12,7 @@ toc : true
 
 ## 从Laucher中启动Activity的流程
 
-### 完整流程图
+### 时序图
 
 ```mermaid
 sequenceDiagram
@@ -498,7 +498,7 @@ private final void queueOrSendMessage(int what, Object obj, int arg1, int arg2) 
 ```
 ，向Handler发送了一条`PAUSE_ACTIVITY`的消息
 
-**step 16** 执行`sendMessage`方法向`mH`发送一条消息，`mH`接收到消息后执行`handleMessage`方法:
+**step 16** `mH`接收到消息后执行`handleMessage`方法:
 ```java
 public void handleMessage(Message msg) {
     ...
@@ -790,7 +790,7 @@ private static void invokeStaticMain(String className) {
     ...
 }
 ```
-，由于之前传入的`processClass`为`"android.app.ActivityThread"`，于是在此通过反向代理调用其静态`main`方法
+，由于之前传入的`processClass`为`"android.app.ActivityThread"`，于是在此通过反射调用其静态`main`方法
 
 **step 29** 执行`main`方法：
 ```java
@@ -820,7 +820,7 @@ public static final void main(String[] args) {
         ...
     }
 ```
-，方法调用了`ActivityManagerProxy`的`attachApplication`方法，其中`final ApplicationThread mAppThread = new ApplicationThread();`在创建`ActivityThread`时创建
+，方法调用了`ActivityManagerProxy`的`attachApplication`方法，其中`final ApplicationThread mAppThread = new ApplicationThread()`在创建`ActivityThread`时创建
 
 **step 30** 执行`attachApplication`方法，向`ActivityManagerService`发送`ATTACH_APPLICATION_TRANSACTION`请求：
 ```java
