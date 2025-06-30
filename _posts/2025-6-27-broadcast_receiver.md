@@ -86,3 +86,7 @@ private Intent registerReceiverInternal(BroadcastReceiver receiver, int userId, 
 }
 ```
 ，首先执行`gerReceiverDispatcher`方法，获取`IIntentReceiver`作为消息分发者，然后调用`ActivityManagerNative.getDefault()`方法获取一个`ActivityManagerProxy`对象，执行其`registerReceiver`方法
+
+### 向`ActivityManagerService`发送广播
+
+### 从`ActivityMangerService`接收广播
