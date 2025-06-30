@@ -19,7 +19,7 @@ sequenceDiagram
     autonumber
 
     Actor User
-    box User Process
+    box Launcher Process
     participant Laucher
     participant Activity
     participant Instrument
@@ -34,6 +34,7 @@ sequenceDiagram
     participant ApplicationThread
     participant ActivityThread
     participant H
+    participant MainActivity
     end
 
     rect rgb(191, 223, 255)
@@ -89,8 +90,8 @@ sequenceDiagram
     ActivityThread->>H:handleMessage
     H->>+ActivityThread:handleLaunchActivity
     ActivityThread->>ActivityThread:performLaunchActivity
-    ActivityThread->>Activity: attach
-    ActivityThread->>Activity:onCreate
+    ActivityThread->>MainActivity: attach
+    ActivityThread->>MainActivity:onCreate
 
     ActivityThread->>ActivityThread:Looper.loop
     deactivate ActivityThread
@@ -1103,7 +1104,14 @@ public void callActivityOnCreate(Activity activity, Bundle icicle) {
 
 **step 42** 在**step 29**中，执行了`main`方法中的`attach`方法，在`attach`执行完后，执行` Looper.loop()`
 
-
+### 总结
+当从一个进程中（比如` Launcher` ）运行在另一个进程中的`Activity`时，包含以下步骤：
+1.  `Launcher `所在进程会通过其所有的` ActivityManagerProxy`对象，向` ActivityManagerService`发起` startActivity`请求
+2. ` AcvivityManagerService`接受到该请求后，就会去执行启动` Activity`所需要的动作，创建相应的` Activity`并置于` ActivityStack`的顶端并执行启动` Activity`的后续动作，发现有已经` resumed`的` Activity`，于是向该` Acitivity`即` Launcher`发送pause请求
+3. ` Launcher`所在的进程接收到该请求后就执行pause ` Launcher`的动作，并通知` ActivityManagerService`
+4. ` ActivityManagerService`接收到该通知后，发现有需要resume 的` Activity`，于是去启动该` Activity`，但是发现其所在的进程没有启动，创建一个进程并调用其` main`方法启动进程
+5.  进程启动后，` ActivityManagerService`向该进程发起请求，请求启动相应的`Activity`
+6. 进程接收到请求后，启动`Activity`并调用其`onCreate`方法，至此，`Activity`启动成功        
 
 ## 从Activity中启动同一进程中的另一Activity
 
@@ -1119,3 +1127,56 @@ public void callActivityOnCreate(Activity activity, Bundle icicle) {
 
 ## Activity热启动
 
+
+## 新版本中Activity启动流程的变化
+
+在新版本中`ActivityManagerService`和`Activity`的部分功能都由`ActivityTaskManagerService`代替
+
+### 变更后的部分流程图
+
+```mermaid
+sequenceDiagram
+autoNumber
+
+box Launch Process
+    participant Instrumentation
+    participant ActivityTaskManagerProxy
+end
+box System Server
+    participant ActivityTaskManagerService
+end
+
+box User Process
+    participant ApplicationThread
+
+end
+
+Instrumentation ->> ActivityTaskManagerProxy: startActvity
+ActivityTaskManagerProxy ->> ActivityTaskManagerService: startActivity
+```
+**step 1** Instrument 调用ActivityTaskManagerProxy的`startActivity`方法，可以看到：
+```java
+public static IActivityTaskManager getService() {
+        return IActivityTaskManagerSingleton.get();
+}
+private static final Singleton<IActivityTaskManager> IActivityTaskManagerSingleton =
+        new Singleton<IActivityTaskManager>() {
+            @Override
+            protected IActivityTaskManager create() {
+                final IBinder b = ServiceManager.getService(Context.ACTIVITY_TASK_SERVICE);
+                return IActivityTaskManager.Stub.asInterface(b);
+        }
+};
+```
+通过`getService`方法，获取到了`ActivityTaskManagerProxy`的单例，并调用其`startActivity`方法向`ActivityTaskManagerService`发送启动`Activity`的请求
+
+**step 2** 执行`ActivityTaskManagerProxy`的`startActivity`方法：
+```java
+    int startActivity(in IApplicationThread caller, in String callingPackage, in Intent intent,
+            in String resolvedType, in IBinder resultTo, in String resultWho, int requestCode,
+            int flags, in ProfilerInfo profilerInfo, in Bundle options);
+    ... 
+```
+，在新版本中，`ActivityTaskManagerProxy`的服务由`AIDL`编写，系统自动生成了`IActivityManagerService`、`IActivityManagerService$Stub`和`IActivityManagerService$Stub$Proxy`
+
+**step 3** 
