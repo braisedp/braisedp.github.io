@@ -471,6 +471,39 @@ private Task resolveReusableTask(boolean includeLaunchedFromBubble) {
 ```
 ，如果`LaunchFlags`为`FLAG_ACTIVITY_NEW_TASK`且`(LaunchFlags & FLAG_ACTIVITY_MULTIPLE_TASK) == 0`，表示要在一个新进程中创建`Activity`同时不允许`Activity`在多个进程中存在实例，此时需要找到一个可以复用的task，同样，如果`LaunchMode`为`LAUNCH_SINGLE_INSTANCE`或者`LAUNCH_SINGLE_TASK`，如果有现有的包含他们的task，则就要在已存在的task中找到他们所在的task并加入，然后方法会找到`Actiivty`可以复用的task
 
-
+通过`computeTargetTask`方法，得出启动`Activity`的task：
+```java
+private Task computeTargetTask() {
+    if (mStartActivity.resultTo == null && mInTask == null && !mAddingToTask
+            && (mLaunchFlags & FLAG_ACTIVITY_NEW_TASK) != 0) {
+        return null;
+    } else if (mSourceRecord != null) {
+        return mSourceRecord.getTask();
+    } else if (mInTask != null) {
+        // The task is specified from AppTaskImpl, so it may not be attached yet.
+        if (!mInTask.isAttached()) {
+            // Attach the task to display area. Ignore the returned root task (though usually
+            // they are the same) because "target task" should be leaf task.
+            getOrCreateRootTask(mStartActivity, mLaunchFlags, mInTask, mOptions);
+        }
+        return mInTask;
+    } else {
+        final Task rootTask = getOrCreateRootTask(mStartActivity, mLaunchFlags, null /* task */,
+                mOptions);
+        final ActivityRecord top = rootTask.getTopNonFinishingActivity();
+        if (top != null) {
+            return top.getTask();
+        } else {
+            // Remove the root task if no activity in the root task.
+            rootTask.removeIfPossible("computeTargetTask");
+        }
+    }
+    return null;
+}
+```
+1. 当一个`Activity`不需要添加到任何一个task时，返回`null`，表示需要新建一个task
+2. 否则，当源`Activity`存在时，将其添加到源`Activity`的task中
+3. 如果指定的task不为空，则将其添加到指定的task中
+4. 否则，获取根task，并获取根task的top `Activity`，若不为空，返回该根task
 
 
