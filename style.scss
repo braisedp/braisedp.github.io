@@ -733,6 +733,12 @@ footer {
   }
 }
 
+.mermaid .node rect,
+.mermaid .node polygon,
+.mermaid .edgePath path {
+  filter: url(#roughFilter); /* 应用手绘风格的滤镜 */
+}
+
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
