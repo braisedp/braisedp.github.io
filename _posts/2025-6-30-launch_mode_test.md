@@ -314,6 +314,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 ## 结合`Activity`启动流程看`LaunchMode`
 
+### 开始启动`Activity`
+
 在调用`startActivity`方法时，会调用到`ActivityStarter`的`executeRequest`方法：
 ```java
 private int executeRequest(Request request) {
@@ -355,6 +357,8 @@ private int startActivityUnchecked(final ActivityRecord r, ActivityRecord source
 ```
 ，调用了`startActivityInner`方法：
 
+### 计算启动标志`launchingTaskFlags`
+
 ```java
 int startActivityInner(final ActivityRecord r, ActivityRecord sourceRecord,
         IVoiceInteractionSession voiceSession, IVoiceInteractor voiceInteractor,
@@ -375,7 +379,7 @@ private void setInitialState(ActivityRecord r, ActivityOptions options, Task inT
         TaskFragment inTaskFragment, int startFlags,
         ActivityRecord sourceRecord, IVoiceInteractionSession voiceSession,
         IVoiceInteractor voiceInteractor, @BalCode int balCode, int realCallingUid) {
-    reset(false /* clearRequest */);
+    reset(false);
     ...
     mLaunchMode = r.launchMode;
 
@@ -386,8 +390,6 @@ private void setInitialState(ActivityRecord r, ActivityOptions options, Task inT
     ...
 
     if (mLaunchMode == LAUNCH_SINGLE_INSTANCE_PER_TASK) {
-        // Adding NEW_TASK flag for singleInstancePerTask launch mode activity, so that the
-        // activity won't be launched in source record's task.
         mLaunchFlags |= FLAG_ACTIVITY_NEW_TASK;
     }
     ...
@@ -410,9 +412,11 @@ private void computeLaunchingTaskFlags() {
 ```
 分为下面情况：
 1. 如果源`Activity`的启动模式为`LAUCH_SINGLE_INSTANCE`，则需要为新`Activity`创建一个新任务，于是设置`mLaunchFlags |= FLAG_ACTIVITY_NEW_TASK`
-2. 如果`Activity`的启动模式为`LAUCH_SINGLE_INSTANCE`或`LAUNCH_SINGLE_TASK`，对于第一种情况，由于目标task为空，于是设置`mLaunchFlags |= FLAG_ACTIVITY_NEW_TASK`
+2. 如果`Activity`的启动模式为`LAUCH_SINGLE_INSTANCE`或`LAUNCH_SINGLE_TASK`，对于第一种情况，由于`inTask`为空，于是设置`mLaunchFlags |= FLAG_ACTIVITY_NEW_TASK`
 
 继续到`startActivtyInner`中：
+
+### 计算目标task
 
 ```java
 
@@ -438,7 +442,6 @@ int startActivityInner(final ActivityRecord r, ActivityRecord sourceRecord,
 
     ...
 
-    return START_SUCCESS;
 }
 ```
 方法首先调用了`resolveReusableTask`方法：
@@ -450,15 +453,12 @@ private Task resolveReusableTask(boolean includeLaunchedFromBubble) {
     
     if (putIntoExistingTask) {
         if (LAUNCH_SINGLE_INSTANCE == mLaunchMode) {
-            // There can be one and only one instance of single instance activity in the
-            // history, and it is always in its own unique task, so we do a special search.
             intentActivity = mRootWindowContainer.findActivity(mIntent, mStartActivity.info,
-                    false /* compareIntentFilters */);
+                    false );
    
             ...
         } ...
         else {
-            // Otherwise find the best task to put the activity in.
             intentActivity =
                     mRootWindowContainer.findTask(mStartActivity, mPreferredTaskDisplayArea,
                             includeLaunchedFromBubble);
@@ -480,10 +480,7 @@ private Task computeTargetTask() {
     } else if (mSourceRecord != null) {
         return mSourceRecord.getTask();
     } else if (mInTask != null) {
-        // The task is specified from AppTaskImpl, so it may not be attached yet.
         if (!mInTask.isAttached()) {
-            // Attach the task to display area. Ignore the returned root task (though usually
-            // they are the same) because "target task" should be leaf task.
             getOrCreateRootTask(mStartActivity, mLaunchFlags, mInTask, mOptions);
         }
         return mInTask;
@@ -494,7 +491,6 @@ private Task computeTargetTask() {
         if (top != null) {
             return top.getTask();
         } else {
-            // Remove the root task if no activity in the root task.
             rootTask.removeIfPossible("computeTargetTask");
         }
     }
@@ -506,4 +502,161 @@ private Task computeTargetTask() {
 3. 如果指定的task不为空，则将其添加到指定的task中
 4. 否则，获取根task，并获取根task的top `Activity`，若不为空，返回该根task
 
+
+### `Activity`的复用
+
+在`startActivityInner`中调用了如下方法：
+```java
+private int deliverToCurrentTopIfNeeded(Task topRootTask, NeededUriGrants intentGrants) {
+    ...
+}
+```
+，判断是否复用当前的top `Activity`
+
+在`startActivityInner`中，还调用了如下方法：
+```java
+if (targetTaskTop != null) {
+    ...
+    startResult = recycleTask(targetTask, targetTaskTop, reusedTask, intentGrants, balVerdict);
+}
+```
+```java
+int recycleTask(Task targetTask, ActivityRecord targetTaskTop, Task reusedTask,
+        NeededUriGrants intentGrants, BalVerdict balVerdict) {
+    ...
+    if (reusedTask != null) {
+        if (targetTask.intent == null) {
+            targetTask.setIntent(mStartActivity);
+        } 
+        ...
+    }
+    ...
+    //将要复用的task放到最顶端
+    //如果需要删除栈中对应记录则执行删除
+    setTargetRootTaskIfNeeded(targetTaskTop);
+    ...
+    complyActivityFlags(targetTask,
+            reusedTask != null ? reusedTask.getTopNonFinishingActivity() : null, intentGrants);
+
+    if (mAddingToTask) {
+        mSupervisor.getBackgroundActivityLaunchController().clearTopIfNeeded(targetTask,
+                mSourceRecord, mStartActivity, mCallingUid, mRealCallingUid, mLaunchFlags,
+                mBalCode);
+        return START_SUCCESS;
+    }
+
+    if (mMovedToTopActivity != null) {
+        targetTaskTop = mMovedToTopActivity;
+    }
+    targetTaskTop = targetTaskTop.finishing
+            ? targetTask.getTopNonFinishingActivity()
+            : targetTaskTop;
+
+
+    resumeTargetRootTaskIfNeeded();
+
+    ...
+
+    mLastStartActivityRecord = targetTaskTop;
+    return mMovedToFront ? START_TASK_TO_FRONT : START_DELIVERED_TO_TOP;
+}
+```
+
+
+观察不同`Activity`复用的情况：
+1. 对于`standard`模式：
+
+2. 对于`singleTop`模式：在`deliverToCurrentTopIfNeeded`中，存在：
+```java
+final ActivityRecord top = topRootTask.topRunningNonDelayedActivityLocked(mNotTop);
+final boolean dontStart = top != null
+        && top.mActivityComponent.equals(mStartActivity.mActivityComponent)
+        && top.mUserId == mStartActivity.mUserId
+        && top.attachedToProcess()
+        && ((mLaunchFlags & FLAG_ACTIVITY_SINGLE_TOP) != 0
+        || LAUNCH_SINGLE_TOP == mLaunchMode)
+        && (!top.isActivityTypeHome() || top.getDisplayArea() == mPreferredTaskDisplayArea);
+if (!dontStart) {
+    return START_SUCCESS;
+}
+...
+top.getTaskFragment().clearLastPausedActivity();
+if (mDoResume) {
+    mRootWindowContainer.resumeFocusedTasksTopActivities();
+}
+...
+deliverNewIntent(top, intentGrants);
+...
+```
+，当top `Activity`满足复用条件时，会复用该`Activity`且向其发送一个`Intent`
+
+3. 对于`singleTask`模式：
+
+在`complyActivityFlags`中，执行了如下语句：
+```java
+else if ((mLaunchFlags & FLAG_ACTIVITY_CLEAR_TOP) != 0
+                || isDocumentLaunchesIntoExisting(mLaunchFlags)
+                || isLaunchModeOneOf(LAUNCH_SINGLE_INSTANCE, LAUNCH_SINGLE_TASK,
+                        LAUNCH_SINGLE_INSTANCE_PER_TASK)) {
+    final ActivityRecord clearTop = targetTask.performClearTop(mStartActivity,
+        mLaunchFlags, finishCount);
+    if (clearTop != null && !clearTop.finishing) {
+        if (finishCount[0] > 0) {
+            mMovedToTopActivity = clearTop;
+        }
+        if (clearTop.isRootOfTask()) {
+            clearTop.getTask().setIntent(mStartActivity);
+        }
+        deliverNewIntent(clearTop, intentGrants);
+    }
+}
+```
+，如果选择了复用任务，则对该task进行清空
+
+4. 对于`singleInstance`模式：
+在`startActivityInner`中进行判断：
+```java
+if (LAUNCH_SINGLE_INSTANCE == mLaunchMode && mSourceRecord != null
+        && targetTask == mSourceRecord.getTask()) {
+    final ActivityRecord activity = mRootWindowContainer.findActivity(mIntent,
+            mStartActivity.info, false);
+    if (activity != null && activity.getTask() != targetTask) {
+        activity.destroyIfPossible("Removes redundant singleInstance");
+    }
+}
+```
+，如果目标`Activity`需要运行在源`Activity`的task中时，需要销毁其他task中的目标`Activity`，对于`singleInstance`模式，在`computeTargetTask`中，`mSourceRecord`是优先于`mInTask`的
+
+5. 对于`singleInstancePerTask`模式：
+
+```java
+else if ((mLaunchFlags & FLAG_ACTIVITY_CLEAR_TOP) != 0
+                || isDocumentLaunchesIntoExisting(mLaunchFlags)
+                || isLaunchModeOneOf(LAUNCH_SINGLE_INSTANCE, LAUNCH_SINGLE_TASK,
+                        LAUNCH_SINGLE_INSTANCE_PER_TASK)) {
+    final ActivityRecord clearTop = targetTask.performClearTop(mStartActivity,
+        mLaunchFlags, finishCount);
+    if (clearTop != null && !clearTop.finishing) {
+        if (finishCount[0] > 0) {
+            mMovedToTopActivity = clearTop;
+        }
+        if (clearTop.isRootOfTask()) {
+            clearTop.getTask().setIntent(mStartActivity);
+        }
+        deliverNewIntent(clearTop, intentGrants);
+    }
+}
+```
+
+待更新...
+
+## `LaunchFlags`总结
+
+| LaunchFlag| 含义|
+|-          | -   |
+| `FLAG_ACTIVITY_CLEAR_TASK`| 会清空任务中的其他旧活动，需要与`FLAG_ACTIVTTY_NEW_TASK`一起使用|
+|`FLAG_ACTIVITY_CLEAR_TOP`|在当前任务中时，在新活动上面的活动会被关闭，新活动不会重新启动，只会接收new intent|
+| `FLAG_ACTIIVTY_NEW_TASK`| 新活动会成为历史栈中的新任务的开始，如果新活动已存在于一个为它运行的任务中，那么不会启动，只会把该任务移到屏幕最前| 
+|`FLAG_ACTIVITY_MULTIPLE_TASK`|与`FLAG_ACTIVITY_NEW_TASK`和`FLAG_ACTIVITY_NEW_DOCUMENT`一起使用，会在创建`Activity`时重新创建一个task|
+|`FLAG_ACTIVITY_NEW_DOCUMENT`|给启动的活动开启一个新的任务记录|
 
