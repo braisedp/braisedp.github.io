@@ -55,7 +55,17 @@ layout: default
 function initMermaid() {
   var config = {
     startOnLoad: true,
-    theme: "forest",
+    securityLevel: 'loose',
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#F0F4FC',
+      primaryTextColor: '#1F2329',
+      primaryBorderColor: '#000000',
+      lineColor: '#888888',
+      tertiaryColor: '#F5F6F7',
+      tertiaryBorderColor: '#F5F6F7',
+      tertiaryTextColor: '#00A4FF'
+    },
     flowchart:{
       useMaxWidth: true,
       htmlLabels: true
