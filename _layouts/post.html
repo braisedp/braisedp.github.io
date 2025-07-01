@@ -73,6 +73,59 @@ function initMermaid() {
   };
   mermaid.initialize(config);
   window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+  document.addEventListener("DOMContentLoaded", () => {
+  // 获取 Mermaid 渲染的 SVG 元素
+  const mermaidContainer = document.getElementById("mermaid-container");
+  const svgElement = mermaidContainer.querySelector("svg");
+
+  if (!svgElement) {
+    console.error("Mermaid SVG not found!");
+    return;
+  }
+
+  // 使用 Rough.js 对 SVG 进行手绘化处理
+  const rough = rough.svg(svgElement); // 初始化 Rough.js
+
+  // 遍历所有节点和边线，替换为手绘风格
+  const nodes = svgElement.querySelectorAll("rect, polygon, path");
+  nodes.forEach((node) => {
+    const bbox = node.getBBox(); // 获取节点的边界框
+
+    // 根据节点类型创建 Rough.js 的手绘元素
+    let roughElement;
+    if (node.tagName === "rect") {
+      roughElement = rough.rectangle(bbox.x, bbox.y, bbox.width, bbox.height, {
+        roughness: 2, // 手绘风格的粗糙度
+        stroke: "black",
+        fill: "white",
+        fillStyle: "hachure", // 填充样式（手绘线条填充）
+      });
+    } else if (node.tagName === "polygon") {
+      const points = node.getAttribute("points").split(" ").map((p) => {
+        const [x, y] = p.split(",");
+        return [parseFloat(x), parseFloat(y)];
+      });
+      roughElement = rough.polygon(points, {
+        roughness: 2,
+        stroke: "black",
+        fill: "white",
+        fillStyle: "hachure",
+      });
+    } else if (node.tagName === "path") {
+      const d = node.getAttribute("d");
+      roughElement = rough.path(d, {
+        roughness: 2,
+        stroke: "black",
+      });
+    }
+
+    // 替换原始节点
+    if (roughElement) {
+      svgElement.appendChild(roughElement);
+      node.remove(); // 移除原始节点
+    }
+  });
+});
 }
 </script>
 
@@ -80,12 +133,6 @@ function initMermaid() {
   async
   onload="initMermaid()">
 </script>
-
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-  <filter id="roughFilter">
-    <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" result="noise" />
-    <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
-  </filter>
-</svg>
+<script src="https://cdn.jsdelivr.net/npm/roughjs/bundled/rough.min.js"></script>
 
 { % endif % }
