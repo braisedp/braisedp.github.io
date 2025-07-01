@@ -49,4 +49,26 @@ layout: default
   {% endif %}
 </div>
 
-s
+{ % if page.mermaid % }
+
+<script>
+function initMermaid() {
+  var config = {
+    startOnLoad: true,
+    theme: "forest",
+    flowchart:{
+      useMaxWidth: true,
+      htmlLabels: true
+    }
+  };
+  mermaid.initialize(config);
+  window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+}
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mermaid/11.7.0/mermaid.min.js"
+  async
+  onload="initMermaid()">
+</script>
+
+{ % endif % }

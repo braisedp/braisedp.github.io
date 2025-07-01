@@ -6,6 +6,7 @@ tags: [Android, Activity]
 comments: true
 author: braisedp
 toc : true
+mermaid: true
 ---
 
 <!-- more -->

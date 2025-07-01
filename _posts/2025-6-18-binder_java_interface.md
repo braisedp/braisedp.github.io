@@ -6,6 +6,7 @@ tags: [Android, Binder]
 comments: true
 author: braisedp
 toc : true
+mermaid: true
 ---
 
 <!-- more -->
