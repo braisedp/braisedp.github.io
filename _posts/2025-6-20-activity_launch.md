@@ -1103,8 +1103,8 @@ sequenceDiagram
     autonumber
 
     Actor User
-    box Launcher Process
-    participant Laucher
+    box App Process
+    participant Launcher
     participant Activity
     participant Instrument
     participant ActivityManagerProxy
@@ -1114,72 +1114,68 @@ sequenceDiagram
     participant ActivityStack
     participant ApplicationThreadProxy
     end
-    box User Process
+    box App Process
     participant ApplicationThread
     participant ActivityThread
     participant H
     participant MainActivity
     end
 
-    rect rgb(191, 223, 255)
-    note right of User: try to start Specified Activity
-    User->>+ Laucher: startActivitySafely
-    Laucher->>+ Activity: startActivity
+
+    critical try to start Specified Activity
+    User->>Launcher: startActivitySafely
+    Launcher->>Activity: startActivity
     Activity->>Activity: startActivityForResult
-    Activity->>+Instrument: execStartActivity
-    Instrument->>+ActivityManagerProxy: startActivity
-    ActivityManagerProxy->>+ActivityManagerService: startActivity
-    ActivityManagerService->>+ActivityStack: startActivityMayWait
+    Activity->>Instrument: execStartActivity
+    Instrument->>ActivityManagerProxy: startActivity
+    ActivityManagerProxy->>ActivityManagerService: startActivity
+    ActivityManagerService->>ActivityStack: startActivityMayWait
     ActivityStack->>ActivityStack: startActivityLocked 
     ActivityStack->>ActivityStack:startActivityUncheckedLocked 
     ActivityStack->>ActivityStack: startActivityLocked 
     ActivityStack->>ActivityStack:  resumeTopActivityLocked
-    end
-    rect rgb(200, 150, 255)
-    note right of Instrument: pause Launcher
+
+
+    option pause Launcher
     ActivityStack->>ActivityStack:  startPausingLocked
-    ActivityStack->>+ApplicationThreadProxy:  schedulePauseActivity
-    deactivate ActivityStack
-    ApplicationThreadProxy->>+ApplicationThread: schedulePauseActivity
-    ApplicationThread->>+ActivityThread:  queryOrSendMessage
-    ActivityThread->>+ H: handleMessage
-    H->>-ActivityThread:  handlePauseActivity
-    ActivityThread->>Laucher:onUserLeavingHint
-    ActivityThread->>Laucher:onPause
-    deactivate Laucher
-    deactivate Activity
+    ActivityStack->>ApplicationThreadProxy:  schedulePauseActivity
+    ApplicationThreadProxy->>ApplicationThread: schedulePauseActivity
+    ApplicationThread->>ActivityThread:  queryOrSendMessage
+    ActivityThread->> H: handleMessage
+    H->>ActivityThread:  handlePauseActivity
+    ActivityThread->>Launcher:onUserLeavingHint
+    ActivityThread->>Launcher:onPause
     ActivityThread->>ActivityThread:QueuedWork.waitToFinish
-    ActivityThread->>-ActivityManagerProxy:activityPaused
+    ActivityThread->>ActivityManagerProxy:activityPaused
     ActivityManagerProxy->>ActivityManagerService:activityPaused
-    ActivityManagerService->>+ActivityStack:  activityPaused
-    end
-    rect rgb(191, 223, 255)
-    note right of Instrument: resume Specified Activity
+    ActivityManagerService->>ActivityStack:  activityPaused
+
+
+    option start Application
     ActivityStack->>ActivityStack:completePauseLocked
     ActivityStack->>ActivityStack:resumeTopActivityLocked
     ActivityStack->>ActivityStack:startSepcificActivityLocked
-    ActivityStack->>+ActivityManagerService:startProcessLocked
-    deactivate ActivityStack
+    ActivityStack->>ActivityManagerService:startProcessLocked
     ActivityManagerService->>ActivityManagerService:startProcessLocked
-    ActivityManagerService->>+ActivityThread:main
+    ActivityManagerService->>ActivityThread:main
     ActivityThread->>ActivityManagerProxy:attachApplication
-
     ActivityManagerProxy->>ActivityManagerService:attachApplication
     ActivityManagerService->>ActivityManagerService:attachApplicationLocked
+
+    option resume Activity
     ActivityManagerService->>ActivityStack:realStartActivityLocked
-    deactivate ActivityManagerService
     ActivityStack->>ApplicationThreadProxy:scheduleLaunchActivity
     ApplicationThreadProxy->>ApplicationThread:scheduleLaunchActivity
     ApplicationThread->>ActivityThread:queueOrSendMessage
     ActivityThread->>H:handleMessage
-    H->>+ActivityThread:handleLaunchActivity
+    H->>ActivityThread:handleLaunchActivity
     ActivityThread->>ActivityThread:performLaunchActivity
     ActivityThread->>MainActivity: attach
     ActivityThread->>MainActivity:onCreate
 
     ActivityThread->>ActivityThread:Looper.loop
-    deactivate ActivityThread
     end
+
 ```
 
 ## 从Activity中启动同一进程中的另一Activity
