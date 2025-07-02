@@ -86,7 +86,39 @@ private Intent registerReceiverInternal(BroadcastReceiver receiver, int userId, 
     }
 }
 ```
-，首先执行`gerReceiverDispatcher`方法，获取`IIntentReceiver`作为消息分发者，然后调用`ActivityManagerNative.getDefault()`方法获取一个`ActivityManagerProxy`对象，执行其`registerReceiver`方法
+，首先执行`gerReceiverDispatcher`方法，将`receiver`包装成`IIntentReceiver`类型的对象，然后调用`ActivityManagerNative.getDefault()`方法获取一个`ActivityManagerProxy`对象，执行其`registerReceiver`方法，其中`getReceiverDispatcher`方法如下：
+```java
+public IIntentReceiver getReceiverDispatcher(BroadcastReceiver r,
+        Context context, Handler handler,
+        Instrumentation instrumentation, boolean registered) {
+    synchronized (mReceivers) {
+        LoadedApk.ReceiverDispatcher rd = null;
+        ArrayMap<BroadcastReceiver, LoadedApk.ReceiverDispatcher> map = null;
+        if (registered) {
+            map = mReceivers.get(context);
+            if (map != null) {
+                rd = map.get(r);
+            }
+        }
+        if (rd == null) {
+            rd = new ReceiverDispatcher(mActivityThread.getApplicationThread(), r, context,
+                    handler, instrumentation, registered);
+            if (registered) {
+                if (map == null) {
+                    map = new ArrayMap<BroadcastReceiver, LoadedApk.ReceiverDispatcher>();
+                    mReceivers.put(context, map);
+                }
+                map.put(r, rd);
+            }
+        } else {
+            rd.validate(context, handler);
+        }
+        rd.mForgotten = false;
+        return rd.getIIntentReceiver();
+    }
+}
+```
+，方法通过`receiver`从`mReceivers`的`map`中查询是否存在对应的`ReceiverDispatcher`，如果存在则复用，否则创建一个新的`ReceiverDispatcher rd`并将`<receiver,rd>`存入`map`中
 
 ### 向`ActivityManagerService`发送广播
 
