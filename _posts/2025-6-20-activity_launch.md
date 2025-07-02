@@ -13,93 +13,17 @@ mermaid: true
 
 ## 从Laucher中启动Activity的流程
 
-### 时序图
-
+### 请求启动`Activity`
 ```mermaid
 sequenceDiagram
-    autonumber
-
-    Actor User
-    box Launcher Process
-    participant Laucher
-    participant Activity
-    participant Instrument
-    participant ActivityManagerProxy
-    end
-    box ActivityManagerService
-    participant ActivityManagerService
-    participant ActivityStack
-    participant ApplicationThreadProxy
-    end
-    box User Process
-    participant ApplicationThread
-    participant ActivityThread
-    participant H
-    participant MainActivity
-    end
-
-    rect rgb(191, 223, 255)
-    note right of User: try to start Specified Activity
+autoNumber
     User->>+ Laucher: startActivitySafely
-    Laucher->>+ Activity: startActivity
+    Laucher->> Activity: startActivity
     Activity->>Activity: startActivityForResult
-    Activity->>+Instrument: execStartActivity
-    Instrument->>+ActivityManagerProxy: startActivity
-    ActivityManagerProxy->>+ActivityManagerService: startActivity
-    ActivityManagerService->>+ActivityStack: startActivityMayWait
-    ActivityStack->>ActivityStack: startActivityLocked 
-    ActivityStack->>ActivityStack:startActivityUncheckedLocked 
-    ActivityStack->>ActivityStack: startActivityLocked 
-    ActivityStack->>ActivityStack:  resumeTopActivityLocked
-    end
-    rect rgb(200, 150, 255)
-    note right of Instrument: pause Launcher
-    ActivityStack->>ActivityStack:  startPausingLocked
-    ActivityStack->>+ApplicationThreadProxy:  schedulePauseActivity
-    deactivate ActivityStack
-    ApplicationThreadProxy->>+ApplicationThread: schedulePauseActivity
-    ApplicationThread->>+ActivityThread:  queryOrSendMessage
-    ActivityThread->>+ H: handleMessage
-    H->>-ActivityThread:  handlePauseActivity
-    ActivityThread->>Laucher:onUserLeavingHint
-    ActivityThread->>Laucher:onPause
-    deactivate Laucher
-    deactivate Activity
-    ActivityThread->>ActivityThread:QueuedWork.waitToFinish
-    ActivityThread->>-ActivityManagerProxy:activityPaused
-    ActivityManagerProxy->>ActivityManagerService:activityPaused
-    ActivityManagerService->>+ActivityStack:  activityPaused
-    end
-    rect rgb(191, 223, 255)
-    note right of Instrument: resume Specified Activity
-    ActivityStack->>ActivityStack:completePauseLocked
-    ActivityStack->>ActivityStack:resumeTopActivityLocked
-    ActivityStack->>ActivityStack:startSepcificActivityLocked
-    ActivityStack->>+ActivityManagerService:startProcessLocked
-    deactivate ActivityStack
-    ActivityManagerService->>ActivityManagerService:startProcessLocked
-    ActivityManagerService->>+ActivityThread:main
-    ActivityThread->>ActivityManagerProxy:attachApplication
-
-    ActivityManagerProxy->>ActivityManagerService:attachApplication
-    ActivityManagerService->>ActivityManagerService:attachApplicationLocked
-    ActivityManagerService->>ActivityStack:realStartActivityLocked
-    deactivate ActivityManagerService
-    ActivityStack->>ApplicationThreadProxy:scheduleLaunchActivity
-    ApplicationThreadProxy->>ApplicationThread:scheduleLaunchActivity
-    ApplicationThread->>ActivityThread:queueOrSendMessage
-    ActivityThread->>H:handleMessage
-    H->>+ActivityThread:handleLaunchActivity
-    ActivityThread->>ActivityThread:performLaunchActivity
-    ActivityThread->>MainActivity: attach
-    ActivityThread->>MainActivity:onCreate
-
-    ActivityThread->>ActivityThread:Looper.loop
-    deactivate ActivityThread
-    end
+    Activity->>Instrument: execStartActivity
+    Instrument->>ActivityManagerProxy: startActivity
+    ActivityManagerProxy->>ActivityManagerService: startActivity
 ```
-
-### 详细步骤
 
 **step 1** 执行`Laucher`的`startActivitySafely`方法，该方法调用了`Activity`的`startActivity`方法
 
@@ -249,6 +173,16 @@ public boolean onTransact(){
 ，方法调用了`Stub`的`startActivity`方法，该方法由`ActivityManagerService`重写`ActivityManagerNative`实现
 ```java
 public final class ActivityManagerService extends ActivityManagerNative
+```
+
+### `ActivityManagerService`执行启动程序
+```mermaid
+sequenceDiagram
+    ActivityManagerService->>+ActivityStack: startActivityMayWait
+    ActivityStack->>ActivityStack: startActivityLocked 
+    ActivityStack->>ActivityStack:startActivityUncheckedLocked 
+    ActivityStack->>ActivityStack: startActivityLocked 
+    ActivityStack->>ActivityStack:  resumeTopActivityLocked
 ```
 
 **step 6** 调用`ActivityManagerService`的`startActivity`方法：
@@ -401,6 +335,24 @@ final boolean resumeTopActivityLocked(ActivityRecord prev) {
 }
 ```
 ，在方法中，判断当前的`Activity`是否resumed、是否正在休眠、是否正在停止一个`Activity`，如果都不是，则调用`startPausingLocked`方法停止正在运行的进程
+
+### 暂停当前的Top Activity
+
+```mermaid
+sequenceDiagram
+    ActivityStack->>ActivityStack:  startPausingLocked
+    ActivityStack->>ApplicationThreadProxy:  schedulePauseActivity
+    ApplicationThreadProxy->>ApplicationThread: schedulePauseActivity
+    ApplicationThread->>ActivityThread:  queryOrSendMessage
+    ActivityThread->> H: handleMessage
+    H->>ActivityThread:  handlePauseActivity
+    ActivityThread->>Laucher:onUserLeavingHint
+    ActivityThread->>Laucher:onPause
+    ActivityThread->>ActivityThread:QueuedWork.waitToFinish
+    ActivityThread->>ActivityManagerProxy:activityPaused
+    ActivityManagerProxy->>ActivityManagerService:activityPaused
+    ActivityManagerService->>ActivityStack:  activityPaused
+```
 
 **step 12** 执行`startPausingLocked`方法：
 ```java
@@ -684,6 +636,21 @@ private final void completePauseLocked() {
 ```
 ，将`mPausingActivity`设置为`null`并再次调用`resumeTopActivityLocked`方法
 
+### pause成功后为新`Activity`启动进程
+```mermaid
+sequenceDiagram
+    ActivityStack->>ActivityStack:completePauseLocked
+    ActivityStack->>ActivityStack:resumeTopActivityLocked
+    ActivityStack->>ActivityStack:startSepcificActivityLocked
+    ActivityStack->>+ActivityManagerService:startProcessLocked
+    ActivityManagerService->>ActivityManagerService:startProcessLocked
+    ActivityManagerService->>+ActivityThread:main
+    ActivityThread->>ActivityManagerProxy:attachApplication
+
+    ActivityManagerProxy->>ActivityManagerService:attachApplication
+    ActivityManagerService->>ActivityManagerService:attachApplicationLocked
+```
+
 **step 25** 执行`resumeTopActivityLocked`方法：
 ```java
 final boolean resumeTopActivityLocked(ActivityRecord prev) {
@@ -903,6 +870,22 @@ private final boolean attachApplicationLocked(IApplicationThread thread,
 ```
 ，从`Handler`中移除`PROC_START_TIMEOUT_MSG`，并检查是否有`Activity`需要启动，于是调用`ActivityStack.realStartActivityLocked`方法
 
+### 启动`Activity`
+```mermaid
+sequenceDiagram
+    ActivityManagerService->>ActivityStack:realStartActivityLocked
+    ActivityStack->>ApplicationThreadProxy:scheduleLaunchActivity
+    ApplicationThreadProxy->>ApplicationThread:scheduleLaunchActivity
+    ApplicationThread->>ActivityThread:queueOrSendMessage
+    ActivityThread->>H:handleMessage
+    H->>ActivityThread:handleLaunchActivity
+    ActivityThread->>ActivityThread:performLaunchActivity
+    ActivityThread->>MainActivity: attach
+    ActivityThread->>MainActivity:onCreate
+
+    ActivityThread->>ActivityThread:Looper.loop
+```
+
 **step 33** 执行`realStartActivityLocked`方法：
 ```java
 final boolean realStartActivityLocked(ActivityRecord r,
@@ -1112,7 +1095,92 @@ public void callActivityOnCreate(Activity activity, Bundle icicle) {
 3. ` Launcher`所在的进程接收到该请求后就执行pause ` Launcher`的动作，并通知` ActivityManagerService`
 4. ` ActivityManagerService`接收到该通知后，发现有需要resume 的` Activity`，于是去启动该` Activity`，但是发现其所在的进程没有启动，创建一个进程并调用其` main`方法启动进程
 5.  进程启动后，` ActivityManagerService`向该进程发起请求，请求启动相应的`Activity`
-6. 进程接收到请求后，启动`Activity`并调用其`onCreate`方法，至此，`Activity`启动成功        
+6. 进程接收到请求后，启动`Activity`并调用其`onCreate`方法，至此，`Activity`启动成功     
+
+
+```mermaid
+sequenceDiagram
+    autonumber
+
+    Actor User
+    box Launcher Process
+    participant Laucher
+    participant Activity
+    participant Instrument
+    participant ActivityManagerProxy
+    end
+    box ActivityManagerService
+    participant ActivityManagerService
+    participant ActivityStack
+    participant ApplicationThreadProxy
+    end
+    box User Process
+    participant ApplicationThread
+    participant ActivityThread
+    participant H
+    participant MainActivity
+    end
+
+    rect rgb(191, 223, 255)
+    note right of User: try to start Specified Activity
+    User->>+ Laucher: startActivitySafely
+    Laucher->>+ Activity: startActivity
+    Activity->>Activity: startActivityForResult
+    Activity->>+Instrument: execStartActivity
+    Instrument->>+ActivityManagerProxy: startActivity
+    ActivityManagerProxy->>+ActivityManagerService: startActivity
+    ActivityManagerService->>+ActivityStack: startActivityMayWait
+    ActivityStack->>ActivityStack: startActivityLocked 
+    ActivityStack->>ActivityStack:startActivityUncheckedLocked 
+    ActivityStack->>ActivityStack: startActivityLocked 
+    ActivityStack->>ActivityStack:  resumeTopActivityLocked
+    end
+    rect rgb(200, 150, 255)
+    note right of Instrument: pause Launcher
+    ActivityStack->>ActivityStack:  startPausingLocked
+    ActivityStack->>+ApplicationThreadProxy:  schedulePauseActivity
+    deactivate ActivityStack
+    ApplicationThreadProxy->>+ApplicationThread: schedulePauseActivity
+    ApplicationThread->>+ActivityThread:  queryOrSendMessage
+    ActivityThread->>+ H: handleMessage
+    H->>-ActivityThread:  handlePauseActivity
+    ActivityThread->>Laucher:onUserLeavingHint
+    ActivityThread->>Laucher:onPause
+    deactivate Laucher
+    deactivate Activity
+    ActivityThread->>ActivityThread:QueuedWork.waitToFinish
+    ActivityThread->>-ActivityManagerProxy:activityPaused
+    ActivityManagerProxy->>ActivityManagerService:activityPaused
+    ActivityManagerService->>+ActivityStack:  activityPaused
+    end
+    rect rgb(191, 223, 255)
+    note right of Instrument: resume Specified Activity
+    ActivityStack->>ActivityStack:completePauseLocked
+    ActivityStack->>ActivityStack:resumeTopActivityLocked
+    ActivityStack->>ActivityStack:startSepcificActivityLocked
+    ActivityStack->>+ActivityManagerService:startProcessLocked
+    deactivate ActivityStack
+    ActivityManagerService->>ActivityManagerService:startProcessLocked
+    ActivityManagerService->>+ActivityThread:main
+    ActivityThread->>ActivityManagerProxy:attachApplication
+
+    ActivityManagerProxy->>ActivityManagerService:attachApplication
+    ActivityManagerService->>ActivityManagerService:attachApplicationLocked
+    ActivityManagerService->>ActivityStack:realStartActivityLocked
+    deactivate ActivityManagerService
+    ActivityStack->>ApplicationThreadProxy:scheduleLaunchActivity
+    ApplicationThreadProxy->>ApplicationThread:scheduleLaunchActivity
+    ApplicationThread->>ActivityThread:queueOrSendMessage
+    ActivityThread->>H:handleMessage
+    H->>+ActivityThread:handleLaunchActivity
+    ActivityThread->>ActivityThread:performLaunchActivity
+    ActivityThread->>MainActivity: attach
+    ActivityThread->>MainActivity:onCreate
+
+    ActivityThread->>ActivityThread:Looper.loop
+    deactivate ActivityThread
+    end
+```
 
 ## 从Activity中启动同一进程中的另一Activity
 
