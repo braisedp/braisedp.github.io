@@ -226,9 +226,8 @@ box System Server
 participant ActivityManagerService
 participant Handler
 participant ApplicationThreadProxy
-participant IIntentReceiver
+participant IIntentReceiver$Proxy
 end
-
 ActivityManagerProxy->>+ActivityManagerService: broadcastIntent
 ActivityManagerService->>ActivityManagerService: broadcastIntentLocked
 ActivityManagerService->>+Handler: sendEmptyMessage/handleMesage
@@ -240,7 +239,7 @@ ActivityManagerService->>ActivityManagerService:performReceiveLocked
 alt 需要Application接收广播
 ActivityManagerService->>ApplicationThreadProxy: scheduleRegisteredReceiver
 else 不需要
-ActivityManagerService->>-IIntentReceiver: performReceive
+ActivityManagerService->>-IIntentReceiver$Proxy: performReceive
 end
 deactivate ActivityManagerService
 
@@ -551,19 +550,24 @@ sequenceDiagram
 autoNumber
 box System Server
 participant ApplicationThreadProxy
-participant IIntentReceiver
-participant ReceiveDispatcher
+participant IIntentReceiver$Proxy
 end
 box receiver Process
 participant ApplicationThread
+participant InnerReceiver
+participant ReceiveDispatcher
+participant Args
 participant BroadcastReceiver
 end
 
 alt 需要Application接收广播
 ApplicationThreadProxy->>ApplicationThread: scheduleRegisteredReceiver
-ApplicationThread->>IIntentReceiver:performReceive
+ApplicationThread->>IIntentReceiver$Proxy:performReceive
 end
-IIntentReceiver->>ReceiveDispatcher: performReceive
+IIntentReceiver$Proxy->>InnerReceiver:performReceive
+InnerReceiver->>ReceiveDispatcher: performReceive
+ReceiveDispatcher->>Args: run
+Args->>BroadcastReceiver:onReceive
 ```
 
 **step 1** 执行`scheduleRegisteredReceiver`方法：
@@ -574,7 +578,89 @@ public void scheduleRegisteredReceiver(IIntentReceiver receiver, Intent intent,
     receiver.performReceive(intent, resultCode, dataStr, extras, ordered, sticky);
 }
 ```
-，调用了`IIntent`的`performReceive`方法，这里调用是通过binder的oneway async队列保证顺序广播的有效性
+，调用了远程对象的`performReceive`方法，这里调用是通过binder的oneway async队列保证顺序广播的有效性，而方法是由
 
+**step 2**执行`IIntentReceiver$Proxy`的`performReceive`方法，会通过`transact`方法调用远程对象
 
+**step3** 远程对象执行`onTransact`方法后，执行`InnerReceiver::performReceive`方法：
+```java
+public void performReceive(Intent intent, int resultCode,
+                String data, Bundle extras, boolean ordered, boolean sticky) {
+            LoadedApk.ReceiverDispatcher rd = mDispatcher.get();
+    ...
+    if (rd != null) {
+        rd.performReceive(intent, resultCode, data, extras,
+                ordered, sticky);
+    }
+    ...
+}
+```
+，每个`InnerReceiver`都对应了一个`ReceiveDispatcher`对象，调用`ReceiveDispatcher`的`performReceive`方法
 
+**step 4** 执行`ReceiveDispatcher::performReceive`方法：
+```java
+public void performReceive(Intent intent, int resultCode,
+        String data, Bundle extras, boolean ordered, boolean sticky) {
+    ...
+    Args args = new Args();
+    args.mCurIntent = intent;
+    args.mCurCode = resultCode;
+    args.mCurData = data;
+    args.mCurMap = extras;
+    args.mCurOrdered = ordered;
+    args.mCurSticky = sticky;
+    if (!mActivityThread.post(args)) {
+        if (mRegistered && ordered) {
+            IActivityManager mgr = ActivityManagerNative.getDefault();
+            try {
+                ...
+                mgr.finishReceiver(mIIntentReceiver, args.mCurCode,
+                        args.mCurData, args.mCurMap, false);
+            } catch (RemoteException ex) {
+            }
+        }
+    }
+}
+```
+，`Args`是`ReceiveDispacther`的一个内部类，实现了`Runnable`接口
+
+**step 5** 执行`Args::run`方法：
+```java
+public void run() {
+    BroadcastReceiver receiver = mReceiver;
+    ...
+    
+    IActivityManager mgr = ActivityManagerNative.getDefault();
+    Intent intent = mCurIntent;
+    mCurIntent = null;
+    ...
+    try {
+        ClassLoader cl =  mReceiver.getClass().getClassLoader();
+        intent.setExtrasClassLoader(cl);
+        if (mCurMap != null) {
+            mCurMap.setClassLoader(cl);
+        }
+        receiver.setOrderedHint(true);
+        receiver.setResult(mCurCode, mCurData, mCurMap);
+        receiver.clearAbortBroadcast();
+        receiver.setOrderedHint(mCurOrdered);
+        receiver.setInitialStickyHint(mCurSticky);
+        receiver.onReceive(mContext, intent);
+    } 
+    ...
+    if (mRegistered && mCurOrdered) {
+        try {
+            ...
+            mgr.finishReceiver(mIIntentReceiver,
+                    receiver.getResultCode(),
+                    receiver.getResultData(),
+                    receiver.getResultExtras(false),
+                    receiver.getAbortBroadcast());
+        } catch (RemoteException ex) {
+        }
+    }
+}
+```
+，执行`BroadcastReceiver`的`onReceive`方法对广播消息进行处理
+
+**step 6** 执行`BroadcastReceiver::onReceive`方法

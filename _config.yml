@@ -41,17 +41,6 @@ footer-links:
 # Text under the icons in footer
 # footer-text: Copyright (c) 2025 brasiedp
 
-# Enter your Disqus shortname (not your username) to enable commenting on posts
-# You can find your shortname on the Settings page of your Disqus account
-disqus: # fromendworld
-
-# Gitalk
-gitalk:
-  clientID: bd65d5c0df878155b7fa
-  clientSecret: d0220762c05c2d6b6f6152a0f0e4b6b090de9729
-  repo: braisedp.github.io
-  owner: brasiedp
-
 # Enter your Google Analytics web tracking code (e.g. UA-2110908-2) to activate tracking
 #google_analytics: 
 
