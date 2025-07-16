@@ -8,6 +8,8 @@ author: braisedp
 toc : true
 ---
 
+<!-- more -->
+
 ## Android权限分类
 
 ![permission level](../images/2025-7-16-android_permission/permissons.svg)
