@@ -54,9 +54,22 @@ D--是-->F[请求用户授权权限]
 F-->C
 ```
 
-## Android权限鉴别机制
+## Android权限机制
 
-在`\etc\permissions\platform.xml`中：
+![permision arch](../images/2025-7-16-android_permission/permissionsarch.svg)
+
+### 默认授权机制
+
+```mermaid
+flowchart TB
+subgraph PackageManagerService
+end
+subgraph ParallelPackageParser
+end
+```
+
+
+<!-- 在`\etc\permissions\platform.xml`中：
 ```xml
 <permissions>
     <permission name="android.permission.BLUETOOTH_ADMIN" >
@@ -74,5 +87,5 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids, 
     SetGids(env, gids, is_child_zygote, fail_fn);
     ...
 }
-```
+``` -->
 ### 
