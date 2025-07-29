@@ -26,7 +26,7 @@ toc : true
 ```
 - `normal`级别的权限，只需要在声明中指定相应的权限就行
 - `signature`级别的权限，需要通过系统签名打包APK
-- `signature|privileged`级别的权限，不仅需要通过系统签名打包，也需要是系统应用（`/system/app`）或者特权系统应用（`/system/priv-app`），在9.0之后，Android引入了allow-list机制，对于特权应用`priv-app`，需要在`/system, /product, /vendor`等目录下的`/etc/permissions/priv-app/privapp-permissions-xxx.xml`声明应用可以使用的权限：
+- 在9.0版本之后，Android引入了allow-list机制，对于特权应用`priv-app`，需要在`/system, /product, /vendor`等目录下的`/etc/permissions/priv-app/privapp-permissions-xxx.xml`声明应用可以使用的权限：
 
 ```xml
 <permissions>
@@ -58,7 +58,72 @@ F-->C
 
 ![permision arch](../images/2025-7-16-android_permission/permissionsarch.svg)
 
-### 扫描目录授权
+### framework层
+`PackageManagerService`管理包的信息，并通过`Settings.java`读写`packages.xml`文件：
+```xml
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<packages>
+    <version sdkVersion="34" databaseVersion="3" buildFingerprint="..." fingerprint="..." />
+    <version volumeUuid="primary_physical" sdkVersion="34" databaseVersion="3" buildFingerprint="..." fingerprint="..." />
+    <permission-trees />
+    <!--权限集合-->
+    <permissions>
+        ...
+        <item name="android.permission.XXX" package="android" protection="18" />
+        ...
+    </permissions>
+    <!--包信息-->
+    <package name = "..." ... sharedUserId = "..." ... >
+        <!--签名信息-->
+        <sigs count="1" schemeVersion="3">
+            <cert index="0" />
+        </sigs>
+        <proper-signing-keyset identifier="1" />
+        <!--权限信息-->
+        <perms>
+            ...
+        </perms>
+    </package>
+    ...
+    <!--一些升级过的包的信息-->
+    <updated-package ... />
+    ...
+    <!--一些userId信息-->
+    <shared-user name="android.uid.system" userId="1000">
+        <sigs count="1" schemeVersion="3">
+            <cert index="2" />
+        </sigs>
+    </shared-user>
+    ...
+    <domain-verifications>
+        <active>
+            <package-state .../>
+            ...
+        </active>
+        ...
+    </domain-verifications>
+    <!--签名信息-->
+    <keyset-settings version="1">
+        <keys>
+            <public-key .../>
+            ...
+        </keys>
+        <keysets>
+            <keyset identifier="1">
+                <key-id identifier="1" />
+            </keyset>
+            ...
+        </keysets>
+        <lastIssuedKeyId value="23" />
+        <lastIssuedKeySetId value="23" />
+    </keyset-settings>
+</packages>
+```
+，在`packages.xml`中，`permissions`标签下定义了不同的权限，包含权限名，包名以及保护级别`protection`，保护级别由两部分组成，分别是
+
+## 授权流程
+
+### 包扫描
 
 <!-- ```mermaid
 sequenceDiagram
@@ -220,7 +285,7 @@ public ParsedPackage parsePackage(File packageFile, int flags, boolean useCaches
 }
 ``` -->
 
-通过解析目录下的文件，解析出来的会是一个`PackageImpl`对象：
+通过解析目录下的文件，得到一个`PackageImpl`对象：
 ```java
 public class PackageImpl implements ParsedPackage, AndroidPackageInternal,
         AndroidPackageHidden, ParsingPackage, ParsingPackageHidden, Parcelable {
@@ -273,7 +338,7 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids, 
     ...
 }
 ``` -->
-### 安装时授权
+### 安装时权限授权
 
 ```mermaid
 sequenceDiagram
@@ -311,6 +376,7 @@ activate UidPermissionState
 UidPermissionState->>PermissionState: grant
 PermissionState-->>UidPermissionState: 
 UidPermissionState-->>PermissionManagerServiceImpl: 
+deactivate UidPermissionState
 Note over PackageManagerService,PermissionState: 持久化
 PermissionManagerServiceImpl->>+PermissionCallback: onPermissionUpdated 
 activate PackageManagerService
@@ -324,7 +390,6 @@ deactivate PermissionManagerServiceImpl
 deactivate PermissionManagerServiceImpl
 deactivate PermissionManagerServiceImpl
 deactivate PermissionManagerServiceImpl
-deactivate UidPermissionState
 ```
 
 **onPackageInstalled**
@@ -356,18 +421,25 @@ private void onPackageInstalledInternal(@NonNull AndroidPackage pkg, int previou
 **updatePermissions**
 ```java
 private void updatePermissions(@NonNull String packageName, @Nullable AndroidPackage pkg) {
+    /**
+    *如果传入的pkg为空，需要更新所有包的权限并替换包的权限信息
+    *否则只替换报的权限信息
+    **/
     final int flags =
             (pkg == null ? UPDATE_PERMISSIONS_ALL | UPDATE_PERMISSIONS_REPLACE_PKG
                     : UPDATE_PERMISSIONS_REPLACE_PKG);
+    //调用另一个updatePermission方法
     updatePermissions(
             packageName, pkg, getVolumeUuidForPackage(pkg), flags, mDefaultPermissionCallback);
 }
+
 
 private void updatePermissions(final @Nullable String changingPkgName,
         final @Nullable AndroidPackage changingPkg,
         final @Nullable String replaceVolumeUuid,
         @UpdatePermissionFlags int flags,
         final @Nullable PermissionCallback callback) {
+    //callback为PermissionManagerServiceImpl内部定义的mDefaultPermissionCallback
     if ((flags & UPDATE_PERMISSIONS_ALL) != 0) {
         final boolean replaceAll = ((flags & UPDATE_PERMISSIONS_REPLACE_ALL) != 0);
         mPackageManagerInt.forEachPackage((AndroidPackage pkg) -> {
@@ -476,7 +548,7 @@ public boolean grant() {
 }
 ```
 
-**onPermissionUpdate**
+**onPermissionUpdated**
 
 ```java
 private final PermissionCallback mDefaultPermissionCallback = new PermissionCallback() {
@@ -507,3 +579,22 @@ void writeSettingsLPrTEMP(boolean sync) {
     mSettings.writeLPr(mLiveComputer, sync);
 }
 ```
+### 运行时权限授权
+
+运行时权限授权主要通过`PermissionManagerService`的`grantRuntimePermissionInternal`方法，并调用了`UidPermissionState::grantPermission`方法，之后，执行了如下代码：
+
+```java
+final int uid = UserHandle.getUid(userId, pkg.getUid());
+if (callback != null) {
+    if (isRuntimePermission) {
+        callback.onPermissionGranted(uid, userId);
+    } else {
+        callback.onInstallPermissionGranted();
+    }
+    if (permissionHasGids) {
+        callback.onGidsChanged(UserHandle.getAppId(pkg.getUid()), userId);
+    }
+}
+```
+，如果权限是运行时权限，则调用`onPermissionGranted`方法，否则调用`onInstallPermissionGranted`方法，如果权限对应着权限组，则需要调用`onGidsChanged`方法
+
