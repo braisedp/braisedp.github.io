@@ -12,7 +12,15 @@ toc : true
 
 ## Android权限分类
 
+Adnroid的权限保护级别由两个部分组成：一部分是基本的权限分类，分为normal, dangerous, signature和internal四个级别：
+
 ![permission level](../images/2025-7-16-android_permission/permissons.svg)
+
+另一部分是一些额外的标签，如：
+
+![permission flag](../images/2025-7-16-android_permission/permissionflags.svg)
+
+一个权限的保护级别由两个部分运算而来，比如`18`表示为`0x2|0x10`，即`PROTECTION_NORMAL | PROTECTION_FLAG_PRIVILIGED`
 
 ### 声明安装时权限
 使用安装时权限，需要在`AndroidManifest.xml`文件中声明相应的权限：
@@ -26,7 +34,7 @@ toc : true
 ```
 - `normal`级别的权限，只需要在声明中指定相应的权限就行
 - `signature`级别的权限，需要通过系统签名打包APK
-- 在9.0版本之后，Android引入了allow-list机制，对于特权应用`priv-app`，需要在`/system, /product, /vendor`等目录下的`/etc/permissions/priv-app/privapp-permissions-xxx.xml`声明应用可以使用的权限：
+- 对于`PROTECTION_FLAG_PRIVILIGED`，在9.0版本之后，Android引入了allow-list机制，对于特权应用`priv-app`，需要在`/system, /product, /vendor`等目录下的`/etc/permissions/priv-app/privapp-permissions-xxx.xml`声明应用可以使用的权限：
 
 ```xml
 <permissions>
