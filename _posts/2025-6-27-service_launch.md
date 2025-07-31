@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Service学习-Service启动过程"
+title: "Service启动过程"
 date:   2025-6-27
 tags: [Android, Service]
 comments: true

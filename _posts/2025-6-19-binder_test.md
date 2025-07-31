@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Binder学习-实践"
+title: "Binder demo实践"
 date:   2025-6-19
 tags: [Android, Binder]
 comments: true

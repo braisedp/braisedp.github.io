@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Binder学习-驱动与架构"
+title: "Binder 驱动与架构"
 date:   2025-6-17
 tags: [Android, Binder]
 comments: true

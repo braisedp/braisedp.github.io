@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Binder学习-Java接口"
+title: "Binder Java接口"
 date:   2025-6-18
 tags: [Android, Binder]
 comments: true

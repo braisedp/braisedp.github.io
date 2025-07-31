@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Activity学习-Activity LaunchMode"
+title: "Activity LaunchMode"
 date:   2025-6-30
 tags: [Android, Activity]
 comments: true

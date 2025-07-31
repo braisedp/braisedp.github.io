@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Activity学习-Activity启动流程"
+title: "Activity启动流程"
 date:   2025-6-23
 tags: [Android, Activity]
 comments: true

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Android学习-Android架构"
+title: "Android架构"
 date:   2025-6-20
 tags: [Android]
 comments: true

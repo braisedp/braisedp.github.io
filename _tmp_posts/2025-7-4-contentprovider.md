@@ -8,6 +8,8 @@ author: braisedp
 toc : true
 ---
 
+<!-- more -->
+
 ## Content Provider
 
 ### 
