@@ -38,8 +38,8 @@ layout: default
   <h2>No post found</h2>
 {% endif %}
 
-<!-- <div class="posts"> -->
-<div id="grid" class="row flex-grid">
+<div class="posts">
+<!-- <div id="grid" class="row flex-grid"> -->
   {% for post in paginator.posts %}
   {% unless post.draft %}
     <article class="post">
