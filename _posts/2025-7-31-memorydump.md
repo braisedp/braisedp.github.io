@@ -17,6 +17,7 @@ toc : true
 dumpsys meminfo <pacakge-name>
 ```
 包含下列信息：
+
 ![meminfo 1](../images/2025-7-31-memorydump/meminfo1.png)
 
 包含Native的堆信息，Dalvik虚拟机的对信息，栈信息，共享内存Ashmem信息以及一些文件的mmap信息等
@@ -33,6 +34,19 @@ Swap Dirty表示使用交换内存时的脏数据大小
 
 对于堆内存，还显示了堆内存的大小，分配的堆内存大小与空闲的堆内存大小
 
+![meminfo 2](../images/2025-7-31-memorydump/meminfo2.png)
+
+除了前述信息外，还对应用的Pss，Rss进行了summary，包含堆内存、代码区、栈、图形等信息
+
+
+![meminfo 3](../images/2025-7-31-memorydump/meminfo3.png)
+
+meminfo还对应用中的一些Android对象进行了计数，包括Activity、Binder、BinderProxy、Parcel等信息
+
+
+![meminfo 4](../images/2025-7-31-memorydump/meminfo4.png)
+
+还包含了一些SQLite相关的信息
 
 ## 堆内存分析
 
