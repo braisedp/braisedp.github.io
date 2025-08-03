@@ -7,7 +7,7 @@ layout: default
     color: #333;
     background-color: rgba(227,231,236,.2);
     line-height: 35px;
-    padding:0px 16px;
+    padding: 0 16px;
     border: 1px solid #c0c0c0;
     font-size: 16px;
     font-weight: bold;
@@ -38,8 +38,7 @@ layout: default
   <h2>No post found</h2>
 {% endif %}
 
-<div class="posts">
-<!-- <div id="grid" class="row flex-grid"> -->
+<!-- <div class="posts">
   {% for post in paginator.posts %}
   {% unless post.draft %}
     <article class="post">
@@ -68,6 +67,34 @@ layout: default
       </div>
 
       <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+    </article>
+  {% endunless %}
+  {% endfor %}
+</div> -->
+
+<div id="grid" class="row flex-grid">
+  {% for post in paginator.posts %}
+  {% unless post.draft %}
+    <article class="box-item" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+        <div class="box-body">
+          <meta itemprop="datePublished" content="{{post.date | date_to_xmlschema }}">
+          <time itemprop="datePublished" datetime="{{ post.date }}" class="date">{{ post.date | date_to_string }}</time>
+          <h3>
+            <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+          </h3>
+          <div clsss="meta">
+          <ul class="tag">
+            {% for tag in post.tags %}
+            <li>
+              <a href="{{ site.url }}{{ site.baseurl }}/tags#{{ tag }}">
+                {{ tag }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          </div>
+          <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+        </div>
     </article>
   {% endunless %}
   {% endfor %}
