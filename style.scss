@@ -202,7 +202,7 @@ dd {
 
 // Table
 table {
-  margin-bottom: 1rem;
+  margin: auto;
   width: 100%;
   border: 1px solid $table-border-color;
   border-collapse: collapse;
@@ -518,8 +518,8 @@ nav {
     display: inline-block;
     border: 1px solid #eee;
     border-radius: 5px;
-    min-height: 220px;
-    min-width: 350px;
+    min-height: 150px;
+    min-width: 400px;
     transition: all 0.3s;
     position: relative;
     cursor: pointer;

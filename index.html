@@ -1,6 +1,10 @@
 ---
 layout: default
 ---
+
+<div class="search-container" style="height: 10px;">
+
+</div>
 <div class="search-container">
   <input type="text" id="search-input" placeholder="search blog posts..." style="width: 90%;
     height: 35px;
@@ -77,8 +81,9 @@ layout: default
   {% unless post.draft %}
     <article class="box-item" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
         <div class="box-body">
-          <meta itemprop="datePublished" content="{{post.date | date_to_xmlschema }}">
-          <time itemprop="datePublished" datetime="{{ post.date }}" class="date">{{ post.date | date_to_string }}</time>
+          <span class="date">
+            {{ post.date | date: "%Y-%m-%d" }}
+          </span>
           <h3>
             <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
           </h3>
