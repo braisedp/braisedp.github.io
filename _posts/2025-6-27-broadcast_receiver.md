@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Android广播机制-BroadcastReceiver"
+title: "BroadcastReceiver"
 date:   2025-6-27
 tags: [Android, BroadcastReceiver]
 comments: true
