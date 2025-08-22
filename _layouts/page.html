@@ -10,3 +10,34 @@ layout: default
     {{ content }}
   </div>
 </article>
+<script>
+function initMermaid() {
+  var config = {
+    startOnLoad: true,
+    securityLevel: 'loose',
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#F0F4FC',
+      primaryTextColor: '#1F2329',
+      primaryBorderColor: '#000000',
+      lineColor: '#888888',
+      tertiaryColor: '#F5F6F7',
+      tertiaryBorderColor: '#F5F6F7',
+      tertiaryTextColor: '#00A4FF',
+      activationBkgColor: '#E6E6E6',
+      activationBorderColor: '#999999',
+    },
+    flowchart:{
+      useMaxWidth: true,
+      htmlLabels: true
+    }
+  };
+  mermaid.initialize(config);
+  window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+}
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.0/mermaid.min.js"
+  async
+  onload="initMermaid()">
+</script>
