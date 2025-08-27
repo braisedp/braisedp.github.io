@@ -10,12 +10,11 @@ toc : true
 
 <!-- more -->
 
-## cantools源码分析
-### cantools与dbc中的名称的对应关系
+## cantools使用
 
-|**名称**|**dbc文件**|**cantools**|
-|:---:|:---:|:---:|
-||BU_|node|
-||BO_|message|
-||SG_|signal|
-||VAR_|choice|
+### cantools提供的feature
+
+## cantools源码分析
+### cantools与dbc文件的对应关系
+
+![def map](../images/2025-8-22-cantools/defmap.svg)
