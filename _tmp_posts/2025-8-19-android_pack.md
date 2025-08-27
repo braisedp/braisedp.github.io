@@ -8,6 +8,8 @@ author: braisedp
 toc : true
 ---
 
+<!-- more -->
+
 ## Android.bp详解
 
 ### Android.bp常用字段总结
