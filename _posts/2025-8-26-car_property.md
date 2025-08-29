@@ -118,3 +118,73 @@ hidl_package_root{
 
 进入`out/target/product/<product-name>/system/lib/`，发现生成了如下.so文件:
 ![generated so](../images/2025-8-26-car_property/so.png)
+
+进入`out/soong/.intermediates/vendor/braisedp/interfaces/automotive/vehicle/2.0/`，可以看到生成如下内容：
+![generated inter](../images/2025-8-26-car_property/intermediate.png)
+
+进入`out/soong/.intermediates/vendor/braisedp/interfaces/automotive/vehicle/2.0/vendor.braisedp.hardware.automotive.vehicle@2.0_genc++_headers/gen/vendor/braisedp/hardware/automotive/vehicle/2.0/`下，发现生成了`.h`文件:
+![generated header](../images/2025-8-26-car_property/header.png)
+
+
+### 在外部使用包
+
+#### 在APP中使用jar包
+
+查看生成的jar包结构内容：
+![genereated jar struct](../images/2025-8-26-car_property/class.png)
+，生成了一个类`ExtentVehicleProperty`，查看类定义：
+```java
+package vendor.braisedp.hardware.automotive.vehicle.V2_0;
+
+import java.util.ArrayList;
+
+public final class ExtentVechicleProperty {
+    public static final int EXT_PROP = 557846528;
+
+    public ExtentVechicleProperty() {
+    }
+
+    ...
+}
+```
+，可以看到，生成了一个final类，并指定了一个final int类型的静态成员`EXT_PROP`
+
+#### 在native中使用动态库
+
+查看生成的`types.h`头文件内容：
+```cpp
+#ifndef HIDL_GENERATED_VENDOR_BRAISEDP_HARDWARE_AUTOMOTIVE_VEHICLE_V2_0_TYPES_H
+#define HIDL_GENERATED_VENDOR_BRAISEDP_HARDWARE_AUTOMOTIVE_VEHICLE_V2_0_TYPES_H
+
+#include <android/hardware/automotive/vehicle/2.0/types.h>
+
+#include <hidl/HidlSupport.h>
+#include <hidl/MQDescriptor.h>
+#include <utils/NativeHandle.h>
+#include <utils/misc.h>
+
+namespace vendor {
+namespace braisedp {
+namespace hardware {
+namespace automotive {
+namespace vehicle {
+namespace V2_0 {
+
+// Forward declaration for forward reference support:
+enum class ExtentVehicleProperty : int32_t;
+
+enum class ExtentVehicleProperty : int32_t {
+    EXT_PROP = 557846528 /* (0x1000 | VehiclePropertyType:INT32 | VehicleArea:GLOBAL | VehiclePropertyGroup:VENDOR) */,
+};
+
+...
+}  // namespace V2_0
+}  // namespace vehicle
+}  // namespace automotive
+}  // namespace hardware
+}  // namespace braisedp
+}  // namespace vendor
+#endif  // HIDL_GENERATED_VENDOR_BRAISEDP_HARDWARE_AUTOMOTIVE_VEHICLE_V2_0_TYPES_H
+```
+，生成了一个枚举类`ExtentVehicleProperty`，并指定了一个成员`EXT_PROP`
+
