@@ -13,7 +13,8 @@ permalink: /about/
 ```mermaid
 kanban
  Todo
-  task1[新建一个car property并能够给app使用]
  Proceeding
   task2[学习cantools]
+ Done
+  task0[学习hidl,aidl生成car property]
 ```
