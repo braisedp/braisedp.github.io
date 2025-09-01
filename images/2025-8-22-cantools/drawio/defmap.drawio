@@ -5,7 +5,7 @@
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="150" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E6E6E6;strokeColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="90" y="-310" width="560" height="1790" as="geometry"/>
+                    <mxGeometry x="90" y="-310" width="560" height="1600" as="geometry"/>
                 </mxCell>
                 <mxCell id="94" value="&lt;div style=&quot;font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;font&gt;BO_ 0 msg_example_1: 8 node1&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;font&gt;&amp;nbsp;SG_ sig_example_1 M : 0|1@1+ (1,0) [0|0] &quot;&quot;&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0);&quot;&gt;Vector__XXX&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;font&gt;&amp;nbsp;SG_ sig_example_2 m0 : 8|8@1- (1,0) [0|3] &quot;&quot; node2 node3&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;font&gt;&amp;nbsp;SG_ sig_example_3 m1 : 16|8@1- (1,0) [0|3] &quot;&quot; node2 node3&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fillColor=#CCCCCC;arcSize=2;" parent="1" vertex="1">
                     <mxGeometry x="120" y="736.5" width="520" height="110" as="geometry"/>
@@ -135,9 +135,6 @@
                             <mxPoint x="320" y="515"/>
                         </Array>
                     </mxGeometry>
-                </mxCell>
-                <mxCell id="96" value="&lt;div style=&quot;font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;font&gt;BA_DEF_&amp;nbsp; &quot;MultiplexExtEnabled&quot; ENUM&amp;nbsp; &quot;No&quot;,&quot;Yes&quot;;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;font&gt;BA_DEF_&amp;nbsp; &quot;BusType&quot; STRING ;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;font&gt;BA_DEF_DEF_&amp;nbsp; &quot;MultiplexExtEnabled&quot; &quot;No&quot;;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;font&gt;BA_DEF_DEF_&amp;nbsp; &quot;BusType&quot; &quot;CAN&quot;;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fillColor=#CCCCCC;arcSize=2;" parent="1" vertex="1">
-                    <mxGeometry x="120" y="1250" width="520" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="77" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;exitX=0.077;exitY=0.214;exitDx=0;exitDy=0;exitPerimeter=0;strokeWidth=1;strokeColor=#007FFF;" parent="1" source="94" target="71" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -299,7 +296,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="120" value="&lt;div style=&quot;font-family: &amp;quot;Courier New&amp;quot;; text-align: left;&quot;&gt;VAL_ 0 sig_example_3 3 &quot;Description&quot; 2 &quot;Description&quot; 1 &quot;Description&#39;&quot; 0 &quot;Description&quot; ;&lt;/div&gt;&lt;div style=&quot;font-family: &amp;quot;Courier New&amp;quot;; text-align: left;&quot;&gt;VAL_ 0 sig_example_2 3 &quot;Description&quot; 2 &quot;Description&quot; 1 &quot;Description&quot; 0 &quot;Description&quot; ;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fillColor=#CCCCCC;arcSize=2;" parent="1" vertex="1">
-                    <mxGeometry x="120" y="1370" width="520" height="90" as="geometry"/>
+                    <mxGeometry x="120" y="1170" width="520" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="121" value="" style="endArrow=classic;html=1;dashed=1;fontStyle=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.846;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;strokeWidth=1;strokeColor=#007FFF;" parent="1" source="120" target="102" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
