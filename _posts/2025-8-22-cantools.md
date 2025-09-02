@@ -170,3 +170,16 @@ def segments(self, invert_shift: bool) -> Iterator[tuple[int, int, str, int]]:
 - 对于每个字节，shift的长度与方向如下：除了最低位填充的字节内的位，其他字节中的位都是 > 0的，显然都要右移到字节中的最低位与0对齐；对于最低位所在字节内的位，由于其开始填充的位$\geq 0$，于是需要左移与最低位的开始位对齐。
 
 于是，对于大端序，从最高位所在字节开始填充，当剩余位数大于等于可以填充的位数时（不是最低位所在字节，或者最低位刚好在0），则右移直到当前字节内的最低位与0对齐，否则左移直到最低位与相应位对齐；对于小端序，从最低位所在字节开始填充，左移的位数始终时当前剩余的位数-总位数+pos，即始终将当前最低位移动到pos上。
+
+![big edian](../images/2025-8-22-cantools/fill_big_edian.svg)
+
+![small edian](../images/2025-8-22-cantools/fill_small_edian.svg)
+
+## cantools二次开发
+|变更功能|
+|:---|
+|pack和unpack使用外部定义的frame类|
+|新增frame id 和pack函数、unpack函数的映射，新增signal id到frame id以及invalid value的映射，方便外部代码使用|
+
+
+### 修改cantools生成cpp代码

@@ -128,7 +128,7 @@ hidl_package_root{
 
 ### 在外部使用包
 
-#### 在APP中使用jar包
+#### 在APK中使用jar包
 
 查看生成的jar包结构内容：
 ![genereated jar struct](../images/2025-8-26-car_property/class.png)
@@ -148,6 +148,21 @@ public final class ExtentVechicleProperty {
 }
 ```
 ，可以看到，生成了一个final类，并指定了一个final int类型的静态成员`EXT_PROP`
+
+在外部开发时，通常使用的包为`android.car.jar`，于是要将生成的Property信息放入到该包中，修改`/packages/services/Car/car-lib/src/android/car/VehiclePropertyIds.java`，加入：
+```java
+@RequiresPermission(Car.PERMISSION_CAR_INFO)
+public static final int  EXT_PROP = 557846528;
+```，并在`toString`方法中加入：
+```java
+case EXT_PROP:
+    return "EXT_PROP";
+```
+，执行命令`m updata-api`，看到`/packages/services/Car/car-lib/api/current.txt`内增加了如下内容：
+```java
+field @RequiresPermission(android.car.Car.PERMISSION_CAR_INFO) public static final int EXT_PROP = 557846528; // 0x21401000
+```
+在`car-lib`下执行`mm`命令，输出`android.car.jar`包，查看
 
 #### 在native中使用动态库
 
