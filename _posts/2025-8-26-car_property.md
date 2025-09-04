@@ -149,7 +149,7 @@ public final class ExtentVechicleProperty {
 ```
 ，可以看到，生成了一个final类，并指定了一个final int类型的静态成员`EXT_PROP`
 
-在外部开发时，通常使用的包为`android.car.jar`，于是要将生成的Property信息放入到该包中，修改`/packages/services/Car/car-lib/src/android/car/VehiclePropertyIds.java`，加入：
+在外部开发时，会用到包为`android.car`包，于是要将生成的Property信息放入到该包中，修改`/packages/services/Car/car-lib/src/android/car/VehiclePropertyIds.java`，加入：
 ```java
 @RequiresPermission(Car.PERMISSION_CAR_INFO)
 public static final int  EXT_PROP = 557846528;
@@ -162,7 +162,16 @@ case EXT_PROP:
 ```java
 field @RequiresPermission(android.car.Car.PERMISSION_CAR_INFO) public static final int EXT_PROP = 557846528; // 0x21401000
 ```
-在`car-lib`下执行`mm`命令，输出`android.car.jar`包，查看
+在`car-lib`下执行`mm`命令，输出`android.car.jar`包，查看`android.car.jar`包中`VehiclePropertyIds`的内容：
+```java
+public static final int EXT_PROP = 557846528;
+```
+，多出了一个静态成员，同样，在`toString`方法中：
+```java
+case 557846528:
+    return "EXT_PROP";
+```
+，多出了相应的条目
 
 #### 在native中使用动态库
 
@@ -203,3 +212,48 @@ enum class ExtentVehicleProperty : int32_t {
 ```
 ，生成了一个枚举类`ExtentVehicleProperty`，并指定了一个成员`EXT_PROP`
 
+## 创建一个AIDL car property属性
+
+### 创建AIDL文件
+
+在`/vendor/braisedp/vehicle/aidl/vendor/braisedp/vehicle/ExtentVehicleProperty.aidl`中创建内容：
+```java
+package vendor.braisedp.vehicle;
+
+import android.hardware.automotive.vehicle.VehiclePropertyGroup;
+import android.hardware.automotive.vehicle.VehiclePropertyType;
+import android.hardware.automotive.vehicle.VehicleArea;
+
+
+@Backing(type="int")
+enum ExtentVehicleProperty{
+    EXT_PROP = 0x1000 + VehiclePropertyGroup.VENDOR + VehicleArea.GLOBAL + VehiclePropertyType.INT32,
+}
+```
+，并编写`/vendor/braisedp/vehicle/aidl/Android.bp`文件:
+```java
+aidl_interface{
+    name : "vendor.braisedp.vehicle",
+    srcs : ["vendor/braisedp/vehicle/ExtentVehicleProperty.aidl"],
+    unstable: true,
+    vendor_available: true,
+    imports:["android.hardware.automotive.vehicle.property-V2"],
+    backend:{
+        java : {
+            enabled : true,
+            sdk_version: "module_current",
+            apex_available:["com.android.car.framework",],
+        },
+        cpp : {
+             enabled : false,
+        },
+        ndk : {
+             enabled : true,
+             vndk:{
+                enabled: false,
+             }
+        },
+    },
+}
+```
+，打包后，在``
