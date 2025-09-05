@@ -92,9 +92,11 @@ dbc会通过textparser库对dbc文件进行语法分析并转化为cantools定�
 对于每个`Database`、`Node`、`Message`、`Signal`实例，都有一个`dbc_specifics`成员，是`Dbc_specifics`实例，指定与其关联的`AttributeDefinition`，`Attribute`和value tables
 
 ### cantools生成c代码
-cantools生成c代码首先会将`Message`和`Signal`转化为`CodeGenMessage`和`CodeGenSignal`：
 
 ![def c map](../images/2025-8-22-cantools/def_cmap.svg)
+
+#### Message/Signal到CodeGenMessage/CodeGenSignal的转换
+cantools生成c代码首先会将`Message`和`Signal`转化为`CodeGenMessage`和`CodeGenSignal`：
 
 在`CodeGenMessage`中，使用`snake_name`作为生成的代码中的message的名称。在`CodeGenSignal`中，使用`snake_name`作为生成的代码中signal的名称，生成`type_name`和`type_length`的代码如下：
 ```python
@@ -175,11 +177,164 @@ def segments(self, invert_shift: bool) -> Iterator[tuple[int, int, str, int]]:
 
 ![small edian](../images/2025-8-22-cantools/fill_small_edian.svg)
 
-## cantools二次开发
+#### CodeGenMessage/ CodeGenSignal -> c代码
+
+cantools生成的对象包括`<database_name>.h`和`<database_name.c>`：
+
+在`<database_name>.h`文件中，cantools主要生成了如下几个部分的代码：
+<table>
+<tr><td rowspan="7">宏部分</td><td>消息id</td><td>
+
+```c
+#define TEST_MESSAGE_1_FRAME_ID (0x01u)
+```
+
+</td></tr>
+<tr><td>消息长度</td><td>
+
+```c
+#define TEST_MESSAGE_1_LENGTH (8u)
+```
+</td></tr>
+<tr><td>是否是扩展类型</td>
+<td>
+
+```c
+#define TEST_MESSAGE_1_IS_EXTENDED (0)
+```
+</td></tr>
+<tr><td>cycle类型的消息的cycletimes</td><td>
+
+```c
+#define TEST_MESSAGE_1_CYCLE_TIME_MS (20u)
+```
+</td></tr>
+<tr><td>VAL_（cantools内的choice）</td><td>
+
+```c
+#define TEST_MESSAGE_1_SIGNAL_1_DESCRITPTION_1_CHOICE (0u)
+```
+</td></tr>
+<tr><td>消息名</td><td>
+
+```c
+#define TEST_MESSAGE_1_NAME "Message_1"
+```
+</td></tr>
+<tr><td>信号名</td><td>
+
+```c
+#define TEST_MESSAGE_1_SIGNAL_1_NAME "Signal_1"
+```
+</td></tr>
+<tr><td colspan="2"> 结构体定义</td><td>
+
+```c
+struct test_message_1_t {
+    uint16_t signal_1;
+};
+```
+</td></tr>
+<tr><td rowspan = "6">函数声明</td><td>消息打包</td><td>
+
+```c
+int test_message_1_pack(
+    uint8_t *dst_p,
+    const struct test_message_1_t *src_p,
+    size_t size);
+```
+</td></tr>
+<tr><td>消息解包</td>
+<td>
+
+```c
+int test_message_1_pack(
+    struct test_message_1_t *dst_p,
+    const uint8_t *src_p,
+    size_t size);
+```
+
+</td>
+</tr>
+<tr><td>信号值解码</td>
+<td>
+
+```c
+double test_message_1_signal_1_decode(uint16_t value);
+```
+</td>
+</tr>
+<tr><td>信号值编码</td>
+<td>
+
+```c
+uint16_t test_message_1_signal_1_encode(double value);
+```
+</td>
+</tr>
+<tr><td>信号值非法判断</td>
+<td>
+
+```c
+bool test_message_1_signal_1_is_in_range(uint16_t value);
+```
+</td>
+</tr>
+<tr><td>消息结构体初始化</td>
+<td>
+
+```c
+int test_message_1_init(struct test_message_1_t *msg_p);
+```
+</td>
+</tr>
+</table>
+
+在`<database_name>.c`文件中，cantools主要生成了如下几个部分的代码：
+<table>
+<tr><td rowspan="2">辅助函数</td><td>内联辅助左移函数</td>
+<td>
+
+```c
+static inline uint8_t pack_left_shift_u16(
+    uint16_t value,
+    uint8_t shift,
+    uint8_t mask)
+{
+    return (uint8_t)((uint8_t)(value << shift) & mask);
+}
+```
+</td>
+</tr>
+<tr><td>内联辅助右移函数</td><td>
+
+```c
+static inline uint8_t pack_right_shift_u16(
+    uint16_t value,
+    uint8_t shift,
+    uint8_t mask)
+{
+    return (uint8_t)((uint8_t)(value >> shift) & mask);
+}
+```
+</td>
+</tr>
+<tr><td rowspan = "6">函数定义</td><td>消息打包</td></tr>
+<tr><td>消息解包</td></tr>
+<tr><td>信号值解码</td></tr>
+<tr><td>信号值编码</td></tr>
+<tr><td>信号值非法判断</td></tr>
+<tr><td>消息结构体初始化</td></tr>
+</table>
+
+<!-- to be continued -->
+
+
+<!-- ## cantools二次开发
 |变更功能|
 |:---|
 |pack和unpack使用外部定义的frame类|
 |新增frame id 和pack函数、unpack函数的映射，新增signal id到frame id以及invalid value的映射，方便外部代码使用|
 
 
-### 修改cantools生成cpp代码
+### 修改cantools生成cpp代码 -->

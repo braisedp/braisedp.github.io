@@ -67,6 +67,57 @@
     <line x1="240" y1="30" x2="240" y2="40" />
     <line x1="250" y1="30" x2="250" y2="40" />
   </g>
+
+  <text y = "25" font-size="6px">
+    <tspan x = "100">
+      15
+    </tspan>
+    <tspan x = "110">
+      14 
+    </tspan>
+    <tspan x = "120">
+      13
+    </tspan>
+    <tspan x = "130">
+      12
+    </tspan>    
+    <tspan x = "140">
+      11
+    </tspan>    
+    <tspan x = "150">
+      10
+    </tspan>    
+    <tspan x = "160">
+      9
+    </tspan>    
+    <tspan x = "170">
+      8
+    </tspan>    
+    <tspan x = "180">
+      7
+    </tspan>
+    <tspan x = "190">
+      6
+    </tspan>
+    <tspan x = "200">
+      5
+    </tspan>
+    <tspan x = "210">
+      4
+    </tspan>
+    <tspan x = "220">
+      3
+    </tspan>
+    <tspan x = "230">
+      2
+    </tspan>
+    <tspan x = "240">
+      1
+    </tspan>
+    <tspan x = "250">
+      0
+    </tspan>
+  </text>
   <text x= "90" y= "70" font-size="8px">
     <tspan x = "140" y= "55" font-size="8px">
       start bit = 13, length = 16
