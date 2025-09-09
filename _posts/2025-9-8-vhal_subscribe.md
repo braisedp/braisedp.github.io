@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Vhal"
+title: "Vhal 订阅流程"
 date:   2025-9-8
 tags: [Android, Automative, vhal]
 comments: true
