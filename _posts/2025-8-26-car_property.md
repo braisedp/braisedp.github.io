@@ -153,12 +153,14 @@ public final class ExtentVechicleProperty {
 ```java
 @RequiresPermission(Car.PERMISSION_CAR_INFO)
 public static final int  EXT_PROP = 557846528;
-```，并在`toString`方法中加入：
+```
+，并在`toString`方法中加入：
+
 ```java
 case EXT_PROP:
     return "EXT_PROP";
 ```
-，执行命令`m updata-api`，看到`/packages/services/Car/car-lib/api/current.txt`内增加了如下内容：
+，执行命令`m update-api`，看到`/packages/services/Car/car-lib/api/current.txt`内增加了如下内容：
 ```java
 field @RequiresPermission(android.car.Car.PERMISSION_CAR_INFO) public static final int EXT_PROP = 557846528; // 0x21401000
 ```

@@ -527,17 +527,10 @@ XXXVehicleHal::XXXVehicleHal(std::unique_ptr<IVehicleHardware> vehicleHardware)
                         onPropertySetErrorEvent(subscriptionManagerCopy, errorEvents);
                     }));
 
-    // 注册心跳监测事件
-    mRecurrentAction = std::make_shared<std::function<void()>>(
-            [vehicleHardwarePtr, subscriptionManagerCopy]() {
-                checkHealth(vehicleHardwarePtr, subscriptionManagerCopy);
-            });
-    mRecurrentTimer.registerTimerCallback(HEART_BEAT_INTERVAL_IN_NANO, mRecurrentAction);
-
     ...
 }
 ```
-，在该步中，首先创建了`SubscriptionManager`，然后将`onPropertyChangeEvent`和`onPropertySetErrorEvent`方法注册到`VehicleHardware`上。 与HIDL实现不同，会设置一个`VehicleHardware`的健康监测。注意到`mVehicleHardware->registerOnPropertyChangeEvent`和`mVehicleHardware->registerOnPropertySetErrorEvent`两个方法，这一步在HIDL实现中是通过设置`VehicleHardWare`的`mOnPropertyChangeEvent`和`mOnPropertySetErrorEvent`实现的。
+，在该步中，首先创建了`SubscriptionManager`，然后将`onPropertyChangeEvent`和`onPropertySetErrorEvent`方法注册到`VehicleHardware`上。
 
 ## 属性配置的加载
 
