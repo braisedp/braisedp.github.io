@@ -75,12 +75,14 @@ SM->>SM: updateHalEventSubscriptionLocked
 deactivate SM
 SM-->>VHM: res, updatedOptions
 deactivate SM
+alt 连续属性
 loop 对updatedOptions中的所有option
 VHM->>+VH: subscribe
 alt 是连续property
 VH->>RT: registerRecurrentEvent
 end
 deactivate VH
+end
 end
 ```
 
@@ -323,7 +325,7 @@ void registerRecurrentEvent(std::chrono::nanoseconds interval, int32_t cookie) {
 ```
 ，这一步向`mCookieToEventsMap`中插入了一个`RecurrentEvent`对象。
 
-### 连续属性的回调
+### 属性回调
 
 ```mermaid
 sequenceDiagram
@@ -338,17 +340,22 @@ participant VH as VehicleHal
 participant  RT as RecurrentTimer
 participant CQ as ConcurrentQueue
 participant BC as BatchingConsumer
+participant VC as VehicleConnector
 end
 
 VHM->>BC: run
 VH->>RT: 创建
-par RecurrentTimer监听属性变化 非主线程
+par 下层产生回调
 loop
+alt 非连续属性
+VC->>+VH: some method
+else 连续属性
 activate RT
 RT->>RT: loop
-RT->>+VH: onContinuousPropertyTimer
+RT->>VH: onContinuousPropertyTimer
 deactivate  RT
 activate VH
+end
 VH->>VH: doHalEvent
 VH->>+VHM: onHalEvent
 deactivate VH
@@ -633,16 +640,18 @@ sp<HalClientVector> SubscriptionManager::getClientsForPropertyLocked(
 oneway onPropertyEvent(vec<VehiclePropValue> propValues);
 ```
 
-
-### 非连续属性的回调
-
-基本与连续属性类似，但是不通过`RecurrentTimer`定时器采样属性值，而是通过`XXXVehicleHal`下层的实现监听属性值的变化，然后通知给`XXVehicleHal`执行`doHalEvent`方法。
-
 # AIDL版本的vhal subscribe
 
-## 涉及到的模块
+## 涉及的模块
+![aidl modules](../images/2025-9-8-vhal_subscribe/modules2.svg)
 
-<!-- not done -->
+|模块|作用|
+|:--:|:--:|
+|**VehicleHal**|与HIDL实现的`VehicleHalManager`类似|
+|**VehicleHardware**|与HIDL实现的`VehicleHal`类似|
+|**SubscriptionManager**|作用保持不变，在是实现上使用(property id, area id)与clients的map取代了property id和clients并在client中用property id 和 options map 记录 area的map|
+|**VehiclePropertyStore**|在AIDL实现中，`VehiclePropertyStore`在订阅回调中负责回调VehicleHal的回调函数；在实现上，使用了property id -> record: ( record id: {area, token} -> value)的嵌套map取代 record id: { property id , area ,token} -> value的单个map|
+|**RecurrentTimer**|功能保持不变，内部采用优先队列优化了计算第一个事件的逻辑|
 
 ## subscribe的流程
 
@@ -956,7 +965,7 @@ std::vector<std::unique_ptr<CallbackInfo>> mCallbackQueue GUARDED_BY(mLock);
 ```
 ，可以看到这一步使用了`std::push_heap`方法，用来对`mCallbackQueue`进行一次堆排序。
 
-### 连续属性的回调
+### 属性的回调
 
 ```mermaid
 sequenceDiagram
@@ -970,12 +979,17 @@ participant SM as SubscriptionManager
 participant VPS as VehiclePropertyStore
 participant VHw as VehicleHardware
 participant RT as RecurrentTimer
+participant XXX
 end
 
 loop 
+alt 非连续属性
+XXX ->>+ VHw: some method
+else 连续属性
 activate RT
 RT->>RT: loop
-RT->>+VHw: action
+RT->>VHw: action
+end
 deactivate RT
 activate VHw
 VHw->>VHw: getValue
@@ -1124,7 +1138,7 @@ mVehicleHardware->registerOnPropertyChangeEvent(
 
 **step 5** 执行`XXXVehicleHal::onPropertyChangeEvent`方法:
 ```cpp
-void DefaultVehicleHal::onPropertyChangeEvent(
+void XXXVehicleHal::onPropertyChangeEvent(
         const std::weak_ptr<SubscriptionManager>& subscriptionManager,
         const std::vector<VehiclePropValue>& updatedValues) {
     auto manager = subscriptionManager.lock();
@@ -1156,7 +1170,3 @@ void SubscriptionClient::sendUpdatedValues(std::shared_ptr<IVehicleCallback> cal
 }
 ```
 ，这一步会调用callback的 `onPropertyEvent`方法
-
-### 非连续属性的回调
-
-<!-- not done -->
