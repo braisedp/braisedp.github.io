@@ -110,44 +110,8 @@ struct ConfigDeclaration {
 ```
 ，包含了`VehiclePropConfig`、property的初始物理值和在每个area的对应初始值。
 
-`VehiclePropConfig`的定义在`hardware/interfaces/automotive/vehicle/2.0/types.hal`中：
-```cpp
-struct VehiclePropConfig {
-    int32_t prop;
-    VehiclePropertyAccess access;
-    VehiclePropertyChangeMode changeMode;
-    vec<VehicleAreaConfig> areaConfigs;
-    vec<int32_t> configArray;
-    string configString;
-    float minSampleRate;
-    float maxSampleRate;
-};
-```
-，其中一些字段解释如下：
-<table>
-<tr>
-<td rowspan="4">access</td><td>NONE</td><td>无</td>
-</tr>
-<tr>
-<td>READ</td><td>只读</td>
-</tr>
-<tr>
-<td>WRITE</td><td>只写</td>
-</tr>
-<tr>
-<td>READ_WRITE</td><td>可读写</td>
-</tr>
-<tr>
-<td rowspan="3">changeMode</td><td>STATIC</td><td>不变化，不支持subscribe</td>
-</tr>
-<tr>
-<td>ON_CHANGE</td><td>get返回当前值，值改变时该类型属性必须触发值改变事件</td>
-</tr>
-<tr>
-<td>CONTINUOUS</td><td>subscribe 必须采用一定的sample rate</td>
-</tr>
+`VehiclePropConfig`的定义详见[Vhal 结构 与 get/set 流程](./2025-9-3-vhal_init.md)：
 
-</table>
 
 查看`VehiclePropertyStore`的`registerProperty`方法：
 ```cpp

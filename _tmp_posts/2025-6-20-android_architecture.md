@@ -14,9 +14,11 @@ toc : true
 
 **Android系统架构图**
 
-![android arch](../images/2025-6-20-android_architecture/android-stack.svg)
+![android arch](../images/2025-6-20-android_architecture/android-stack.svg) 
 
-> 图片来源：https://source.android.google.cn/docs/core/architecture?hl=zh-cn
+<center>Android 架构 [^1]</center> 
+
+[^1]: 图片来源：https://source.android.google.cn/docs/core/architecture?hl=zh-cn
 
 从Android的架构图可以看出，Android架构中从上至下通常包含如下层级：
 
