@@ -10,13 +10,6 @@ toc : true
 
 <!-- more -->
 
-- [x] HIDL 结构
-- [x] HIDL 订阅
-- [x] HIDL 回调
-- [ ] AIDL 结构
-- [x] AIDL 订阅
-- [ ] AIDL 回调
-
 # HIDL版本的vhal subscribe
 
 ## 涉及到的模块
