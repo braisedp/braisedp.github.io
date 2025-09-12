@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Android 编译"
-date:   2025-8-19
+date:   2025-9-12
 tags: [Android, bp, soong, blueprint]
 comments: true
 author: braisedp
