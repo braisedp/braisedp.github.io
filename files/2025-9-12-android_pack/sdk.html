@@ -1,0 +1,2520 @@
+
+<html>
+<head>
+<title>Build Docs</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<style>
+.accordion,.simple{margin-left:1.5em;text-indent:-1.5em;margin-top:.25em}
+.collapsible{border-width:0 0 0 1;margin-left:.25em;padding-left:.25em;border-style:solid;
+  border-color:grey;display:none;}
+span.fixed{display: block; float: left; clear: left; width: 1em;}
+ul {
+	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 30ch;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+</style>
+
+<script type="text/javascript">
+window.addEventListener('message', (e) => {
+  if (e != null && e.data != null && e.data.type === "SET_BASE" && e.data.base != null) {
+    const existingBase = document.querySelector('base');
+    if (existingBase != null) {
+      existingBase.parentElement.removeChild(existingBase);
+    }
+
+    const base = document.createElement('base');
+    base.setAttribute('href', e.data.base);
+    document.head.appendChild(base);
+  }
+});
+</script>
+
+</head>
+<body><ul>
+<li><h3>sdk package</h3></li>
+<li><a href="sdk.html#module_exports">module_exports</a></li>
+<li><a href="sdk.html#module_exports_snapshot">module_exports_snapshot</a></li>
+<li><a href="sdk.html#sdk">sdk</a></li>
+<li><a href="sdk.html#sdk_snapshot">sdk_snapshot</a></li>
+</ul>
+
+<div style="margin-left:30ch;padding:1px 16px;">
+
+	
+	<p>
+  <h2 id="module_exports">module_exports</h2>
+  module_exports defines the exports of a mainline module. The exports are Soong modules
+which are required by Soong modules that are not part of the mainline module.
+
+<div class="breadcrumb">
+    
+				<a href=sdk.html#module_exports.name>name</a>
+				,&nbsp;<a href=sdk.html#module_exports.defaults>defaults</a>
+				,&nbsp;<a href=sdk.html#module_exports.host_supported>host_supported</a>
+				,&nbsp;<a href=sdk.html#module_exports.device_supported>device_supported</a>
+				,&nbsp;<a href=sdk.html#module_exports.apexes>apexes</a>
+				,&nbsp;<a href=sdk.html#module_exports.arch>arch</a>
+				,&nbsp;<a href=sdk.html#module_exports.bootclasspath_fragments>bootclasspath_fragments</a>
+				,&nbsp;<a href=sdk.html#module_exports.compat_configs>compat_configs</a>
+				,&nbsp;<a href=sdk.html#module_exports.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=sdk.html#module_exports.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=sdk.html#module_exports.device_specific>device_specific</a>
+				,&nbsp;<a href=sdk.html#module_exports.dist>dist</a>
+				,&nbsp;<a href=sdk.html#module_exports.dists>dists</a>
+				,&nbsp;<a href=sdk.html#module_exports.enabled>enabled</a>
+				,&nbsp;<a href=sdk.html#module_exports.host_required>host_required</a>
+				,&nbsp;<a href=sdk.html#module_exports.init_rc>init_rc</a>
+				,&nbsp;<a href=sdk.html#module_exports.java_boot_libs>java_boot_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports.java_header_libs>java_header_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports.java_libs>java_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports.java_sdk_libs>java_sdk_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports.java_system_modules>java_system_modules</a>
+				,&nbsp;<a href=sdk.html#module_exports.java_systemserver_libs>java_systemserver_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports.java_tests>java_tests</a>
+				,&nbsp;<a href=sdk.html#module_exports.licenses>licenses</a>
+				,&nbsp;<a href=sdk.html#module_exports.multilib>multilib</a>
+				,&nbsp;<a href=sdk.html#module_exports.native_binaries>native_binaries</a>
+				,&nbsp;<a href=sdk.html#module_exports.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=sdk.html#module_exports.native_header_libs>native_header_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports.native_libs>native_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports.native_objects>native_objects</a>
+				,&nbsp;<a href=sdk.html#module_exports.native_shared_libs>native_shared_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports.native_static_libs>native_static_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports.owner>owner</a>
+				,&nbsp;<a href=sdk.html#module_exports.prebuilt_visibility>prebuilt_visibility</a>
+				,&nbsp;<a href=sdk.html#module_exports.product_specific>product_specific</a>
+				,&nbsp;<a href=sdk.html#module_exports.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=sdk.html#module_exports.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=sdk.html#module_exports.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=sdk.html#module_exports.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=sdk.html#module_exports.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=sdk.html#module_exports.proprietary>proprietary</a>
+				,&nbsp;<a href=sdk.html#module_exports.ramdisk>ramdisk</a>
+				,&nbsp;<a href=sdk.html#module_exports.recovery>recovery</a>
+				,&nbsp;<a href=sdk.html#module_exports.required>required</a>
+				,&nbsp;<a href=sdk.html#module_exports.soc_specific>soc_specific</a>
+				,&nbsp;<a href=sdk.html#module_exports.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=sdk.html#module_exports.systemserverclasspath_fragments>systemserverclasspath_fragments</a>
+				,&nbsp;<a href=sdk.html#module_exports.target>target</a>
+				,&nbsp;<a href=sdk.html#module_exports.target.android>target.android</a>
+				,&nbsp;<a href=sdk.html#module_exports.target.host>target.host</a>
+				,&nbsp;<a href=sdk.html#module_exports.target_required>target_required</a>
+				,&nbsp;<a href=sdk.html#module_exports.traits>traits</a>
+				,&nbsp;<a href=sdk.html#module_exports.vendor>vendor</a>
+				,&nbsp;<a href=sdk.html#module_exports.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=sdk.html#module_exports.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=sdk.html#module_exports.visibility>visibility</a></div>
+    <div class="simple" id="module_exports.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="module_exports.defaults">
+        <span class="fixed">&nbsp;</span><b>defaults </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="module_exports.host_supported">
+        <span class="fixed">&nbsp;</span><b>host_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the host.  Defaults to false.
+
+</div>
+    <div class="simple" id="module_exports.device_supported">
+        <span class="fixed">&nbsp;</span><b>device_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the device.  Defaults to true.
+
+</div>
+    <div class="accordion"  id="module_exports.apexes">
+        <span class="fixed">&#x2295</span><b>apexes</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="module_exports.bootclasspath_fragments">
+        <span class="fixed">&#x2295</span><b>bootclasspath_fragments</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.compat_configs">
+        <span class="fixed">&#x2295</span><b>compat_configs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="module_exports.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="module_exports.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="module_exports.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="module_exports.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="module_exports.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="module_exports.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="module_exports.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="module_exports.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="module_exports.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="module_exports.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="module_exports.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="module_exports.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="module_exports.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="accordion"  id="module_exports.java_boot_libs">
+        <span class="fixed">&#x2295</span><b>java_boot_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.java_header_libs">
+        <span class="fixed">&#x2295</span><b>java_header_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.java_libs">
+        <span class="fixed">&#x2295</span><b>java_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.java_sdk_libs">
+        <span class="fixed">&#x2295</span><b>java_sdk_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.java_system_modules">
+        <span class="fixed">&#x2295</span><b>java_system_modules</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.java_systemserver_libs">
+        <span class="fixed">&#x2295</span><b>java_systemserver_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.java_tests">
+        <span class="fixed">&#x2295</span><b>java_tests</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="module_exports.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="module_exports.native_binaries">
+        <span class="fixed">&#x2295</span><b>native_binaries</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="accordion"  id="module_exports.native_header_libs">
+        <span class="fixed">&#x2295</span><b>native_header_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.native_libs">
+        <span class="fixed">&#x2295</span><b>native_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.native_objects">
+        <span class="fixed">&#x2295</span><b>native_objects</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.native_shared_libs">
+        <span class="fixed">&#x2295</span><b>native_shared_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.native_static_libs">
+        <span class="fixed">&#x2295</span><b>native_static_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="module_exports.prebuilt_visibility">
+        <span class="fixed">&nbsp;</span><b>prebuilt_visibility </b>
+        <i>list of string</i>, The additional visibility to add to the prebuilt modules to allow them to
+reference each other.
+
+This can only be used to widen the visibility of the members:
+
+* Specifying //visibility:public here will make all members visible and
+<pre>
+
+  essentially ignore their own visibility.
+</pre>
+* Specifying //visibility:private here is an error.
+* Specifying any other rule here will add it to the members visibility and
+<pre>
+
+  be output to the member prebuilt in the snapshot. Duplicates will be
+  dropped. Adding a rule to members that have //visibility:private will
+  cause the //visibility:private to be discarded.
+
+</pre>
+</div>
+    <div class="simple" id="module_exports.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="module_exports.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="module_exports.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="module_exports.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="module_exports.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="module_exports.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="module_exports.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="module_exports.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="module_exports.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="module_exports.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="module_exports.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="module_exports.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="module_exports.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="module_exports.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="module_exports.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="module_exports.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="module_exports.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="module_exports.systemserverclasspath_fragments">
+        <span class="fixed">&#x2295</span><b>systemserverclasspath_fragments</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="module_exports.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="module_exports.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="module_exports.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="accordion"  id="module_exports.traits">
+        <span class="fixed">&#x2295</span><b>traits</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>interface {}</i></div></div>
+    <div class="simple" id="module_exports.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="module_exports.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="module_exports.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="module_exports.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="module_exports_snapshot">module_exports_snapshot</h2>
+  module_exports_snapshot is a snapshot of prebuilt versions of all the exports
+of a mainline module.
+
+<div class="breadcrumb">
+    
+				<a href=sdk.html#module_exports_snapshot.name>name</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.defaults>defaults</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.host_supported>host_supported</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.device_supported>device_supported</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.apexes>apexes</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.arch>arch</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.bootclasspath_fragments>bootclasspath_fragments</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.compat_configs>compat_configs</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.device_specific>device_specific</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.dist>dist</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.dists>dists</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.enabled>enabled</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.host_required>host_required</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.init_rc>init_rc</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.java_boot_libs>java_boot_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.java_header_libs>java_header_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.java_libs>java_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.java_sdk_libs>java_sdk_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.java_system_modules>java_system_modules</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.java_systemserver_libs>java_systemserver_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.java_tests>java_tests</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.licenses>licenses</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.multilib>multilib</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.native_binaries>native_binaries</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.native_header_libs>native_header_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.native_libs>native_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.native_objects>native_objects</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.native_shared_libs>native_shared_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.native_static_libs>native_static_libs</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.owner>owner</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.prebuilt_visibility>prebuilt_visibility</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.product_specific>product_specific</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.proprietary>proprietary</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.ramdisk>ramdisk</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.recovery>recovery</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.required>required</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.soc_specific>soc_specific</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.systemserverclasspath_fragments>systemserverclasspath_fragments</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.target>target</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.target.android>target.android</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.target.host>target.host</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.target_required>target_required</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.traits>traits</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.vendor>vendor</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=sdk.html#module_exports_snapshot.visibility>visibility</a></div>
+    <div class="simple" id="module_exports_snapshot.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="module_exports_snapshot.defaults">
+        <span class="fixed">&nbsp;</span><b>defaults </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="module_exports_snapshot.host_supported">
+        <span class="fixed">&nbsp;</span><b>host_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the host.  Defaults to false.
+
+</div>
+    <div class="simple" id="module_exports_snapshot.device_supported">
+        <span class="fixed">&nbsp;</span><b>device_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the device.  Defaults to true.
+
+</div>
+    <div class="accordion"  id="module_exports_snapshot.apexes">
+        <span class="fixed">&#x2295</span><b>apexes</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports_snapshot.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="module_exports_snapshot.bootclasspath_fragments">
+        <span class="fixed">&#x2295</span><b>bootclasspath_fragments</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.compat_configs">
+        <span class="fixed">&#x2295</span><b>compat_configs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports_snapshot.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="module_exports_snapshot.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="module_exports_snapshot.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="module_exports_snapshot.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="module_exports_snapshot.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="module_exports_snapshot.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="module_exports_snapshot.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="module_exports_snapshot.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="module_exports_snapshot.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="module_exports_snapshot.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="module_exports_snapshot.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="module_exports_snapshot.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="module_exports_snapshot.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="module_exports_snapshot.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="accordion"  id="module_exports_snapshot.java_boot_libs">
+        <span class="fixed">&#x2295</span><b>java_boot_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.java_header_libs">
+        <span class="fixed">&#x2295</span><b>java_header_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.java_libs">
+        <span class="fixed">&#x2295</span><b>java_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.java_sdk_libs">
+        <span class="fixed">&#x2295</span><b>java_sdk_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.java_system_modules">
+        <span class="fixed">&#x2295</span><b>java_system_modules</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.java_systemserver_libs">
+        <span class="fixed">&#x2295</span><b>java_systemserver_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.java_tests">
+        <span class="fixed">&#x2295</span><b>java_tests</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports_snapshot.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="module_exports_snapshot.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="module_exports_snapshot.native_binaries">
+        <span class="fixed">&#x2295</span><b>native_binaries</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports_snapshot.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="accordion"  id="module_exports_snapshot.native_header_libs">
+        <span class="fixed">&#x2295</span><b>native_header_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.native_libs">
+        <span class="fixed">&#x2295</span><b>native_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.native_objects">
+        <span class="fixed">&#x2295</span><b>native_objects</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.native_shared_libs">
+        <span class="fixed">&#x2295</span><b>native_shared_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.native_static_libs">
+        <span class="fixed">&#x2295</span><b>native_static_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports_snapshot.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="module_exports_snapshot.prebuilt_visibility">
+        <span class="fixed">&nbsp;</span><b>prebuilt_visibility </b>
+        <i>list of string</i>, The additional visibility to add to the prebuilt modules to allow them to
+reference each other.
+
+This can only be used to widen the visibility of the members:
+
+* Specifying //visibility:public here will make all members visible and
+<pre>
+
+  essentially ignore their own visibility.
+</pre>
+* Specifying //visibility:private here is an error.
+* Specifying any other rule here will add it to the members visibility and
+<pre>
+
+  be output to the member prebuilt in the snapshot. Duplicates will be
+  dropped. Adding a rule to members that have //visibility:private will
+  cause the //visibility:private to be discarded.
+
+</pre>
+</div>
+    <div class="simple" id="module_exports_snapshot.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="module_exports_snapshot.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="module_exports_snapshot.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="module_exports_snapshot.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="module_exports_snapshot.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="module_exports_snapshot.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="module_exports_snapshot.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="module_exports_snapshot.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="module_exports_snapshot.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="module_exports_snapshot.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="module_exports_snapshot.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="module_exports_snapshot.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="module_exports_snapshot.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="module_exports_snapshot.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="module_exports_snapshot.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="module_exports_snapshot.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="module_exports_snapshot.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="module_exports_snapshot.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="module_exports_snapshot.systemserverclasspath_fragments">
+        <span class="fixed">&#x2295</span><b>systemserverclasspath_fragments</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="module_exports_snapshot.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="module_exports_snapshot.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="module_exports_snapshot.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="module_exports_snapshot.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="accordion"  id="module_exports_snapshot.traits">
+        <span class="fixed">&#x2295</span><b>traits</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="module_exports_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>interface {}</i></div></div>
+    <div class="simple" id="module_exports_snapshot.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="module_exports_snapshot.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="module_exports_snapshot.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="module_exports_snapshot.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="sdk">sdk</h2>
+  sdk defines an SDK which is a logical group of modules (e.g. native libs, headers, java libs, etc.)
+which Mainline modules like APEX can choose to build with.
+
+<div class="breadcrumb">
+    
+				<a href=sdk.html#sdk.name>name</a>
+				,&nbsp;<a href=sdk.html#sdk.defaults>defaults</a>
+				,&nbsp;<a href=sdk.html#sdk.host_supported>host_supported</a>
+				,&nbsp;<a href=sdk.html#sdk.device_supported>device_supported</a>
+				,&nbsp;<a href=sdk.html#sdk.apexes>apexes</a>
+				,&nbsp;<a href=sdk.html#sdk.arch>arch</a>
+				,&nbsp;<a href=sdk.html#sdk.bootclasspath_fragments>bootclasspath_fragments</a>
+				,&nbsp;<a href=sdk.html#sdk.compat_configs>compat_configs</a>
+				,&nbsp;<a href=sdk.html#sdk.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=sdk.html#sdk.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=sdk.html#sdk.device_specific>device_specific</a>
+				,&nbsp;<a href=sdk.html#sdk.dist>dist</a>
+				,&nbsp;<a href=sdk.html#sdk.dists>dists</a>
+				,&nbsp;<a href=sdk.html#sdk.enabled>enabled</a>
+				,&nbsp;<a href=sdk.html#sdk.host_required>host_required</a>
+				,&nbsp;<a href=sdk.html#sdk.init_rc>init_rc</a>
+				,&nbsp;<a href=sdk.html#sdk.java_boot_libs>java_boot_libs</a>
+				,&nbsp;<a href=sdk.html#sdk.java_header_libs>java_header_libs</a>
+				,&nbsp;<a href=sdk.html#sdk.java_sdk_libs>java_sdk_libs</a>
+				,&nbsp;<a href=sdk.html#sdk.java_system_modules>java_system_modules</a>
+				,&nbsp;<a href=sdk.html#sdk.java_systemserver_libs>java_systemserver_libs</a>
+				,&nbsp;<a href=sdk.html#sdk.licenses>licenses</a>
+				,&nbsp;<a href=sdk.html#sdk.multilib>multilib</a>
+				,&nbsp;<a href=sdk.html#sdk.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=sdk.html#sdk.native_header_libs>native_header_libs</a>
+				,&nbsp;<a href=sdk.html#sdk.native_libs>native_libs</a>
+				,&nbsp;<a href=sdk.html#sdk.native_objects>native_objects</a>
+				,&nbsp;<a href=sdk.html#sdk.native_shared_libs>native_shared_libs</a>
+				,&nbsp;<a href=sdk.html#sdk.native_static_libs>native_static_libs</a>
+				,&nbsp;<a href=sdk.html#sdk.owner>owner</a>
+				,&nbsp;<a href=sdk.html#sdk.prebuilt_visibility>prebuilt_visibility</a>
+				,&nbsp;<a href=sdk.html#sdk.product_specific>product_specific</a>
+				,&nbsp;<a href=sdk.html#sdk.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=sdk.html#sdk.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=sdk.html#sdk.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=sdk.html#sdk.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=sdk.html#sdk.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=sdk.html#sdk.proprietary>proprietary</a>
+				,&nbsp;<a href=sdk.html#sdk.ramdisk>ramdisk</a>
+				,&nbsp;<a href=sdk.html#sdk.recovery>recovery</a>
+				,&nbsp;<a href=sdk.html#sdk.required>required</a>
+				,&nbsp;<a href=sdk.html#sdk.soc_specific>soc_specific</a>
+				,&nbsp;<a href=sdk.html#sdk.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=sdk.html#sdk.systemserverclasspath_fragments>systemserverclasspath_fragments</a>
+				,&nbsp;<a href=sdk.html#sdk.target>target</a>
+				,&nbsp;<a href=sdk.html#sdk.target.android>target.android</a>
+				,&nbsp;<a href=sdk.html#sdk.target.host>target.host</a>
+				,&nbsp;<a href=sdk.html#sdk.target_required>target_required</a>
+				,&nbsp;<a href=sdk.html#sdk.traits>traits</a>
+				,&nbsp;<a href=sdk.html#sdk.vendor>vendor</a>
+				,&nbsp;<a href=sdk.html#sdk.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=sdk.html#sdk.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=sdk.html#sdk.visibility>visibility</a></div>
+    <div class="simple" id="sdk.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="sdk.defaults">
+        <span class="fixed">&nbsp;</span><b>defaults </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="sdk.host_supported">
+        <span class="fixed">&nbsp;</span><b>host_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the host.  Defaults to false.
+
+</div>
+    <div class="simple" id="sdk.device_supported">
+        <span class="fixed">&nbsp;</span><b>device_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the device.  Defaults to true.
+
+</div>
+    <div class="accordion"  id="sdk.apexes">
+        <span class="fixed">&#x2295</span><b>apexes</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="sdk.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="sdk.bootclasspath_fragments">
+        <span class="fixed">&#x2295</span><b>bootclasspath_fragments</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.compat_configs">
+        <span class="fixed">&#x2295</span><b>compat_configs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="sdk.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="sdk.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="sdk.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="sdk.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="sdk.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="sdk.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="sdk.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="sdk.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="sdk.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="sdk.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="sdk.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="sdk.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="sdk.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="sdk.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="accordion"  id="sdk.java_boot_libs">
+        <span class="fixed">&#x2295</span><b>java_boot_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.java_header_libs">
+        <span class="fixed">&#x2295</span><b>java_header_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.java_sdk_libs">
+        <span class="fixed">&#x2295</span><b>java_sdk_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.java_system_modules">
+        <span class="fixed">&#x2295</span><b>java_system_modules</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.java_systemserver_libs">
+        <span class="fixed">&#x2295</span><b>java_systemserver_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="sdk.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="sdk.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="sdk.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="accordion"  id="sdk.native_header_libs">
+        <span class="fixed">&#x2295</span><b>native_header_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.native_libs">
+        <span class="fixed">&#x2295</span><b>native_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.native_objects">
+        <span class="fixed">&#x2295</span><b>native_objects</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.native_shared_libs">
+        <span class="fixed">&#x2295</span><b>native_shared_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.native_static_libs">
+        <span class="fixed">&#x2295</span><b>native_static_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="sdk.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="sdk.prebuilt_visibility">
+        <span class="fixed">&nbsp;</span><b>prebuilt_visibility </b>
+        <i>list of string</i>, The additional visibility to add to the prebuilt modules to allow them to
+reference each other.
+
+This can only be used to widen the visibility of the members:
+
+* Specifying //visibility:public here will make all members visible and
+<pre>
+
+  essentially ignore their own visibility.
+</pre>
+* Specifying //visibility:private here is an error.
+* Specifying any other rule here will add it to the members visibility and
+<pre>
+
+  be output to the member prebuilt in the snapshot. Duplicates will be
+  dropped. Adding a rule to members that have //visibility:private will
+  cause the //visibility:private to be discarded.
+
+</pre>
+</div>
+    <div class="simple" id="sdk.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="sdk.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sdk.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sdk.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sdk.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="sdk.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sdk.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sdk.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sdk.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sdk.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sdk.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="sdk.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="sdk.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="sdk.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="sdk.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="sdk.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="sdk.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="sdk.systemserverclasspath_fragments">
+        <span class="fixed">&#x2295</span><b>systemserverclasspath_fragments</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="sdk.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="sdk.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="sdk.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="sdk.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="accordion"  id="sdk.traits">
+        <span class="fixed">&#x2295</span><b>traits</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>interface {}</i></div></div>
+    <div class="simple" id="sdk.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="sdk.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="sdk.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="sdk.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="sdk_snapshot">sdk_snapshot</h2>
+  sdk_snapshot is a snapshot of an SDK. This is an auto-generated module.
+
+<div class="breadcrumb">
+    
+				<a href=sdk.html#sdk_snapshot.name>name</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.defaults>defaults</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.host_supported>host_supported</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.device_supported>device_supported</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.apexes>apexes</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.arch>arch</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.bootclasspath_fragments>bootclasspath_fragments</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.compat_configs>compat_configs</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.device_specific>device_specific</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.dist>dist</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.dists>dists</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.enabled>enabled</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.host_required>host_required</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.init_rc>init_rc</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.java_boot_libs>java_boot_libs</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.java_header_libs>java_header_libs</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.java_sdk_libs>java_sdk_libs</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.java_system_modules>java_system_modules</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.java_systemserver_libs>java_systemserver_libs</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.licenses>licenses</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.multilib>multilib</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.native_header_libs>native_header_libs</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.native_libs>native_libs</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.native_objects>native_objects</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.native_shared_libs>native_shared_libs</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.native_static_libs>native_static_libs</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.owner>owner</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.prebuilt_visibility>prebuilt_visibility</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.product_specific>product_specific</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.proprietary>proprietary</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.ramdisk>ramdisk</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.recovery>recovery</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.required>required</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.soc_specific>soc_specific</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.systemserverclasspath_fragments>systemserverclasspath_fragments</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.target>target</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.target.android>target.android</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.target.host>target.host</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.target_required>target_required</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.traits>traits</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.vendor>vendor</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=sdk.html#sdk_snapshot.visibility>visibility</a></div>
+    <div class="simple" id="sdk_snapshot.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="sdk_snapshot.defaults">
+        <span class="fixed">&nbsp;</span><b>defaults </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="sdk_snapshot.host_supported">
+        <span class="fixed">&nbsp;</span><b>host_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the host.  Defaults to false.
+
+</div>
+    <div class="simple" id="sdk_snapshot.device_supported">
+        <span class="fixed">&nbsp;</span><b>device_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the device.  Defaults to true.
+
+</div>
+    <div class="accordion"  id="sdk_snapshot.apexes">
+        <span class="fixed">&#x2295</span><b>apexes</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="sdk_snapshot.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="sdk_snapshot.bootclasspath_fragments">
+        <span class="fixed">&#x2295</span><b>bootclasspath_fragments</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.compat_configs">
+        <span class="fixed">&#x2295</span><b>compat_configs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="sdk_snapshot.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="sdk_snapshot.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="sdk_snapshot.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="sdk_snapshot.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="sdk_snapshot.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="sdk_snapshot.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="sdk_snapshot.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="sdk_snapshot.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="sdk_snapshot.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="sdk_snapshot.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="sdk_snapshot.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="sdk_snapshot.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="sdk_snapshot.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="sdk_snapshot.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="accordion"  id="sdk_snapshot.java_boot_libs">
+        <span class="fixed">&#x2295</span><b>java_boot_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.java_header_libs">
+        <span class="fixed">&#x2295</span><b>java_header_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.java_sdk_libs">
+        <span class="fixed">&#x2295</span><b>java_sdk_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.java_system_modules">
+        <span class="fixed">&#x2295</span><b>java_system_modules</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.java_systemserver_libs">
+        <span class="fixed">&#x2295</span><b>java_systemserver_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="sdk_snapshot.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="sdk_snapshot.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="sdk_snapshot.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="accordion"  id="sdk_snapshot.native_header_libs">
+        <span class="fixed">&#x2295</span><b>native_header_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.native_libs">
+        <span class="fixed">&#x2295</span><b>native_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.native_objects">
+        <span class="fixed">&#x2295</span><b>native_objects</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.native_shared_libs">
+        <span class="fixed">&#x2295</span><b>native_shared_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.native_static_libs">
+        <span class="fixed">&#x2295</span><b>native_static_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="sdk_snapshot.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="sdk_snapshot.prebuilt_visibility">
+        <span class="fixed">&nbsp;</span><b>prebuilt_visibility </b>
+        <i>list of string</i>, The additional visibility to add to the prebuilt modules to allow them to
+reference each other.
+
+This can only be used to widen the visibility of the members:
+
+* Specifying //visibility:public here will make all members visible and
+<pre>
+
+  essentially ignore their own visibility.
+</pre>
+* Specifying //visibility:private here is an error.
+* Specifying any other rule here will add it to the members visibility and
+<pre>
+
+  be output to the member prebuilt in the snapshot. Duplicates will be
+  dropped. Adding a rule to members that have //visibility:private will
+  cause the //visibility:private to be discarded.
+
+</pre>
+</div>
+    <div class="simple" id="sdk_snapshot.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="sdk_snapshot.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sdk_snapshot.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sdk_snapshot.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sdk_snapshot.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sdk_snapshot.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="sdk_snapshot.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sdk_snapshot.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sdk_snapshot.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sdk_snapshot.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sdk_snapshot.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sdk_snapshot.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="sdk_snapshot.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="sdk_snapshot.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="sdk_snapshot.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="sdk_snapshot.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="sdk_snapshot.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="sdk_snapshot.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="sdk_snapshot.systemserverclasspath_fragments">
+        <span class="fixed">&#x2295</span><b>systemserverclasspath_fragments</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="simple" id="sdk_snapshot.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="sdk_snapshot.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="sdk_snapshot.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="sdk_snapshot.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="accordion"  id="sdk_snapshot.traits">
+        <span class="fixed">&#x2295</span><b>traits</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sdk_snapshot.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>interface {}</i></div></div>
+    <div class="simple" id="sdk_snapshot.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="sdk_snapshot.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="sdk_snapshot.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="sdk_snapshot.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div></div>
+<script>
+  accordions = document.getElementsByClassName('accordion');
+  for (i=0; i < accordions.length; ++i) {
+    accordions[i].addEventListener("click", function() {
+      var panel = this.nextElementSibling;
+      var child = this.firstElementChild;
+      if (panel.style.display === "block") {
+          panel.style.display = "none";
+          child.textContent = '\u2295';
+      } else {
+          panel.style.display = "block";
+          child.textContent = '\u2296';
+      }
+    });
+  }
+</script>
+</body>

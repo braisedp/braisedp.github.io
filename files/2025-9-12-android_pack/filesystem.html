@@ -1,0 +1,4017 @@
+
+<html>
+<head>
+<title>Build Docs</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<style>
+.accordion,.simple{margin-left:1.5em;text-indent:-1.5em;margin-top:.25em}
+.collapsible{border-width:0 0 0 1;margin-left:.25em;padding-left:.25em;border-style:solid;
+  border-color:grey;display:none;}
+span.fixed{display: block; float: left; clear: left; width: 1em;}
+ul {
+	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 30ch;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+</style>
+
+<script type="text/javascript">
+window.addEventListener('message', (e) => {
+  if (e != null && e.data != null && e.data.type === "SET_BASE" && e.data.base != null) {
+    const existingBase = document.querySelector('base');
+    if (existingBase != null) {
+      existingBase.parentElement.removeChild(existingBase);
+    }
+
+    const base = document.createElement('base');
+    base.setAttribute('href', e.data.base);
+    document.head.appendChild(base);
+  }
+});
+</script>
+
+</head>
+<body><ul>
+<li><h3>filesystem package</h3></li>
+<li><a href="filesystem.html#android_filesystem">android_filesystem</a></li>
+<li><a href="filesystem.html#android_system_image">android_system_image</a></li>
+<li><a href="filesystem.html#avb_add_hash_footer">avb_add_hash_footer</a></li>
+<li><a href="filesystem.html#avb_gen_vbmeta_image">avb_gen_vbmeta_image</a></li>
+<li><a href="filesystem.html#bootimg">bootimg</a></li>
+<li><a href="filesystem.html#logical_partition">logical_partition</a></li>
+<li><a href="filesystem.html#raw_binary">raw_binary</a></li>
+<li><a href="filesystem.html#vbmeta">vbmeta</a></li>
+</ul>
+
+<div style="margin-left:30ch;padding:1px 16px;">
+
+	
+	<p>
+  <h2 id="android_filesystem">android_filesystem</h2>
+  android_filesystem packages a set of modules and their transitive dependencies into a filesystem
+image. The filesystem images are expected to be mounted in the target device, which means the
+modules in the filesystem image are built for the target device (i.e. Android, not Linux host).
+The modules are placed in the filesystem image just like they are installed to the ordinary
+partitions like system.img. For example, cc_library modules are placed under ./lib[64] directory.
+
+<div class="breadcrumb">
+    
+				<a href=filesystem.html#android_filesystem.name>name</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.arch>arch</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.arch.arm>arch.arm</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.arch.arm64>arch.arm64</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.arch.x86>arch.x86</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.arch.x86_64>arch.x86_64</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.avb_algorithm>avb_algorithm</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.avb_hash_algorithm>avb_hash_algorithm</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.avb_private_key>avb_private_key</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.base_dir>base_dir</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.deps>deps</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.device_specific>device_specific</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.dirs>dirs</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.dist>dist</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.dists>dists</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.enabled>enabled</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.fake_timestamp>fake_timestamp</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.file_contexts>file_contexts</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.host_required>host_required</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.init_rc>init_rc</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.licenses>licenses</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.multilib>multilib</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.multilib.common>multilib.common</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.multilib.first>multilib.first</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.multilib.lib32>multilib.lib32</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.multilib.lib64>multilib.lib64</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.owner>owner</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.partition_name>partition_name</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.product_specific>product_specific</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.product_variables.platform_version_name>product_variables.platform_version_name</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.proprietary>proprietary</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.ramdisk>ramdisk</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.recovery>recovery</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.required>required</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.soc_specific>soc_specific</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.symlinks>symlinks</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.target>target</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.target.android>target.android</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.target.host>target.host</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.target_required>target_required</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.type>type</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.use_avb>use_avb</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.uuid>uuid</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.vendor>vendor</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=filesystem.html#android_filesystem.visibility>visibility</a></div>
+    <div class="simple" id="android_filesystem.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="android_filesystem.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="android_filesystem.arch.arm">
+        <span class="fixed">&#x2295</span><b>arch.arm</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_filesystem.arch.arm64">
+        <span class="fixed">&#x2295</span><b>arch.arm64</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_filesystem.arch.x86">
+        <span class="fixed">&#x2295</span><b>arch.x86</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_filesystem.arch.x86_64">
+        <span class="fixed">&#x2295</span><b>arch.x86_64</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="simple" id="android_filesystem.avb_algorithm">
+        <span class="fixed">&nbsp;</span><b>avb_algorithm </b>
+        <i>string</i>, Signing algorithm for avbtool. Default is SHA256_RSA4096.
+
+</div>
+    <div class="simple" id="android_filesystem.avb_hash_algorithm">
+        <span class="fixed">&nbsp;</span><b>avb_hash_algorithm </b>
+        <i>string</i>, Hash algorithm used for avbtool (for descriptors). This is passed as hash_algorithm to
+avbtool. Default used by avbtool is sha1.
+
+</div>
+    <div class="simple" id="android_filesystem.avb_private_key">
+        <span class="fixed">&nbsp;</span><b>avb_private_key </b>
+        <i>string</i>, Path to the private key that avbtool will use to sign this filesystem image.
+TODO(jiyong): allow apex_key to be specified here
+
+</div>
+    <div class="simple" id="android_filesystem.base_dir">
+        <span class="fixed">&nbsp;</span><b>base_dir </b>
+        <i>string</i>, Base directory relative to root, to which deps are installed, e.g. &#34;system&#34;. Default is &#34;.&#34;
+(root).
+
+</div>
+    <div class="simple" id="android_filesystem.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="android_filesystem.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="android_filesystem.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="android_filesystem.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="simple" id="android_filesystem.dirs">
+        <span class="fixed">&nbsp;</span><b>dirs </b>
+        <i>list of string</i>, Directories to be created under root. e.g. /dev, /proc, etc.
+
+</div>
+    <div class="accordion"  id="android_filesystem.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="android_filesystem.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="android_filesystem.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="android_filesystem.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="android_filesystem.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="android_filesystem.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="android_filesystem.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="android_filesystem.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="android_filesystem.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="android_filesystem.fake_timestamp">
+        <span class="fixed">&nbsp;</span><b>fake_timestamp </b>
+        <i>string</i>, Seconds since unix epoch to override timestamps of file entries
+
+</div>
+    <div class="simple" id="android_filesystem.file_contexts">
+        <span class="fixed">&nbsp;</span><b>file_contexts </b>
+        <i>string</i>, file_contexts file to make image. Currently, only ext4 is supported.
+
+</div>
+    <div class="simple" id="android_filesystem.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="android_filesystem.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="android_filesystem.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="android_filesystem.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="android_filesystem.multilib.common">
+        <span class="fixed">&#x2295</span><b>multilib.common</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_filesystem.multilib.first">
+        <span class="fixed">&#x2295</span><b>multilib.first</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_filesystem.multilib.lib32">
+        <span class="fixed">&#x2295</span><b>multilib.lib32</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_filesystem.multilib.lib64">
+        <span class="fixed">&#x2295</span><b>multilib.lib64</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="simple" id="android_filesystem.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="android_filesystem.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="android_filesystem.partition_name">
+        <span class="fixed">&nbsp;</span><b>partition_name </b>
+        <i>string</i>, Name of the partition stored in vbmeta desc. Defaults to the name of this module.
+
+</div>
+    <div class="simple" id="android_filesystem.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="android_filesystem.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_filesystem.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="android_filesystem.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_filesystem.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="android_filesystem.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="android_filesystem.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="android_filesystem.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="android_filesystem.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_filesystem.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="android_filesystem.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_filesystem.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="android_filesystem.product_variables.platform_version_name">
+        <span class="fixed">&#x2295</span><b>product_variables.platform_version_name</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_filesystem.base_dir">
+        <span class="fixed">&#x2295</span><b>base_dir</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="android_filesystem.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_filesystem.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="android_filesystem.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="android_filesystem.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="android_filesystem.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="android_filesystem.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="android_filesystem.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="android_filesystem.symlinks">
+        <span class="fixed">&nbsp;</span><b>symlinks </b>
+        <i>list of symlinkDefinition</i>, Symbolic links to be created under root with &#34;ln -sf &lt;target&gt; &lt;name&gt;&#34;.
+
+</div>
+    <div class="simple" id="android_filesystem.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="android_filesystem.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="android_filesystem.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="android_filesystem.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_filesystem.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="android_filesystem.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="android_filesystem.type">
+        <span class="fixed">&nbsp;</span><b>type </b>
+        <i>string</i>, Type of the filesystem. Currently, ext4, cpio, and compressed_cpio are supported. Default
+is ext4.
+
+</div>
+    <div class="simple" id="android_filesystem.use_avb">
+        <span class="fixed">&nbsp;</span><b>use_avb </b>
+        <i>bool</i>, When set to true, sign the image with avbtool. Default is false.
+
+</div>
+    <div class="simple" id="android_filesystem.uuid">
+        <span class="fixed">&nbsp;</span><b>uuid </b>
+        <i>string</i>, When set, passed to mkuserimg_mke2fs --mke2fs_uuid &amp; --mke2fs_hash_seed.
+Otherwise, they&#39;ll be set as random which might cause indeterministic build output.
+
+</div>
+    <div class="simple" id="android_filesystem.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="android_filesystem.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="android_filesystem.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="android_filesystem.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="android_system_image">android_system_image</h2>
+  android_system_image is a specialization of android_filesystem for the &#39;system&#39; partition.
+Currently, the only difference is the inclusion of linker.config.pb file which specifies
+the provided and the required libraries to and from APEXes.
+
+<div class="breadcrumb">
+    
+				<a href=filesystem.html#android_system_image.name>name</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.arch>arch</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.arch.arm>arch.arm</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.arch.arm64>arch.arm64</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.arch.x86>arch.x86</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.arch.x86_64>arch.x86_64</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.avb_algorithm>avb_algorithm</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.avb_hash_algorithm>avb_hash_algorithm</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.avb_private_key>avb_private_key</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.base_dir>base_dir</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.deps>deps</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.device_specific>device_specific</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.dirs>dirs</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.dist>dist</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.dists>dists</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.enabled>enabled</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.fake_timestamp>fake_timestamp</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.file_contexts>file_contexts</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.host_required>host_required</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.init_rc>init_rc</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.licenses>licenses</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.linker_config_src>linker_config_src</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.multilib>multilib</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.multilib.common>multilib.common</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.multilib.first>multilib.first</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.multilib.lib32>multilib.lib32</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.multilib.lib64>multilib.lib64</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.owner>owner</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.partition_name>partition_name</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.product_specific>product_specific</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.product_variables.platform_version_name>product_variables.platform_version_name</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.proprietary>proprietary</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.ramdisk>ramdisk</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.recovery>recovery</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.required>required</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.soc_specific>soc_specific</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.symlinks>symlinks</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.target>target</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.target.android>target.android</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.target.host>target.host</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.target_required>target_required</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.type>type</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.use_avb>use_avb</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.uuid>uuid</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.vendor>vendor</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=filesystem.html#android_system_image.visibility>visibility</a></div>
+    <div class="simple" id="android_system_image.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="android_system_image.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="android_system_image.arch.arm">
+        <span class="fixed">&#x2295</span><b>arch.arm</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_system_image.arch.arm64">
+        <span class="fixed">&#x2295</span><b>arch.arm64</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_system_image.arch.x86">
+        <span class="fixed">&#x2295</span><b>arch.x86</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_system_image.arch.x86_64">
+        <span class="fixed">&#x2295</span><b>arch.x86_64</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="simple" id="android_system_image.avb_algorithm">
+        <span class="fixed">&nbsp;</span><b>avb_algorithm </b>
+        <i>string</i>, Signing algorithm for avbtool. Default is SHA256_RSA4096.
+
+</div>
+    <div class="simple" id="android_system_image.avb_hash_algorithm">
+        <span class="fixed">&nbsp;</span><b>avb_hash_algorithm </b>
+        <i>string</i>, Hash algorithm used for avbtool (for descriptors). This is passed as hash_algorithm to
+avbtool. Default used by avbtool is sha1.
+
+</div>
+    <div class="simple" id="android_system_image.avb_private_key">
+        <span class="fixed">&nbsp;</span><b>avb_private_key </b>
+        <i>string</i>, Path to the private key that avbtool will use to sign this filesystem image.
+TODO(jiyong): allow apex_key to be specified here
+
+</div>
+    <div class="simple" id="android_system_image.base_dir">
+        <span class="fixed">&nbsp;</span><b>base_dir </b>
+        <i>string</i>, Base directory relative to root, to which deps are installed, e.g. &#34;system&#34;. Default is &#34;.&#34;
+(root).
+
+</div>
+    <div class="simple" id="android_system_image.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="android_system_image.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="android_system_image.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="android_system_image.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="simple" id="android_system_image.dirs">
+        <span class="fixed">&nbsp;</span><b>dirs </b>
+        <i>list of string</i>, Directories to be created under root. e.g. /dev, /proc, etc.
+
+</div>
+    <div class="accordion"  id="android_system_image.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="android_system_image.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="android_system_image.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="android_system_image.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="android_system_image.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="android_system_image.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="android_system_image.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="android_system_image.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="android_system_image.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="android_system_image.fake_timestamp">
+        <span class="fixed">&nbsp;</span><b>fake_timestamp </b>
+        <i>string</i>, Seconds since unix epoch to override timestamps of file entries
+
+</div>
+    <div class="simple" id="android_system_image.file_contexts">
+        <span class="fixed">&nbsp;</span><b>file_contexts </b>
+        <i>string</i>, file_contexts file to make image. Currently, only ext4 is supported.
+
+</div>
+    <div class="simple" id="android_system_image.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="android_system_image.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="android_system_image.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="android_system_image.linker_config_src">
+        <span class="fixed">&nbsp;</span><b>linker_config_src </b>
+        <i>string</i>, Path to the input linker config json file.
+
+</div>
+    <div class="simple" id="android_system_image.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="android_system_image.multilib.common">
+        <span class="fixed">&#x2295</span><b>multilib.common</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_system_image.multilib.first">
+        <span class="fixed">&#x2295</span><b>multilib.first</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_system_image.multilib.lib32">
+        <span class="fixed">&#x2295</span><b>multilib.lib32</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="accordion"  id="android_system_image.multilib.lib64">
+        <span class="fixed">&#x2295</span><b>multilib.lib64</b>
+        <i>depsProperty</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.deps">
+        <span class="fixed">&nbsp;</span><b>deps </b>
+        <i>list of string</i>, Modules to include in this package
+
+</div></div>
+    <div class="simple" id="android_system_image.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="android_system_image.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="android_system_image.partition_name">
+        <span class="fixed">&nbsp;</span><b>partition_name </b>
+        <i>string</i>, Name of the partition stored in vbmeta desc. Defaults to the name of this module.
+
+</div>
+    <div class="simple" id="android_system_image.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="android_system_image.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_system_image.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="android_system_image.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_system_image.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="android_system_image.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="android_system_image.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="android_system_image.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="android_system_image.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_system_image.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="android_system_image.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_system_image.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="android_system_image.product_variables.platform_version_name">
+        <span class="fixed">&#x2295</span><b>product_variables.platform_version_name</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_system_image.base_dir">
+        <span class="fixed">&#x2295</span><b>base_dir</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="android_system_image.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="android_system_image.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="android_system_image.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="android_system_image.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="android_system_image.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="android_system_image.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="android_system_image.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="android_system_image.symlinks">
+        <span class="fixed">&nbsp;</span><b>symlinks </b>
+        <i>list of symlinkDefinition</i>, Symbolic links to be created under root with &#34;ln -sf &lt;target&gt; &lt;name&gt;&#34;.
+
+</div>
+    <div class="simple" id="android_system_image.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="android_system_image.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="android_system_image.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="android_system_image.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="android_system_image.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="android_system_image.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="android_system_image.type">
+        <span class="fixed">&nbsp;</span><b>type </b>
+        <i>string</i>, Type of the filesystem. Currently, ext4, cpio, and compressed_cpio are supported. Default
+is ext4.
+
+</div>
+    <div class="simple" id="android_system_image.use_avb">
+        <span class="fixed">&nbsp;</span><b>use_avb </b>
+        <i>bool</i>, When set to true, sign the image with avbtool. Default is false.
+
+</div>
+    <div class="simple" id="android_system_image.uuid">
+        <span class="fixed">&nbsp;</span><b>uuid </b>
+        <i>string</i>, When set, passed to mkuserimg_mke2fs --mke2fs_uuid &amp; --mke2fs_hash_seed.
+Otherwise, they&#39;ll be set as random which might cause indeterministic build output.
+
+</div>
+    <div class="simple" id="android_system_image.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="android_system_image.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="android_system_image.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="android_system_image.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="avb_add_hash_footer">avb_add_hash_footer</h2>
+  The AVB footer adds verification information to the image.
+
+<div class="breadcrumb">
+    
+				<a href=filesystem.html#avb_add_hash_footer.name>name</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.src>src</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.algorithm>algorithm</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.arch>arch</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.device_specific>device_specific</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.dist>dist</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.dists>dists</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.enabled>enabled</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.filename>filename</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.host_required>host_required</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.include_descriptors_from_images>include_descriptors_from_images</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.init_rc>init_rc</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.licenses>licenses</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.multilib>multilib</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.owner>owner</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.partition_name>partition_name</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.partition_size>partition_size</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.private_key>private_key</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.product_specific>product_specific</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.proprietary>proprietary</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.props>props</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.ramdisk>ramdisk</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.recovery>recovery</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.required>required</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.salt>salt</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.soc_specific>soc_specific</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.target>target</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.target.android>target.android</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.target.host>target.host</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.target_required>target_required</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.vendor>vendor</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=filesystem.html#avb_add_hash_footer.visibility>visibility</a></div>
+    <div class="simple" id="avb_add_hash_footer.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.src">
+        <span class="fixed">&nbsp;</span><b>src </b>
+        <i>string</i>, Source file of this image. Can reference a genrule type module with the &#34;:module&#34; syntax.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.algorithm">
+        <span class="fixed">&nbsp;</span><b>algorithm </b>
+        <i>string</i>, Algorithm that avbtool will use to sign this image. Default is SHA256_RSA4096.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="avb_add_hash_footer.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="avb_add_hash_footer.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="avb_add_hash_footer.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.filename">
+        <span class="fixed">&nbsp;</span><b>filename </b>
+        <i>string</i>, Set the name of the output. Defaults to &lt;module_name&gt;.img.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.include_descriptors_from_images">
+        <span class="fixed">&nbsp;</span><b>include_descriptors_from_images </b>
+        <i>list of string</i>, Include descriptors from images
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="avb_add_hash_footer.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.partition_name">
+        <span class="fixed">&nbsp;</span><b>partition_name </b>
+        <i>string</i>, Name of the image partition. Defaults to the name of this module.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.partition_size">
+        <span class="fixed">&nbsp;</span><b>partition_size </b>
+        <i>int64</i>, Size of the partition. Defaults to dynamically calculating the size.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.private_key">
+        <span class="fixed">&nbsp;</span><b>private_key </b>
+        <i>string</i>, Path to the private key that avbtool will use to sign this image.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="avb_add_hash_footer.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_add_hash_footer.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="avb_add_hash_footer.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_add_hash_footer.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="avb_add_hash_footer.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="avb_add_hash_footer.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="avb_add_hash_footer.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="avb_add_hash_footer.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_add_hash_footer.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="avb_add_hash_footer.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_add_hash_footer.src">
+        <span class="fixed">&#x2295</span><b>src</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="avb_add_hash_footer.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_add_hash_footer.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="avb_add_hash_footer.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_add_hash_footer.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="avb_add_hash_footer.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.props">
+        <span class="fixed">&nbsp;</span><b>props </b>
+        <i>list of avbProp</i>, List of properties to add to the footer
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.salt">
+        <span class="fixed">&nbsp;</span><b>salt </b>
+        <i>string</i>, The salt in hex. Required for reproducible builds.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="avb_add_hash_footer.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="avb_add_hash_footer.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_add_hash_footer.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="avb_add_hash_footer.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="avb_add_hash_footer.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="avb_gen_vbmeta_image">avb_gen_vbmeta_image</h2>
+  The avbGenVbmetaImage generates an unsigned VBMeta image output for the given image.
+
+<div class="breadcrumb">
+    
+				<a href=filesystem.html#avb_gen_vbmeta_image.name>name</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.src>src</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.arch>arch</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.device_specific>device_specific</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.dist>dist</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.dists>dists</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.enabled>enabled</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.host_required>host_required</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.init_rc>init_rc</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.licenses>licenses</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.multilib>multilib</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.owner>owner</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.partition_name>partition_name</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.product_specific>product_specific</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.proprietary>proprietary</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.ramdisk>ramdisk</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.recovery>recovery</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.required>required</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.salt>salt</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.soc_specific>soc_specific</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.target>target</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.target.android>target.android</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.target.host>target.host</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.target_required>target_required</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.vendor>vendor</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=filesystem.html#avb_gen_vbmeta_image.visibility>visibility</a></div>
+    <div class="simple" id="avb_gen_vbmeta_image.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.src">
+        <span class="fixed">&nbsp;</span><b>src </b>
+        <i>string</i>, Source file of this image. Can reference a genrule type module with the &#34;:module&#34; syntax.
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="avb_gen_vbmeta_image.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.partition_name">
+        <span class="fixed">&nbsp;</span><b>partition_name </b>
+        <i>string</i>, Name of the image partition. Defaults to the name of this module.
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_gen_vbmeta_image.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_gen_vbmeta_image.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_gen_vbmeta_image.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_gen_vbmeta_image.src">
+        <span class="fixed">&#x2295</span><b>src</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_gen_vbmeta_image.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="avb_gen_vbmeta_image.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="avb_gen_vbmeta_image.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.salt">
+        <span class="fixed">&nbsp;</span><b>salt </b>
+        <i>string</i>, The salt in hex. Required for reproducible builds.
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="avb_gen_vbmeta_image.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="avb_gen_vbmeta_image.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="avb_gen_vbmeta_image.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="avb_gen_vbmeta_image.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="bootimg">bootimg</h2>
+  bootimg is the image for the boot partition. It consists of header, kernel, ramdisk, and dtb.
+
+<div class="breadcrumb">
+    
+				<a href=filesystem.html#bootimg.name>name</a>
+				,&nbsp;<a href=filesystem.html#bootimg.arch>arch</a>
+				,&nbsp;<a href=filesystem.html#bootimg.avb_algorithm>avb_algorithm</a>
+				,&nbsp;<a href=filesystem.html#bootimg.avb_private_key>avb_private_key</a>
+				,&nbsp;<a href=filesystem.html#bootimg.bootconfig>bootconfig</a>
+				,&nbsp;<a href=filesystem.html#bootimg.cmdline>cmdline</a>
+				,&nbsp;<a href=filesystem.html#bootimg.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=filesystem.html#bootimg.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#bootimg.device_specific>device_specific</a>
+				,&nbsp;<a href=filesystem.html#bootimg.dist>dist</a>
+				,&nbsp;<a href=filesystem.html#bootimg.dists>dists</a>
+				,&nbsp;<a href=filesystem.html#bootimg.dtb_prebuilt>dtb_prebuilt</a>
+				,&nbsp;<a href=filesystem.html#bootimg.enabled>enabled</a>
+				,&nbsp;<a href=filesystem.html#bootimg.header_version>header_version</a>
+				,&nbsp;<a href=filesystem.html#bootimg.host_required>host_required</a>
+				,&nbsp;<a href=filesystem.html#bootimg.init_rc>init_rc</a>
+				,&nbsp;<a href=filesystem.html#bootimg.kernel_prebuilt>kernel_prebuilt</a>
+				,&nbsp;<a href=filesystem.html#bootimg.licenses>licenses</a>
+				,&nbsp;<a href=filesystem.html#bootimg.multilib>multilib</a>
+				,&nbsp;<a href=filesystem.html#bootimg.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=filesystem.html#bootimg.owner>owner</a>
+				,&nbsp;<a href=filesystem.html#bootimg.partition_name>partition_name</a>
+				,&nbsp;<a href=filesystem.html#bootimg.product_specific>product_specific</a>
+				,&nbsp;<a href=filesystem.html#bootimg.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=filesystem.html#bootimg.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=filesystem.html#bootimg.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=filesystem.html#bootimg.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=filesystem.html#bootimg.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=filesystem.html#bootimg.proprietary>proprietary</a>
+				,&nbsp;<a href=filesystem.html#bootimg.ramdisk>ramdisk</a>
+				,&nbsp;<a href=filesystem.html#bootimg.ramdisk_module>ramdisk_module</a>
+				,&nbsp;<a href=filesystem.html#bootimg.recovery>recovery</a>
+				,&nbsp;<a href=filesystem.html#bootimg.required>required</a>
+				,&nbsp;<a href=filesystem.html#bootimg.soc_specific>soc_specific</a>
+				,&nbsp;<a href=filesystem.html#bootimg.stem>stem</a>
+				,&nbsp;<a href=filesystem.html#bootimg.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=filesystem.html#bootimg.target>target</a>
+				,&nbsp;<a href=filesystem.html#bootimg.target.android>target.android</a>
+				,&nbsp;<a href=filesystem.html#bootimg.target.host>target.host</a>
+				,&nbsp;<a href=filesystem.html#bootimg.target_required>target_required</a>
+				,&nbsp;<a href=filesystem.html#bootimg.use_avb>use_avb</a>
+				,&nbsp;<a href=filesystem.html#bootimg.vendor>vendor</a>
+				,&nbsp;<a href=filesystem.html#bootimg.vendor_boot>vendor_boot</a>
+				,&nbsp;<a href=filesystem.html#bootimg.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#bootimg.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=filesystem.html#bootimg.visibility>visibility</a></div>
+    <div class="simple" id="bootimg.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="bootimg.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="bootimg.avb_algorithm">
+        <span class="fixed">&nbsp;</span><b>avb_algorithm </b>
+        <i>string</i>, Hash and signing algorithm for avbtool. Default is SHA256_RSA4096.
+
+</div>
+    <div class="simple" id="bootimg.avb_private_key">
+        <span class="fixed">&nbsp;</span><b>avb_private_key </b>
+        <i>string</i>, Path to the private key that avbtool will use to sign this filesystem image.
+TODO(jiyong): allow apex_key to be specified here
+
+</div>
+    <div class="simple" id="bootimg.bootconfig">
+        <span class="fixed">&nbsp;</span><b>bootconfig </b>
+        <i>string</i>, File that contains bootconfig parameters. This can be set only when `vendor_boot` is true
+and `header_version` is greater than or equal to 4.
+
+</div>
+    <div class="simple" id="bootimg.cmdline">
+        <span class="fixed">&nbsp;</span><b>cmdline </b>
+        <i>list of string</i>, Optional kernel commandline arguments
+
+</div>
+    <div class="simple" id="bootimg.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="bootimg.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="bootimg.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="bootimg.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="bootimg.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="bootimg.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="bootimg.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="bootimg.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="bootimg.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="bootimg.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="bootimg.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="bootimg.dtb_prebuilt">
+        <span class="fixed">&nbsp;</span><b>dtb_prebuilt </b>
+        <i>string</i>, Path to the device tree blob (DTB) prebuilt file to add to this boot image
+
+</div>
+    <div class="simple" id="bootimg.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="bootimg.header_version">
+        <span class="fixed">&nbsp;</span><b>header_version </b>
+        <i>string</i>, Header version number. Must be set to one of the version numbers that are currently
+supported. Refer to
+https://source.android.com/devices/bootloader/boot-image-header
+
+</div>
+    <div class="simple" id="bootimg.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="bootimg.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="bootimg.kernel_prebuilt">
+        <span class="fixed">&nbsp;</span><b>kernel_prebuilt </b>
+        <i>string</i>, Path to the linux kernel prebuilt file
+
+</div>
+    <div class="simple" id="bootimg.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="bootimg.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="bootimg.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="bootimg.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="bootimg.partition_name">
+        <span class="fixed">&nbsp;</span><b>partition_name </b>
+        <i>string</i>, Name of the partition stored in vbmeta desc. Defaults to the name of this module.
+
+</div>
+    <div class="simple" id="bootimg.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="bootimg.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="bootimg.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="bootimg.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="bootimg.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="bootimg.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="bootimg.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="bootimg.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="bootimg.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="bootimg.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="bootimg.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="bootimg.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="bootimg.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="bootimg.cmdline">
+        <span class="fixed">&#x2295</span><b>cmdline</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="bootimg.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="bootimg.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="bootimg.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="bootimg.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="bootimg.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="bootimg.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="bootimg.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="bootimg.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="bootimg.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="bootimg.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="bootimg.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="bootimg.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="bootimg.ramdisk_module">
+        <span class="fixed">&nbsp;</span><b>ramdisk_module </b>
+        <i>string</i>, Filesystem module that is used as ramdisk
+
+</div>
+    <div class="simple" id="bootimg.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="bootimg.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="bootimg.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="bootimg.stem">
+        <span class="fixed">&nbsp;</span><b>stem </b>
+        <i>string</i>, Set the name of the output. Defaults to &lt;module_name&gt;.img.
+
+</div>
+    <div class="simple" id="bootimg.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="bootimg.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="bootimg.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="bootimg.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="bootimg.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="bootimg.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="bootimg.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="bootimg.use_avb">
+        <span class="fixed">&nbsp;</span><b>use_avb </b>
+        <i>bool</i>, When set to true, sign the image with avbtool. Default is false.
+
+</div>
+    <div class="simple" id="bootimg.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="bootimg.vendor_boot">
+        <span class="fixed">&nbsp;</span><b>vendor_boot </b>
+        <i>bool</i>, Determines if this image is for the vendor_boot partition. Default is false. Refer to
+https://source.android.com/devices/bootloader/partitions/vendor-boot-partitions
+
+</div>
+    <div class="simple" id="bootimg.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="bootimg.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="bootimg.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="logical_partition">logical_partition</h2>
+  logical_partition is a partition image which has one or more logical partitions in it.
+
+<div class="breadcrumb">
+    
+				<a href=filesystem.html#logical_partition.name>name</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.arch>arch</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.default_group>default_group</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.device_specific>device_specific</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.dist>dist</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.dists>dists</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.enabled>enabled</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.groups>groups</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.host_required>host_required</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.init_rc>init_rc</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.licenses>licenses</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.multilib>multilib</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.owner>owner</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.product_specific>product_specific</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.proprietary>proprietary</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.ramdisk>ramdisk</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.recovery>recovery</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.required>required</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.size>size</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.soc_specific>soc_specific</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.sparse>sparse</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.stem>stem</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.target>target</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.target.android>target.android</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.target.host>target.host</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.target_required>target_required</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.vendor>vendor</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=filesystem.html#logical_partition.visibility>visibility</a></div>
+    <div class="simple" id="logical_partition.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="logical_partition.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="logical_partition.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="logical_partition.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="logical_partition.default_group">
+        <span class="fixed">&nbsp;</span><b>default_group </b>
+        <i>list of partitionProperties</i>, List of partitions for default group. Default group has no size limit and automatically
+minimized when creating an image.
+
+</div>
+    <div class="simple" id="logical_partition.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="logical_partition.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="logical_partition.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="logical_partition.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="logical_partition.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="logical_partition.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="logical_partition.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="logical_partition.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="logical_partition.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="logical_partition.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="logical_partition.groups">
+        <span class="fixed">&nbsp;</span><b>groups </b>
+        <i>list of groupProperties</i>, List of groups. A group defines a fixed sized region. It can host one or more logical
+partitions and their total size is limited by the size of the group they are in.
+
+</div>
+    <div class="simple" id="logical_partition.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="logical_partition.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="logical_partition.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="logical_partition.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="logical_partition.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="logical_partition.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="logical_partition.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="logical_partition.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="logical_partition.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="logical_partition.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="logical_partition.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="logical_partition.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="logical_partition.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="logical_partition.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="logical_partition.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="logical_partition.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="logical_partition.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="logical_partition.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="logical_partition.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="logical_partition.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="logical_partition.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="logical_partition.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="logical_partition.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="logical_partition.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="logical_partition.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="logical_partition.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="logical_partition.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="logical_partition.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="logical_partition.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="logical_partition.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="logical_partition.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="logical_partition.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="logical_partition.size">
+        <span class="fixed">&nbsp;</span><b>size </b>
+        <i>string</i>, Total size of the logical partition. If set to &#34;auto&#34;, total size is automatically
+calcaulted as minimum.
+
+</div>
+    <div class="simple" id="logical_partition.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="logical_partition.sparse">
+        <span class="fixed">&nbsp;</span><b>sparse </b>
+        <i>bool</i>, Whether the output is a sparse image or not. Default is false.
+
+</div>
+    <div class="simple" id="logical_partition.stem">
+        <span class="fixed">&nbsp;</span><b>stem </b>
+        <i>string</i>, Set the name of the output. Defaults to &lt;module_name&gt;.img.
+
+</div>
+    <div class="simple" id="logical_partition.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="logical_partition.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="logical_partition.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="logical_partition.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="logical_partition.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="logical_partition.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="logical_partition.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="logical_partition.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="logical_partition.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="logical_partition.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="logical_partition.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="raw_binary">raw_binary</h2>
+  
+<div class="breadcrumb">
+    
+				<a href=filesystem.html#raw_binary.name>name</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.src>src</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.arch>arch</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.device_specific>device_specific</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.dist>dist</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.dists>dists</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.enabled>enabled</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.host_required>host_required</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.init_rc>init_rc</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.licenses>licenses</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.multilib>multilib</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.owner>owner</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.product_specific>product_specific</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.proprietary>proprietary</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.ramdisk>ramdisk</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.recovery>recovery</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.required>required</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.soc_specific>soc_specific</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.stem>stem</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.target>target</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.target.android>target.android</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.target.host>target.host</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.target_required>target_required</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.vendor>vendor</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=filesystem.html#raw_binary.visibility>visibility</a></div>
+    <div class="simple" id="raw_binary.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="raw_binary.src">
+        <span class="fixed">&nbsp;</span><b>src </b>
+        <i>string</i>, Name of input executable. Can be a name of a target.
+
+</div>
+    <div class="simple" id="raw_binary.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="raw_binary.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="raw_binary.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="raw_binary.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="raw_binary.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="raw_binary.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="raw_binary.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="raw_binary.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="raw_binary.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="raw_binary.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="raw_binary.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="raw_binary.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="raw_binary.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="raw_binary.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="raw_binary.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="raw_binary.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="raw_binary.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="raw_binary.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="raw_binary.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="raw_binary.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="raw_binary.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="raw_binary.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="raw_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="raw_binary.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="raw_binary.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="raw_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="raw_binary.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="raw_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="raw_binary.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="raw_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="raw_binary.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="raw_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="raw_binary.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="raw_binary.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="raw_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="raw_binary.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="raw_binary.src">
+        <span class="fixed">&#x2295</span><b>src</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="raw_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="raw_binary.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="raw_binary.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="raw_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="raw_binary.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="raw_binary.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="raw_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="raw_binary.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="raw_binary.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="raw_binary.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="raw_binary.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="raw_binary.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="raw_binary.stem">
+        <span class="fixed">&nbsp;</span><b>stem </b>
+        <i>string</i>, Set the name of the output. Defaults to &lt;module_name&gt;.bin.
+
+</div>
+    <div class="simple" id="raw_binary.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="raw_binary.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="raw_binary.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="raw_binary.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="raw_binary.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="raw_binary.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="raw_binary.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="raw_binary.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="raw_binary.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="raw_binary.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="raw_binary.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="vbmeta">vbmeta</h2>
+  vbmeta is the partition image that has the verification information for other partitions.
+
+<div class="breadcrumb">
+    
+				<a href=filesystem.html#vbmeta.name>name</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.algorithm>algorithm</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.arch>arch</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.chained_partitions>chained_partitions</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.device_specific>device_specific</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.dist>dist</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.dists>dists</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.enabled>enabled</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.host_required>host_required</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.init_rc>init_rc</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.licenses>licenses</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.multilib>multilib</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.owner>owner</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.partition_name>partition_name</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.partitions>partitions</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.private_key>private_key</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.product_specific>product_specific</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.proprietary>proprietary</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.ramdisk>ramdisk</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.recovery>recovery</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.required>required</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.rollback_index_file>rollback_index_file</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.rollback_index_location>rollback_index_location</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.soc_specific>soc_specific</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.stem>stem</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.target>target</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.target.android>target.android</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.target.host>target.host</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.target_required>target_required</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.vendor>vendor</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=filesystem.html#vbmeta.visibility>visibility</a></div>
+    <div class="simple" id="vbmeta.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="vbmeta.algorithm">
+        <span class="fixed">&nbsp;</span><b>algorithm </b>
+        <i>string</i>, Algorithm that avbtool will use to sign this vbmeta image. Default is SHA256_RSA4096.
+
+</div>
+    <div class="simple" id="vbmeta.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="vbmeta.chained_partitions">
+        <span class="fixed">&nbsp;</span><b>chained_partitions </b>
+        <i>list of chainedPartitionProperties</i>, List of chained partitions that this vbmeta deletages the verification.
+
+</div>
+    <div class="simple" id="vbmeta.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="vbmeta.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="vbmeta.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="vbmeta.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="vbmeta.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="vbmeta.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="vbmeta.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="vbmeta.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="vbmeta.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="vbmeta.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="vbmeta.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="vbmeta.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="vbmeta.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="vbmeta.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="vbmeta.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="vbmeta.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="vbmeta.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="vbmeta.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="vbmeta.partition_name">
+        <span class="fixed">&nbsp;</span><b>partition_name </b>
+        <i>string</i>, Name of the partition stored in vbmeta desc. Defaults to the name of this module.
+
+</div>
+    <div class="simple" id="vbmeta.partitions">
+        <span class="fixed">&nbsp;</span><b>partitions </b>
+        <i>list of string</i>, List of filesystem modules that this vbmeta has descriptors for. The filesystem modules
+have to be signed (use_avb: true).
+
+</div>
+    <div class="simple" id="vbmeta.private_key">
+        <span class="fixed">&nbsp;</span><b>private_key </b>
+        <i>string</i>, Path to the private key that avbtool will use to sign this vbmeta image.
+
+</div>
+    <div class="simple" id="vbmeta.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="vbmeta.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="vbmeta.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="vbmeta.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="vbmeta.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="vbmeta.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="vbmeta.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="vbmeta.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="vbmeta.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="vbmeta.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="vbmeta.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="vbmeta.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="vbmeta.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="vbmeta.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="vbmeta.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="vbmeta.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="vbmeta.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="vbmeta.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="vbmeta.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="vbmeta.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="vbmeta.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="vbmeta.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="vbmeta.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="vbmeta.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="vbmeta.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="vbmeta.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="vbmeta.rollback_index_file">
+        <span class="fixed">&nbsp;</span><b>rollback_index_file </b>
+        <i>string</i>, File whose content will provide the rollback index. If unspecified, the rollback index
+is from PLATFORM_SECURITY_PATCH
+
+</div>
+    <div class="simple" id="vbmeta.rollback_index_location">
+        <span class="fixed">&nbsp;</span><b>rollback_index_location </b>
+        <i>int64</i>, Rollback index location of this vbmeta image. Must be 0, 1, 2, etc. Default is 0.
+
+</div>
+    <div class="simple" id="vbmeta.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="vbmeta.stem">
+        <span class="fixed">&nbsp;</span><b>stem </b>
+        <i>string</i>, Set the name of the output. Defaults to &lt;module_name&gt;.img.
+
+</div>
+    <div class="simple" id="vbmeta.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="vbmeta.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="vbmeta.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="vbmeta.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="vbmeta.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="vbmeta.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="vbmeta.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="vbmeta.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="vbmeta.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="vbmeta.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="vbmeta.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div></div>
+<script>
+  accordions = document.getElementsByClassName('accordion');
+  for (i=0; i < accordions.length; ++i) {
+    accordions[i].addEventListener("click", function() {
+      var panel = this.nextElementSibling;
+      var child = this.firstElementChild;
+      if (panel.style.display === "block") {
+          panel.style.display = "none";
+          child.textContent = '\u2295';
+      } else {
+          panel.style.display = "block";
+          child.textContent = '\u2296';
+      }
+    });
+  }
+</script>
+</body>

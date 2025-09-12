@@ -1,0 +1,3126 @@
+
+<html>
+<head>
+<title>Build Docs</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<style>
+.accordion,.simple{margin-left:1.5em;text-indent:-1.5em;margin-top:.25em}
+.collapsible{border-width:0 0 0 1;margin-left:.25em;padding-left:.25em;border-style:solid;
+  border-color:grey;display:none;}
+span.fixed{display: block; float: left; clear: left; width: 1em;}
+ul {
+	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 30ch;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+</style>
+
+<script type="text/javascript">
+window.addEventListener('message', (e) => {
+  if (e != null && e.data != null && e.data.type === "SET_BASE" && e.data.base != null) {
+    const existingBase = document.querySelector('base');
+    if (existingBase != null) {
+      existingBase.parentElement.removeChild(existingBase);
+    }
+
+    const base = document.createElement('base');
+    base.setAttribute('href', e.data.base);
+    document.head.appendChild(base);
+  }
+});
+</script>
+
+</head>
+<body><ul>
+<li><h3>aidl package</h3></li>
+<li><a href="aidl.html#aidl_interface">aidl_interface</a></li>
+<li><a href="aidl.html#aidl_interface_defaults">aidl_interface_defaults</a></li>
+<li><a href="aidl.html#aidl_interface_headers">aidl_interface_headers</a></li>
+<li><a href="aidl.html#aidl_interfaces_metadata">aidl_interfaces_metadata</a></li>
+</ul>
+
+<div style="margin-left:30ch;padding:1px 16px;">
+
+	
+	<p>
+  <h2 id="aidl_interface">aidl_interface</h2>
+  
+<div class="breadcrumb">
+    
+				<a href=aidl.html#aidl_interface.name>name</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.srcs>srcs</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.defaults>defaults</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.host_supported>host_supported</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.backend.cpp>backend.cpp</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.backend.java>backend.java</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.backend.ndk>backend.ndk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.backend.rust>backend.rust</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.bazel_module>bazel_module</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.device_specific>device_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.dist>dist</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.dists>dists</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.double_loadable>double_loadable</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.dumpapi>dumpapi</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.enabled>enabled</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.flags>flags</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.frozen>frozen</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.gen_trace>gen_trace</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.headers>headers</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.host_required>host_required</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.imports>imports</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.include_dirs>include_dirs</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.init_rc>init_rc</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.licenses>licenses</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.local_include_dir>local_include_dir</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.min_sdk_version>min_sdk_version</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.odm_available>odm_available</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.owner>owner</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.product_available>product_available</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.product_specific>product_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.proprietary>proprietary</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.ramdisk>ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.recovery>recovery</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.recovery_available>recovery_available</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.required>required</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.soc_specific>soc_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.stability>stability</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.target.android>target.android</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.target.host>target.host</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.target_required>target_required</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.unstable>unstable</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.vendor>vendor</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.vendor_available>vendor_available</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.versions>versions</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.versions_with_info>versions_with_info</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.visibility>visibility</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.vndk>vndk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface.vndk_use_version>vndk_use_version</a></div>
+    <div class="simple" id="aidl_interface.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="aidl_interface.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, List of .aidl files which compose this interface.
+
+</div>
+    <div class="simple" id="aidl_interface.defaults">
+        <span class="fixed">&nbsp;</span><b>defaults </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="aidl_interface.host_supported">
+        <span class="fixed">&nbsp;</span><b>host_supported </b>
+        <i>bool</i>, Whether the library can be used on host
+
+</div>
+    <div class="accordion"  id="aidl_interface.backend.cpp">
+        <span class="fixed">&#x2295</span><b>backend.cpp</b>
+        <i></i></div>
+      <div class="collapsible">Backend of the compiler generating code for C++ clients using
+libbinder (unstable C++ interface)
+When enabled, this creates a target called &#34;&lt;name&gt;-cpp&#34;.
+
+ 
+        
+    <div class="simple" id="aidl_interface.additional_shared_libraries">
+        <span class="fixed">&nbsp;</span><b>additional_shared_libraries </b>
+        <i>list of string</i>, Must be NDK libraries, for stable types.
+
+</div>
+    <div class="simple" id="aidl_interface.cflags">
+        <span class="fixed">&nbsp;</span><b>cflags </b>
+        <i>list of string</i>, cflags to forward to native compilation. This is expected to be
+used more for AIDL compiler developers than being actually
+practical.
+
+</div>
+    <div class="simple" id="aidl_interface.gen_log">
+        <span class="fixed">&nbsp;</span><b>gen_log </b>
+        <i>bool</i>, Whether to generate additional code for gathering information
+about the transactions.
+Default: false
+
+</div>
+    <div class="simple" id="aidl_interface.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, Whether to generate code in the corresponding backend.
+Default:
+<pre>
+
+  - for Java/NDK/CPP backends - True
+  - for Rust backend - False
+
+</pre>
+</div>
+    <div class="simple" id="aidl_interface.apex_available">
+        <span class="fixed">&nbsp;</span><b>apex_available </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="aidl_interface.min_sdk_version">
+        <span class="fixed">&nbsp;</span><b>min_sdk_version </b>
+        <i>string</i>, The minimum version of the sdk that the compiled artifacts will run against
+For native modules, the property needs to be set when a module is a part of mainline modules(APEX).
+Forwarded to generated java/native module.
+
+</div>
+    <div class="simple" id="aidl_interface.gen_trace">
+        <span class="fixed">&nbsp;</span><b>gen_trace </b>
+        <i>bool</i>, Whether tracing should be added to the interface.
+
+</div>
+    <div class="accordion"  id="aidl_interface.vndk">
+        <span class="fixed">&#x2295</span><b>vndk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, declared as a VNDK or VNDK-SP module. The vendor variant
+will be installed in /system instead of /vendor partition.
+
+`vendor_available` and `product_available` must be explicitly
+set to either true or false together with `vndk: {enabled: true}`.
+
+</div>
+    <div class="simple" id="aidl_interface.support_system_process">
+        <span class="fixed">&nbsp;</span><b>support_system_process </b>
+        <i>bool</i>, declared as a VNDK-SP module, which is a subset of VNDK.
+
+`vndk: { enabled: true }` must set together.
+
+All these modules are allowed to link to VNDK-SP or LL-NDK
+modules only. Other dependency will cause link-type errors.
+
+If `support_system_process` is not set or set to false,
+the module is VNDK-core and can link to other VNDK-core,
+VNDK-SP or LL-NDK modules only.
+
+</div>
+    <div class="simple" id="aidl_interface.private">
+        <span class="fixed">&nbsp;</span><b>private </b>
+        <i>bool</i>, declared as a VNDK-private module.
+This module still creates the vendor and product variants refering
+to the `vendor_available: true` and `product_available: true`
+properties. However, it is only available to the other VNDK modules
+but not to the non-VNDK vendor or product modules.
+
+</div>
+    <div class="simple" id="aidl_interface.extends">
+        <span class="fixed">&nbsp;</span><b>extends </b>
+        <i>string</i>, Extending another module
+
+</div></div></div>
+    <div class="accordion"  id="aidl_interface.backend.java">
+        <span class="fixed">&#x2295</span><b>backend.java</b>
+        <i></i></div>
+      <div class="collapsible">Backend of the compiler generating code for Java clients.
+When enabled, this creates a target called &#34;&lt;name&gt;-java&#34;.
+
+ 
+        
+    <div class="simple" id="aidl_interface.sdk_version">
+        <span class="fixed">&nbsp;</span><b>sdk_version </b>
+        <i>string</i>, Set to the version of the sdk to compile against
+Default: system_current
+
+</div>
+    <div class="simple" id="aidl_interface.platform_apis">
+        <span class="fixed">&nbsp;</span><b>platform_apis </b>
+        <i>bool</i>, Whether to compile against platform APIs instead of
+an SDK.
+
+</div>
+    <div class="simple" id="aidl_interface.gen_rpc">
+        <span class="fixed">&nbsp;</span><b>gen_rpc </b>
+        <i>bool</i>, Whether RPC features are enabled (requires API level 32)
+TODO(b/175819535): enable this automatically?
+
+</div>
+    <div class="simple" id="aidl_interface.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, Whether to generate code in the corresponding backend.
+Default:
+<pre>
+
+  - for Java/NDK/CPP backends - True
+  - for Rust backend - False
+
+</pre>
+</div>
+    <div class="simple" id="aidl_interface.apex_available">
+        <span class="fixed">&nbsp;</span><b>apex_available </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="aidl_interface.min_sdk_version">
+        <span class="fixed">&nbsp;</span><b>min_sdk_version </b>
+        <i>string</i>, The minimum version of the sdk that the compiled artifacts will run against
+For native modules, the property needs to be set when a module is a part of mainline modules(APEX).
+Forwarded to generated java/native module.
+
+</div>
+    <div class="simple" id="aidl_interface.gen_trace">
+        <span class="fixed">&nbsp;</span><b>gen_trace </b>
+        <i>bool</i>, Whether tracing should be added to the interface.
+
+</div>
+    <div class="accordion"  id="aidl_interface.lint">
+        <span class="fixed">&#x2295</span><b>lint</b>
+        <i></i></div>
+      <div class="collapsible">Controls for running Android Lint on the module.
+
+ 
+        
+    <div class="simple" id="aidl_interface.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, If true, run Android Lint on the module.  Defaults to true.
+
+</div>
+    <div class="simple" id="aidl_interface.flags">
+        <span class="fixed">&nbsp;</span><b>flags </b>
+        <i>list of string</i>, Flags to pass to the Android Lint tool.
+
+</div>
+    <div class="simple" id="aidl_interface.fatal_checks">
+        <span class="fixed">&nbsp;</span><b>fatal_checks </b>
+        <i>list of string</i>, Checks that should be treated as fatal.
+
+</div>
+    <div class="simple" id="aidl_interface.error_checks">
+        <span class="fixed">&nbsp;</span><b>error_checks </b>
+        <i>list of string</i>, Checks that should be treated as errors.
+
+</div>
+    <div class="simple" id="aidl_interface.warning_checks">
+        <span class="fixed">&nbsp;</span><b>warning_checks </b>
+        <i>list of string</i>, Checks that should be treated as warnings.
+
+</div>
+    <div class="simple" id="aidl_interface.disabled_checks">
+        <span class="fixed">&nbsp;</span><b>disabled_checks </b>
+        <i>list of string</i>, Checks that should be skipped.
+
+</div>
+    <div class="simple" id="aidl_interface.extra_check_modules">
+        <span class="fixed">&nbsp;</span><b>extra_check_modules </b>
+        <i>list of string</i>, Modules that provide extra lint checks
+
+</div>
+    <div class="simple" id="aidl_interface.baseline_filename">
+        <span class="fixed">&nbsp;</span><b>baseline_filename </b>
+        <i>string</i>, Name of the file that lint uses as the baseline. Defaults to &#34;lint-baseline.xml&#34;.
+
+</div>
+    <div class="simple" id="aidl_interface.strict_updatability_linting">
+        <span class="fixed">&nbsp;</span><b>strict_updatability_linting </b>
+        <i>bool</i>, If true, baselining updatability lint checks (e.g. NewApi) is prohibited. Defaults to false.
+
+</div>
+    <div class="simple" id="aidl_interface.test">
+        <span class="fixed">&nbsp;</span><b>test </b>
+        <i>bool</i>, Treat the code in this module as test code for @VisibleForTesting enforcement.
+This will be true by default for test module types, false otherwise.
+If soong gets support for testonly, this flag should be replaced with that.
+
+</div></div></div>
+    <div class="accordion"  id="aidl_interface.backend.ndk">
+        <span class="fixed">&#x2295</span><b>backend.ndk</b>
+        <i></i></div>
+      <div class="collapsible">Backend of the compiler generating code for C++ clients using libbinder_ndk
+(stable C interface to system&#39;s libbinder) When enabled, this creates a target
+called &#34;&lt;name&gt;-V&lt;ver&gt;-ndk&#34; (for both apps and platform) and
+&#34;&lt;name&gt;-V&lt;ver&gt;-ndk_platform&#34; (for platform only).
+TODO(b/161456198): remove the ndk_platform backend as the ndk backend can serve
+the same purpose.
+
+ 
+        
+    <div class="simple" id="aidl_interface.sdk_version">
+        <span class="fixed">&nbsp;</span><b>sdk_version </b>
+        <i>string</i>, Set to the version of the sdk to compile against, for the NDK
+variant.
+Default: current
+
+</div>
+    <div class="simple" id="aidl_interface.apps_enabled">
+        <span class="fixed">&nbsp;</span><b>apps_enabled </b>
+        <i>bool</i>, If set to false, the ndk backend is exclusive to platform and is not
+available to applications. Default is true (i.e. available to both
+applications and platform).
+
+</div>
+    <div class="simple" id="aidl_interface.additional_shared_libraries">
+        <span class="fixed">&nbsp;</span><b>additional_shared_libraries </b>
+        <i>list of string</i>, Must be NDK libraries, for stable types.
+
+</div>
+    <div class="simple" id="aidl_interface.cflags">
+        <span class="fixed">&nbsp;</span><b>cflags </b>
+        <i>list of string</i>, cflags to forward to native compilation. This is expected to be
+used more for AIDL compiler developers than being actually
+practical.
+
+</div>
+    <div class="simple" id="aidl_interface.gen_log">
+        <span class="fixed">&nbsp;</span><b>gen_log </b>
+        <i>bool</i>, Whether to generate additional code for gathering information
+about the transactions.
+Default: false
+
+</div>
+    <div class="simple" id="aidl_interface.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, Whether to generate code in the corresponding backend.
+Default:
+<pre>
+
+  - for Java/NDK/CPP backends - True
+  - for Rust backend - False
+
+</pre>
+</div>
+    <div class="simple" id="aidl_interface.apex_available">
+        <span class="fixed">&nbsp;</span><b>apex_available </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="aidl_interface.min_sdk_version">
+        <span class="fixed">&nbsp;</span><b>min_sdk_version </b>
+        <i>string</i>, The minimum version of the sdk that the compiled artifacts will run against
+For native modules, the property needs to be set when a module is a part of mainline modules(APEX).
+Forwarded to generated java/native module.
+
+</div>
+    <div class="simple" id="aidl_interface.gen_trace">
+        <span class="fixed">&nbsp;</span><b>gen_trace </b>
+        <i>bool</i>, Whether tracing should be added to the interface.
+
+</div>
+    <div class="accordion"  id="aidl_interface.vndk">
+        <span class="fixed">&#x2295</span><b>vndk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, declared as a VNDK or VNDK-SP module. The vendor variant
+will be installed in /system instead of /vendor partition.
+
+`vendor_available` and `product_available` must be explicitly
+set to either true or false together with `vndk: {enabled: true}`.
+
+</div>
+    <div class="simple" id="aidl_interface.support_system_process">
+        <span class="fixed">&nbsp;</span><b>support_system_process </b>
+        <i>bool</i>, declared as a VNDK-SP module, which is a subset of VNDK.
+
+`vndk: { enabled: true }` must set together.
+
+All these modules are allowed to link to VNDK-SP or LL-NDK
+modules only. Other dependency will cause link-type errors.
+
+If `support_system_process` is not set or set to false,
+the module is VNDK-core and can link to other VNDK-core,
+VNDK-SP or LL-NDK modules only.
+
+</div>
+    <div class="simple" id="aidl_interface.private">
+        <span class="fixed">&nbsp;</span><b>private </b>
+        <i>bool</i>, declared as a VNDK-private module.
+This module still creates the vendor and product variants refering
+to the `vendor_available: true` and `product_available: true`
+properties. However, it is only available to the other VNDK modules
+but not to the non-VNDK vendor or product modules.
+
+</div>
+    <div class="simple" id="aidl_interface.extends">
+        <span class="fixed">&nbsp;</span><b>extends </b>
+        <i>string</i>, Extending another module
+
+</div></div></div>
+    <div class="accordion"  id="aidl_interface.backend.rust">
+        <span class="fixed">&#x2295</span><b>backend.rust</b>
+        <i></i></div>
+      <div class="collapsible">Backend of the compiler generating code for Rust clients.
+When enabled, this creates a target called &#34;&lt;name&gt;-rust&#34;.
+
+ 
+        
+    <div class="simple" id="aidl_interface.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, Whether to generate code in the corresponding backend.
+Default:
+<pre>
+
+  - for Java/NDK/CPP backends - True
+  - for Rust backend - False
+
+</pre>
+</div>
+    <div class="simple" id="aidl_interface.apex_available">
+        <span class="fixed">&nbsp;</span><b>apex_available </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="aidl_interface.min_sdk_version">
+        <span class="fixed">&nbsp;</span><b>min_sdk_version </b>
+        <i>string</i>, The minimum version of the sdk that the compiled artifacts will run against
+For native modules, the property needs to be set when a module is a part of mainline modules(APEX).
+Forwarded to generated java/native module.
+
+</div>
+    <div class="simple" id="aidl_interface.gen_trace">
+        <span class="fixed">&nbsp;</span><b>gen_trace </b>
+        <i>bool</i>, Whether tracing should be added to the interface.
+
+</div></div>
+    <div class="accordion"  id="aidl_interface.bazel_module">
+        <span class="fixed">&#x2295</span><b>bazel_module</b>
+        <i>bazelModuleProperties</i></div>
+      <div class="collapsible">In &#34;Bazel mixed build&#34; mode, this represents the Bazel target replacing
+this Soong module.
+
+ 
+        
+    <div class="simple" id="aidl_interface.label">
+        <span class="fixed">&nbsp;</span><b>label </b>
+        <i>string</i>, The label of the Bazel target replacing this Soong module. When run in conversion mode, this
+will import the handcrafted build target into the autogenerated file. Note: this may result in
+a conflict due to duplicate targets if bp2build_available is also set.
+
+</div>
+    <div class="simple" id="aidl_interface.bp2build_available">
+        <span class="fixed">&nbsp;</span><b>bp2build_available </b>
+        <i>bool</i>, If true, bp2build will generate the converted Bazel target for this module. Note: this may
+cause a conflict due to the duplicate targets if label is also set.
+
+This is a bool pointer to support tristates: true, false, not set.
+
+To opt in a module, set bazel_module: { bp2build_available: true }
+To opt out a module, set bazel_module: { bp2build_available: false }
+To defer the default setting for the directory, do not set the value.
+
+</div></div>
+    <div class="simple" id="aidl_interface.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="aidl_interface.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="aidl_interface.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="aidl_interface.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="aidl_interface.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="aidl_interface.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="aidl_interface.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="aidl_interface.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="aidl_interface.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="aidl_interface.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="aidl_interface.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="aidl_interface.double_loadable">
+        <span class="fixed">&nbsp;</span><b>double_loadable </b>
+        <i>bool</i>, Whether the library can be loaded multiple times into the same process
+
+</div>
+    <div class="accordion"  id="aidl_interface.dumpapi">
+        <span class="fixed">&#x2295</span><b>dumpapi</b>
+        <i>DumpApiProperties</i></div>
+      <div class="collapsible">--dumpapi options
+
+ 
+        
+    <div class="simple" id="aidl_interface.no_license">
+        <span class="fixed">&nbsp;</span><b>no_license </b>
+        <i>bool</i>, Dumps without license header (assuming it is the first comment in .aidl file). Default: false
+
+</div></div>
+    <div class="simple" id="aidl_interface.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="aidl_interface.flags">
+        <span class="fixed">&nbsp;</span><b>flags </b>
+        <i>list of string</i>, Optional flags to be passed to the AIDL compiler. e.g. &#34;-Weverything&#34;
+
+</div>
+    <div class="simple" id="aidl_interface.frozen">
+        <span class="fixed">&nbsp;</span><b>frozen </b>
+        <i>bool</i>, If true, this interface is frozen and does not have any changes since the last
+frozen version.
+If false, there are changes to this interface between the last frozen version (N) and
+the current version (N + 1).
+
+</div>
+    <div class="simple" id="aidl_interface.gen_trace">
+        <span class="fixed">&nbsp;</span><b>gen_trace </b>
+        <i>bool</i>, Whether tracing should be added to the interface.
+
+</div>
+    <div class="simple" id="aidl_interface.headers">
+        <span class="fixed">&nbsp;</span><b>headers </b>
+        <i>list of string</i>, List of aidl_interface_headers modules that provide include dependencies
+for the AIDL tool.
+
+</div>
+    <div class="simple" id="aidl_interface.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface.imports">
+        <span class="fixed">&nbsp;</span><b>imports </b>
+        <i>list of string</i>, List of aidl_interface modules that this uses. If one of your AIDL interfaces uses an
+interface or parcelable from another aidl_interface, you should put its name here.
+It could be an aidl_interface solely or with version(such as -V1)
+
+</div>
+    <div class="simple" id="aidl_interface.include_dirs">
+        <span class="fixed">&nbsp;</span><b>include_dirs </b>
+        <i>list of string</i>, Top level directories for includes.
+TODO(b/128940869): remove it if aidl_interface can depend on framework.aidl
+
+</div>
+    <div class="simple" id="aidl_interface.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="aidl_interface.local_include_dir">
+        <span class="fixed">&nbsp;</span><b>local_include_dir </b>
+        <i>string</i>, Relative path for includes. By default assumes AIDL path is relative to current directory.
+
+</div>
+    <div class="simple" id="aidl_interface.min_sdk_version">
+        <span class="fixed">&nbsp;</span><b>min_sdk_version </b>
+        <i>string</i>, The minimum version of the sdk that the compiled artifacts will run against
+For native modules, the property needs to be set when a module is a part of mainline modules(APEX).
+Forwarded to generated java/native module. This can be overridden by
+backend.&lt;name&gt;.min_sdk_version.
+
+</div>
+    <div class="simple" id="aidl_interface.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="aidl_interface.odm_available">
+        <span class="fixed">&nbsp;</span><b>odm_available </b>
+        <i>bool</i>, Whether the library can be installed on the odm image.
+
+</div>
+    <div class="simple" id="aidl_interface.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="aidl_interface.product_available">
+        <span class="fixed">&nbsp;</span><b>product_available </b>
+        <i>bool</i>, Whether the library can be installed on the product image.
+
+</div>
+    <div class="simple" id="aidl_interface.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="aidl_interface.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interface.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface.include_dirs">
+        <span class="fixed">&#x2295</span><b>include_dirs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interface.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interface.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="aidl_interface.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="aidl_interface.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="aidl_interface.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="aidl_interface.recovery_available">
+        <span class="fixed">&nbsp;</span><b>recovery_available </b>
+        <i>bool</i>, Whether the library can be installed on the recovery image.
+
+</div>
+    <div class="simple" id="aidl_interface.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="aidl_interface.stability">
+        <span class="fixed">&nbsp;</span><b>stability </b>
+        <i>string</i>, Stability promise. Currently only supports &#34;vintf&#34;.
+If this is unset, this corresponds to an interface with stability within
+this compilation context (so an interface loaded here can only be used
+with things compiled together, e.g. on the system.img).
+If this is set to &#34;vintf&#34;, this corresponds to a stability promise: the
+interface must be kept stable as long as it is used.
+
+</div>
+    <div class="simple" id="aidl_interface.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="aidl_interface.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="aidl_interface.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="aidl_interface.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface.unstable">
+        <span class="fixed">&nbsp;</span><b>unstable </b>
+        <i>bool</i>, Marks that this interface does not need to be stable. When set to true, the build system
+doesn&#39;t create the API dump and require it to be updated. Default is false.
+
+</div>
+    <div class="simple" id="aidl_interface.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="aidl_interface.vendor_available">
+        <span class="fixed">&nbsp;</span><b>vendor_available </b>
+        <i>bool</i>, Whether the library can be installed on the vendor image.
+
+</div>
+    <div class="simple" id="aidl_interface.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="aidl_interface.versions">
+        <span class="fixed">&nbsp;</span><b>versions </b>
+        <i>list of string</i>, Deprecated: Use `versions_with_info` instead. Don&#39;t use `versions` property directly.
+
+</div>
+    <div class="accordion"  id="aidl_interface.versions_with_info">
+        <span class="fixed">&#x2295</span><b>versions_with_info</b>
+        <i>list of </i></div>
+      <div class="collapsible">Previous API versions that are now frozen. The version that is last in
+the list is considered as the most recent version.
+The struct contains both version and imports information per a version.
+Until versions property is removed, don&#39;t use `versions_with_info` directly.
+
+ 
+        
+    <div class="simple" id="aidl_interface.version">
+        <span class="fixed">&nbsp;</span><b>version </b>
+        <i>string</i>
+</div>
+    <div class="simple" id="aidl_interface.imports">
+        <span class="fixed">&nbsp;</span><b>imports </b>
+        <i>list of string</i>
+</div></div>
+    <div class="simple" id="aidl_interface.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+    <div class="accordion"  id="aidl_interface.vndk">
+        <span class="fixed">&#x2295</span><b>vndk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, declared as a VNDK or VNDK-SP module. The vendor variant
+will be installed in /system instead of /vendor partition.
+
+`vendor_available` and `product_available` must be explicitly
+set to either true or false together with `vndk: {enabled: true}`.
+
+</div>
+    <div class="simple" id="aidl_interface.support_system_process">
+        <span class="fixed">&nbsp;</span><b>support_system_process </b>
+        <i>bool</i>, declared as a VNDK-SP module, which is a subset of VNDK.
+
+`vndk: { enabled: true }` must set together.
+
+All these modules are allowed to link to VNDK-SP or LL-NDK
+modules only. Other dependency will cause link-type errors.
+
+If `support_system_process` is not set or set to false,
+the module is VNDK-core and can link to other VNDK-core,
+VNDK-SP or LL-NDK modules only.
+
+</div>
+    <div class="simple" id="aidl_interface.private">
+        <span class="fixed">&nbsp;</span><b>private </b>
+        <i>bool</i>, declared as a VNDK-private module.
+This module still creates the vendor and product variants refering
+to the `vendor_available: true` and `product_available: true`
+properties. However, it is only available to the other VNDK modules
+but not to the non-VNDK vendor or product modules.
+
+</div>
+    <div class="simple" id="aidl_interface.extends">
+        <span class="fixed">&nbsp;</span><b>extends </b>
+        <i>string</i>, Extending another module
+
+</div></div>
+    <div class="simple" id="aidl_interface.vndk_use_version">
+        <span class="fixed">&nbsp;</span><b>vndk_use_version </b>
+        <i>string</i>, How to interpret VNDK options. We only want one library in the VNDK (not multiple
+versions, since this would be a waste of space/unclear, and ultimately we want all
+code in a given release to be updated to use a specific version). By default, this
+puts either the latest stable version of the library or, if there is no stable
+version, the unstable version of the library in the VNDK. When using this field,
+explicitly set it to one of the values in the &#39;versions&#39; field to put that version
+in the VNDK or set it to the next version (1 higher than this) to mean the version
+that will be frozen in the next update.
+
+</div>
+	
+	<p>
+  <h2 id="aidl_interface_defaults">aidl_interface_defaults</h2>
+  
+<div class="breadcrumb">
+    
+				<a href=aidl.html#aidl_interface_defaults.name>name</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.srcs>srcs</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.defaults>defaults</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.host_supported>host_supported</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.device_supported>device_supported</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.apex_available>apex_available</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.arch>arch</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.backend.cpp>backend.cpp</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.backend.java>backend.java</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.backend.ndk>backend.ndk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.backend.rust>backend.rust</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.bazel_module>bazel_module</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.defaults_visibility>defaults_visibility</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.device_specific>device_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.dist>dist</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.dists>dists</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.double_loadable>double_loadable</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.dumpapi>dumpapi</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.enabled>enabled</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.flags>flags</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.frozen>frozen</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.gen_trace>gen_trace</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.headers>headers</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.host_required>host_required</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.imports>imports</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.include_dirs>include_dirs</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.init_rc>init_rc</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.licenses>licenses</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.local_include_dir>local_include_dir</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.min_sdk_version>min_sdk_version</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.multilib>multilib</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.odm_available>odm_available</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.owner>owner</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.product_available>product_available</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.product_specific>product_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.proprietary>proprietary</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.ramdisk>ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.recovery>recovery</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.recovery_available>recovery_available</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.required>required</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.soc_specific>soc_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.stability>stability</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.target>target</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.target.android>target.android</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.target.host>target.host</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.target_required>target_required</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.unstable>unstable</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.vendor>vendor</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.vendor_available>vendor_available</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.versions>versions</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.versions_with_info>versions_with_info</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.visibility>visibility</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.vndk>vndk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_defaults.vndk_use_version>vndk_use_version</a></div>
+    <div class="simple" id="aidl_interface_defaults.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, List of .aidl files which compose this interface.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.defaults">
+        <span class="fixed">&nbsp;</span><b>defaults </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="aidl_interface_defaults.host_supported">
+        <span class="fixed">&nbsp;</span><b>host_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the host.  Defaults to false.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.device_supported">
+        <span class="fixed">&nbsp;</span><b>device_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the device.  Defaults to true.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.apex_available">
+        <span class="fixed">&nbsp;</span><b>apex_available </b>
+        <i>list of string</i>, Availability of this module in APEXes. Only the listed APEXes can contain this module. If
+the module has stubs then other APEXes and the platform may access it through them
+(subject to visibility).
+
+&#34;//apex_available:anyapex&#34; is a pseudo APEX name that matches to any APEX.
+&#34;//apex_available:platform&#34; refers to non-APEX partitions like &#34;system.img&#34;.
+&#34;com.android.gki.*&#34; matches any APEX module name with the prefix &#34;com.android.gki.&#34;.
+Default is [&#34;//apex_available:platform&#34;].
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="aidl_interface_defaults.backend.cpp">
+        <span class="fixed">&#x2295</span><b>backend.cpp</b>
+        <i></i></div>
+      <div class="collapsible">Backend of the compiler generating code for C++ clients using
+libbinder (unstable C++ interface)
+When enabled, this creates a target called &#34;&lt;name&gt;-cpp&#34;.
+
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.additional_shared_libraries">
+        <span class="fixed">&nbsp;</span><b>additional_shared_libraries </b>
+        <i>list of string</i>, Must be NDK libraries, for stable types.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.cflags">
+        <span class="fixed">&nbsp;</span><b>cflags </b>
+        <i>list of string</i>, cflags to forward to native compilation. This is expected to be
+used more for AIDL compiler developers than being actually
+practical.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.gen_log">
+        <span class="fixed">&nbsp;</span><b>gen_log </b>
+        <i>bool</i>, Whether to generate additional code for gathering information
+about the transactions.
+Default: false
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, Whether to generate code in the corresponding backend.
+Default:
+<pre>
+
+  - for Java/NDK/CPP backends - True
+  - for Rust backend - False
+
+</pre>
+</div>
+    <div class="simple" id="aidl_interface_defaults.apex_available">
+        <span class="fixed">&nbsp;</span><b>apex_available </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="aidl_interface_defaults.min_sdk_version">
+        <span class="fixed">&nbsp;</span><b>min_sdk_version </b>
+        <i>string</i>, The minimum version of the sdk that the compiled artifacts will run against
+For native modules, the property needs to be set when a module is a part of mainline modules(APEX).
+Forwarded to generated java/native module.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.gen_trace">
+        <span class="fixed">&nbsp;</span><b>gen_trace </b>
+        <i>bool</i>, Whether tracing should be added to the interface.
+
+</div>
+    <div class="accordion"  id="aidl_interface_defaults.vndk">
+        <span class="fixed">&#x2295</span><b>vndk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, declared as a VNDK or VNDK-SP module. The vendor variant
+will be installed in /system instead of /vendor partition.
+
+`vendor_available` and `product_available` must be explicitly
+set to either true or false together with `vndk: {enabled: true}`.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.support_system_process">
+        <span class="fixed">&nbsp;</span><b>support_system_process </b>
+        <i>bool</i>, declared as a VNDK-SP module, which is a subset of VNDK.
+
+`vndk: { enabled: true }` must set together.
+
+All these modules are allowed to link to VNDK-SP or LL-NDK
+modules only. Other dependency will cause link-type errors.
+
+If `support_system_process` is not set or set to false,
+the module is VNDK-core and can link to other VNDK-core,
+VNDK-SP or LL-NDK modules only.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.private">
+        <span class="fixed">&nbsp;</span><b>private </b>
+        <i>bool</i>, declared as a VNDK-private module.
+This module still creates the vendor and product variants refering
+to the `vendor_available: true` and `product_available: true`
+properties. However, it is only available to the other VNDK modules
+but not to the non-VNDK vendor or product modules.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.extends">
+        <span class="fixed">&nbsp;</span><b>extends </b>
+        <i>string</i>, Extending another module
+
+</div></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.backend.java">
+        <span class="fixed">&#x2295</span><b>backend.java</b>
+        <i></i></div>
+      <div class="collapsible">Backend of the compiler generating code for Java clients.
+When enabled, this creates a target called &#34;&lt;name&gt;-java&#34;.
+
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.sdk_version">
+        <span class="fixed">&nbsp;</span><b>sdk_version </b>
+        <i>string</i>, Set to the version of the sdk to compile against
+Default: system_current
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.platform_apis">
+        <span class="fixed">&nbsp;</span><b>platform_apis </b>
+        <i>bool</i>, Whether to compile against platform APIs instead of
+an SDK.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.gen_rpc">
+        <span class="fixed">&nbsp;</span><b>gen_rpc </b>
+        <i>bool</i>, Whether RPC features are enabled (requires API level 32)
+TODO(b/175819535): enable this automatically?
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, Whether to generate code in the corresponding backend.
+Default:
+<pre>
+
+  - for Java/NDK/CPP backends - True
+  - for Rust backend - False
+
+</pre>
+</div>
+    <div class="simple" id="aidl_interface_defaults.apex_available">
+        <span class="fixed">&nbsp;</span><b>apex_available </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="aidl_interface_defaults.min_sdk_version">
+        <span class="fixed">&nbsp;</span><b>min_sdk_version </b>
+        <i>string</i>, The minimum version of the sdk that the compiled artifacts will run against
+For native modules, the property needs to be set when a module is a part of mainline modules(APEX).
+Forwarded to generated java/native module.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.gen_trace">
+        <span class="fixed">&nbsp;</span><b>gen_trace </b>
+        <i>bool</i>, Whether tracing should be added to the interface.
+
+</div>
+    <div class="accordion"  id="aidl_interface_defaults.lint">
+        <span class="fixed">&#x2295</span><b>lint</b>
+        <i></i></div>
+      <div class="collapsible">Controls for running Android Lint on the module.
+
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, If true, run Android Lint on the module.  Defaults to true.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.flags">
+        <span class="fixed">&nbsp;</span><b>flags </b>
+        <i>list of string</i>, Flags to pass to the Android Lint tool.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.fatal_checks">
+        <span class="fixed">&nbsp;</span><b>fatal_checks </b>
+        <i>list of string</i>, Checks that should be treated as fatal.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.error_checks">
+        <span class="fixed">&nbsp;</span><b>error_checks </b>
+        <i>list of string</i>, Checks that should be treated as errors.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.warning_checks">
+        <span class="fixed">&nbsp;</span><b>warning_checks </b>
+        <i>list of string</i>, Checks that should be treated as warnings.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.disabled_checks">
+        <span class="fixed">&nbsp;</span><b>disabled_checks </b>
+        <i>list of string</i>, Checks that should be skipped.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.extra_check_modules">
+        <span class="fixed">&nbsp;</span><b>extra_check_modules </b>
+        <i>list of string</i>, Modules that provide extra lint checks
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.baseline_filename">
+        <span class="fixed">&nbsp;</span><b>baseline_filename </b>
+        <i>string</i>, Name of the file that lint uses as the baseline. Defaults to &#34;lint-baseline.xml&#34;.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.strict_updatability_linting">
+        <span class="fixed">&nbsp;</span><b>strict_updatability_linting </b>
+        <i>bool</i>, If true, baselining updatability lint checks (e.g. NewApi) is prohibited. Defaults to false.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.test">
+        <span class="fixed">&nbsp;</span><b>test </b>
+        <i>bool</i>, Treat the code in this module as test code for @VisibleForTesting enforcement.
+This will be true by default for test module types, false otherwise.
+If soong gets support for testonly, this flag should be replaced with that.
+
+</div></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.backend.ndk">
+        <span class="fixed">&#x2295</span><b>backend.ndk</b>
+        <i></i></div>
+      <div class="collapsible">Backend of the compiler generating code for C++ clients using libbinder_ndk
+(stable C interface to system&#39;s libbinder) When enabled, this creates a target
+called &#34;&lt;name&gt;-V&lt;ver&gt;-ndk&#34; (for both apps and platform) and
+&#34;&lt;name&gt;-V&lt;ver&gt;-ndk_platform&#34; (for platform only).
+TODO(b/161456198): remove the ndk_platform backend as the ndk backend can serve
+the same purpose.
+
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.sdk_version">
+        <span class="fixed">&nbsp;</span><b>sdk_version </b>
+        <i>string</i>, Set to the version of the sdk to compile against, for the NDK
+variant.
+Default: current
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.apps_enabled">
+        <span class="fixed">&nbsp;</span><b>apps_enabled </b>
+        <i>bool</i>, If set to false, the ndk backend is exclusive to platform and is not
+available to applications. Default is true (i.e. available to both
+applications and platform).
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.additional_shared_libraries">
+        <span class="fixed">&nbsp;</span><b>additional_shared_libraries </b>
+        <i>list of string</i>, Must be NDK libraries, for stable types.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.cflags">
+        <span class="fixed">&nbsp;</span><b>cflags </b>
+        <i>list of string</i>, cflags to forward to native compilation. This is expected to be
+used more for AIDL compiler developers than being actually
+practical.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.gen_log">
+        <span class="fixed">&nbsp;</span><b>gen_log </b>
+        <i>bool</i>, Whether to generate additional code for gathering information
+about the transactions.
+Default: false
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, Whether to generate code in the corresponding backend.
+Default:
+<pre>
+
+  - for Java/NDK/CPP backends - True
+  - for Rust backend - False
+
+</pre>
+</div>
+    <div class="simple" id="aidl_interface_defaults.apex_available">
+        <span class="fixed">&nbsp;</span><b>apex_available </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="aidl_interface_defaults.min_sdk_version">
+        <span class="fixed">&nbsp;</span><b>min_sdk_version </b>
+        <i>string</i>, The minimum version of the sdk that the compiled artifacts will run against
+For native modules, the property needs to be set when a module is a part of mainline modules(APEX).
+Forwarded to generated java/native module.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.gen_trace">
+        <span class="fixed">&nbsp;</span><b>gen_trace </b>
+        <i>bool</i>, Whether tracing should be added to the interface.
+
+</div>
+    <div class="accordion"  id="aidl_interface_defaults.vndk">
+        <span class="fixed">&#x2295</span><b>vndk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, declared as a VNDK or VNDK-SP module. The vendor variant
+will be installed in /system instead of /vendor partition.
+
+`vendor_available` and `product_available` must be explicitly
+set to either true or false together with `vndk: {enabled: true}`.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.support_system_process">
+        <span class="fixed">&nbsp;</span><b>support_system_process </b>
+        <i>bool</i>, declared as a VNDK-SP module, which is a subset of VNDK.
+
+`vndk: { enabled: true }` must set together.
+
+All these modules are allowed to link to VNDK-SP or LL-NDK
+modules only. Other dependency will cause link-type errors.
+
+If `support_system_process` is not set or set to false,
+the module is VNDK-core and can link to other VNDK-core,
+VNDK-SP or LL-NDK modules only.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.private">
+        <span class="fixed">&nbsp;</span><b>private </b>
+        <i>bool</i>, declared as a VNDK-private module.
+This module still creates the vendor and product variants refering
+to the `vendor_available: true` and `product_available: true`
+properties. However, it is only available to the other VNDK modules
+but not to the non-VNDK vendor or product modules.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.extends">
+        <span class="fixed">&nbsp;</span><b>extends </b>
+        <i>string</i>, Extending another module
+
+</div></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.backend.rust">
+        <span class="fixed">&#x2295</span><b>backend.rust</b>
+        <i></i></div>
+      <div class="collapsible">Backend of the compiler generating code for Rust clients.
+When enabled, this creates a target called &#34;&lt;name&gt;-rust&#34;.
+
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, Whether to generate code in the corresponding backend.
+Default:
+<pre>
+
+  - for Java/NDK/CPP backends - True
+  - for Rust backend - False
+
+</pre>
+</div>
+    <div class="simple" id="aidl_interface_defaults.apex_available">
+        <span class="fixed">&nbsp;</span><b>apex_available </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="aidl_interface_defaults.min_sdk_version">
+        <span class="fixed">&nbsp;</span><b>min_sdk_version </b>
+        <i>string</i>, The minimum version of the sdk that the compiled artifacts will run against
+For native modules, the property needs to be set when a module is a part of mainline modules(APEX).
+Forwarded to generated java/native module.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.gen_trace">
+        <span class="fixed">&nbsp;</span><b>gen_trace </b>
+        <i>bool</i>, Whether tracing should be added to the interface.
+
+</div></div>
+    <div class="accordion"  id="aidl_interface_defaults.bazel_module">
+        <span class="fixed">&#x2295</span><b>bazel_module</b>
+        <i>bazelModuleProperties</i></div>
+      <div class="collapsible">In &#34;Bazel mixed build&#34; mode, this represents the Bazel target replacing
+this Soong module.
+
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.label">
+        <span class="fixed">&nbsp;</span><b>label </b>
+        <i>string</i>, The label of the Bazel target replacing this Soong module. When run in conversion mode, this
+will import the handcrafted build target into the autogenerated file. Note: this may result in
+a conflict due to duplicate targets if bp2build_available is also set.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.bp2build_available">
+        <span class="fixed">&nbsp;</span><b>bp2build_available </b>
+        <i>bool</i>, If true, bp2build will generate the converted Bazel target for this module. Note: this may
+cause a conflict due to the duplicate targets if label is also set.
+
+This is a bool pointer to support tristates: true, false, not set.
+
+To opt in a module, set bazel_module: { bp2build_available: true }
+To opt out a module, set bazel_module: { bp2build_available: false }
+To defer the default setting for the directory, do not set the value.
+
+</div></div>
+    <div class="simple" id="aidl_interface_defaults.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.defaults_visibility">
+        <span class="fixed">&nbsp;</span><b>defaults_visibility </b>
+        <i>list of string</i>, Controls the visibility of the defaults module itself.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="aidl_interface_defaults.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="aidl_interface_defaults.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.double_loadable">
+        <span class="fixed">&nbsp;</span><b>double_loadable </b>
+        <i>bool</i>, Whether the library can be loaded multiple times into the same process
+
+</div>
+    <div class="accordion"  id="aidl_interface_defaults.dumpapi">
+        <span class="fixed">&#x2295</span><b>dumpapi</b>
+        <i>DumpApiProperties</i></div>
+      <div class="collapsible">--dumpapi options
+
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.no_license">
+        <span class="fixed">&nbsp;</span><b>no_license </b>
+        <i>bool</i>, Dumps without license header (assuming it is the first comment in .aidl file). Default: false
+
+</div></div>
+    <div class="simple" id="aidl_interface_defaults.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.flags">
+        <span class="fixed">&nbsp;</span><b>flags </b>
+        <i>list of string</i>, Optional flags to be passed to the AIDL compiler. e.g. &#34;-Weverything&#34;
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.frozen">
+        <span class="fixed">&nbsp;</span><b>frozen </b>
+        <i>bool</i>, If true, this interface is frozen and does not have any changes since the last
+frozen version.
+If false, there are changes to this interface between the last frozen version (N) and
+the current version (N + 1).
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.gen_trace">
+        <span class="fixed">&nbsp;</span><b>gen_trace </b>
+        <i>bool</i>, Whether tracing should be added to the interface.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.headers">
+        <span class="fixed">&nbsp;</span><b>headers </b>
+        <i>list of string</i>, List of aidl_interface_headers modules that provide include dependencies
+for the AIDL tool.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.imports">
+        <span class="fixed">&nbsp;</span><b>imports </b>
+        <i>list of string</i>, List of aidl_interface modules that this uses. If one of your AIDL interfaces uses an
+interface or parcelable from another aidl_interface, you should put its name here.
+It could be an aidl_interface solely or with version(such as -V1)
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.include_dirs">
+        <span class="fixed">&nbsp;</span><b>include_dirs </b>
+        <i>list of string</i>, Top level directories for includes.
+TODO(b/128940869): remove it if aidl_interface can depend on framework.aidl
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.local_include_dir">
+        <span class="fixed">&nbsp;</span><b>local_include_dir </b>
+        <i>string</i>, Relative path for includes. By default assumes AIDL path is relative to current directory.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.min_sdk_version">
+        <span class="fixed">&nbsp;</span><b>min_sdk_version </b>
+        <i>string</i>, The minimum version of the sdk that the compiled artifacts will run against
+For native modules, the property needs to be set when a module is a part of mainline modules(APEX).
+Forwarded to generated java/native module. This can be overridden by
+backend.&lt;name&gt;.min_sdk_version.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="aidl_interface_defaults.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.odm_available">
+        <span class="fixed">&nbsp;</span><b>odm_available </b>
+        <i>bool</i>, Whether the library can be installed on the odm image.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.product_available">
+        <span class="fixed">&nbsp;</span><b>product_available </b>
+        <i>bool</i>, Whether the library can be installed on the product image.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="aidl_interface_defaults.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_defaults.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_defaults.include_dirs">
+        <span class="fixed">&#x2295</span><b>include_dirs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_defaults.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_defaults.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_defaults.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_defaults.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_defaults.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_defaults.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_defaults.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="aidl_interface_defaults.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.recovery_available">
+        <span class="fixed">&nbsp;</span><b>recovery_available </b>
+        <i>bool</i>, Whether the library can be installed on the recovery image.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.stability">
+        <span class="fixed">&nbsp;</span><b>stability </b>
+        <i>string</i>, Stability promise. Currently only supports &#34;vintf&#34;.
+If this is unset, this corresponds to an interface with stability within
+this compilation context (so an interface loaded here can only be used
+with things compiled together, e.g. on the system.img).
+If this is set to &#34;vintf&#34;, this corresponds to a stability promise: the
+interface must be kept stable as long as it is used.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="aidl_interface_defaults.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="aidl_interface_defaults.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="aidl_interface_defaults.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.unstable">
+        <span class="fixed">&nbsp;</span><b>unstable </b>
+        <i>bool</i>, Marks that this interface does not need to be stable. When set to true, the build system
+doesn&#39;t create the API dump and require it to be updated. Default is false.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.vendor_available">
+        <span class="fixed">&nbsp;</span><b>vendor_available </b>
+        <i>bool</i>, Whether the library can be installed on the vendor image.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.versions">
+        <span class="fixed">&nbsp;</span><b>versions </b>
+        <i>list of string</i>, Deprecated: Use `versions_with_info` instead. Don&#39;t use `versions` property directly.
+
+</div>
+    <div class="accordion"  id="aidl_interface_defaults.versions_with_info">
+        <span class="fixed">&#x2295</span><b>versions_with_info</b>
+        <i>list of </i></div>
+      <div class="collapsible">Previous API versions that are now frozen. The version that is last in
+the list is considered as the most recent version.
+The struct contains both version and imports information per a version.
+Until versions property is removed, don&#39;t use `versions_with_info` directly.
+
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.version">
+        <span class="fixed">&nbsp;</span><b>version </b>
+        <i>string</i>
+</div>
+    <div class="simple" id="aidl_interface_defaults.imports">
+        <span class="fixed">&nbsp;</span><b>imports </b>
+        <i>list of string</i>
+</div></div>
+    <div class="simple" id="aidl_interface_defaults.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+    <div class="accordion"  id="aidl_interface_defaults.vndk">
+        <span class="fixed">&#x2295</span><b>vndk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_defaults.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, declared as a VNDK or VNDK-SP module. The vendor variant
+will be installed in /system instead of /vendor partition.
+
+`vendor_available` and `product_available` must be explicitly
+set to either true or false together with `vndk: {enabled: true}`.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.support_system_process">
+        <span class="fixed">&nbsp;</span><b>support_system_process </b>
+        <i>bool</i>, declared as a VNDK-SP module, which is a subset of VNDK.
+
+`vndk: { enabled: true }` must set together.
+
+All these modules are allowed to link to VNDK-SP or LL-NDK
+modules only. Other dependency will cause link-type errors.
+
+If `support_system_process` is not set or set to false,
+the module is VNDK-core and can link to other VNDK-core,
+VNDK-SP or LL-NDK modules only.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.private">
+        <span class="fixed">&nbsp;</span><b>private </b>
+        <i>bool</i>, declared as a VNDK-private module.
+This module still creates the vendor and product variants refering
+to the `vendor_available: true` and `product_available: true`
+properties. However, it is only available to the other VNDK modules
+but not to the non-VNDK vendor or product modules.
+
+</div>
+    <div class="simple" id="aidl_interface_defaults.extends">
+        <span class="fixed">&nbsp;</span><b>extends </b>
+        <i>string</i>, Extending another module
+
+</div></div>
+    <div class="simple" id="aidl_interface_defaults.vndk_use_version">
+        <span class="fixed">&nbsp;</span><b>vndk_use_version </b>
+        <i>string</i>, How to interpret VNDK options. We only want one library in the VNDK (not multiple
+versions, since this would be a waste of space/unclear, and ultimately we want all
+code in a given release to be updated to use a specific version). By default, this
+puts either the latest stable version of the library or, if there is no stable
+version, the unstable version of the library in the VNDK. When using this field,
+explicitly set it to one of the values in the &#39;versions&#39; field to put that version
+in the VNDK or set it to the next version (1 higher than this) to mean the version
+that will be frozen in the next update.
+
+</div>
+	
+	<p>
+  <h2 id="aidl_interface_headers">aidl_interface_headers</h2>
+  Modules which provide AIDL sources that are only used to provide &#34;-I&#34; flags to the
+aidl tool. No language bindings are generated from these modules. Typically this will
+be used to provide includes for UnstructuredParcelable AIDL definitions such as those
+coming from framework modules.
+
+<div class="breadcrumb">
+    
+				<a href=aidl.html#aidl_interface_headers.name>name</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.srcs>srcs</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.bazel_module>bazel_module</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.device_specific>device_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.dist>dist</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.dists>dists</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.enabled>enabled</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.host_required>host_required</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.include_dir>include_dir</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.init_rc>init_rc</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.licenses>licenses</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.owner>owner</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.product_specific>product_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.proprietary>proprietary</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.ramdisk>ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.recovery>recovery</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.required>required</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.soc_specific>soc_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.target.android>target.android</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.target.host>target.host</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.target_required>target_required</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.vendor>vendor</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=aidl.html#aidl_interface_headers.visibility>visibility</a></div>
+    <div class="simple" id="aidl_interface_headers.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="aidl_interface_headers.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, List of .aidl files which compose this interface.
+
+</div>
+    <div class="accordion"  id="aidl_interface_headers.bazel_module">
+        <span class="fixed">&#x2295</span><b>bazel_module</b>
+        <i>bazelModuleProperties</i></div>
+      <div class="collapsible">In &#34;Bazel mixed build&#34; mode, this represents the Bazel target replacing
+this Soong module.
+
+ 
+        
+    <div class="simple" id="aidl_interface_headers.label">
+        <span class="fixed">&nbsp;</span><b>label </b>
+        <i>string</i>, The label of the Bazel target replacing this Soong module. When run in conversion mode, this
+will import the handcrafted build target into the autogenerated file. Note: this may result in
+a conflict due to duplicate targets if bp2build_available is also set.
+
+</div>
+    <div class="simple" id="aidl_interface_headers.bp2build_available">
+        <span class="fixed">&nbsp;</span><b>bp2build_available </b>
+        <i>bool</i>, If true, bp2build will generate the converted Bazel target for this module. Note: this may
+cause a conflict due to the duplicate targets if label is also set.
+
+This is a bool pointer to support tristates: true, false, not set.
+
+To opt in a module, set bazel_module: { bp2build_available: true }
+To opt out a module, set bazel_module: { bp2build_available: false }
+To defer the default setting for the directory, do not set the value.
+
+</div></div>
+    <div class="simple" id="aidl_interface_headers.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="aidl_interface_headers.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="aidl_interface_headers.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="aidl_interface_headers.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="aidl_interface_headers.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="aidl_interface_headers.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="aidl_interface_headers.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="aidl_interface_headers.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="aidl_interface_headers.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="aidl_interface_headers.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="aidl_interface_headers.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="aidl_interface_headers.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="aidl_interface_headers.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface_headers.include_dir">
+        <span class="fixed">&nbsp;</span><b>include_dir </b>
+        <i>string</i>, Relative path for includes. assumes AIDL path is relative to current directory.
+
+</div>
+    <div class="simple" id="aidl_interface_headers.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface_headers.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="aidl_interface_headers.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="aidl_interface_headers.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="aidl_interface_headers.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="aidl_interface_headers.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_headers.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_headers.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_headers.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_headers.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_headers.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface_headers.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface_headers.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface_headers.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interface_headers.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_headers.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_headers.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_headers.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_headers.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_headers.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_headers.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_headers.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_headers.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interface_headers.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interface_headers.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="aidl_interface_headers.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="aidl_interface_headers.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="aidl_interface_headers.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="aidl_interface_headers.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface_headers.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="aidl_interface_headers.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="aidl_interface_headers.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="aidl_interface_headers.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interface_headers.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="aidl_interface_headers.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface_headers.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="aidl_interface_headers.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="aidl_interface_headers.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interface_headers.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="aidl_interfaces_metadata">aidl_interfaces_metadata</h2>
+  
+<div class="breadcrumb">
+    
+				<a href=aidl.html#aidl_interfaces_metadata.name>name</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.device_specific>device_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.dist>dist</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.dists>dists</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.enabled>enabled</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.host_required>host_required</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.init_rc>init_rc</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.licenses>licenses</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.owner>owner</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.product_specific>product_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.proprietary>proprietary</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.ramdisk>ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.recovery>recovery</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.required>required</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.soc_specific>soc_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.target.android>target.android</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.target.host>target.host</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.target_required>target_required</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.vendor>vendor</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=aidl.html#aidl_interfaces_metadata.visibility>visibility</a></div>
+    <div class="simple" id="aidl_interfaces_metadata.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="aidl_interfaces_metadata.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="aidl_interfaces_metadata.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="aidl_interfaces_metadata.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="aidl_interfaces_metadata.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interfaces_metadata.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interfaces_metadata.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interfaces_metadata.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interfaces_metadata.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interfaces_metadata.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interfaces_metadata.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interfaces_metadata.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interfaces_metadata.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interfaces_metadata.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="aidl_interfaces_metadata.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interfaces_metadata.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="aidl_interfaces_metadata.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interfaces_metadata.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interfaces_metadata.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interfaces_metadata.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interfaces_metadata.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interfaces_metadata.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="aidl_interfaces_metadata.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="aidl_interfaces_metadata.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interfaces_metadata.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="aidl_interfaces_metadata.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="aidl_interfaces_metadata.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interfaces_metadata.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="aidl_interfaces_metadata.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="aidl_interfaces_metadata.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="aidl_interfaces_metadata.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="aidl_interfaces_metadata.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div></div>
+<script>
+  accordions = document.getElementsByClassName('accordion');
+  for (i=0; i < accordions.length; ++i) {
+    accordions[i].addEventListener("click", function() {
+      var panel = this.nextElementSibling;
+      var child = this.firstElementChild;
+      if (panel.style.display === "block") {
+          panel.style.display = "none";
+          child.textContent = '\u2295';
+      } else {
+          panel.style.display = "block";
+          child.textContent = '\u2296';
+      }
+    });
+  }
+</script>
+</body>

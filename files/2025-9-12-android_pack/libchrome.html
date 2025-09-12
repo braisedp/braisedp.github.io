@@ -1,0 +1,2466 @@
+
+<html>
+<head>
+<title>Build Docs</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<style>
+.accordion,.simple{margin-left:1.5em;text-indent:-1.5em;margin-top:.25em}
+.collapsible{border-width:0 0 0 1;margin-left:.25em;padding-left:.25em;border-style:solid;
+  border-color:grey;display:none;}
+span.fixed{display: block; float: left; clear: left; width: 1em;}
+ul {
+	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 30ch;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+</style>
+
+<script type="text/javascript">
+window.addEventListener('message', (e) => {
+  if (e != null && e.data != null && e.data.type === "SET_BASE" && e.data.base != null) {
+    const existingBase = document.querySelector('base');
+    if (existingBase != null) {
+      existingBase.parentElement.removeChild(existingBase);
+    }
+
+    const base = document.createElement('base');
+    base.setAttribute('href', e.data.base);
+    document.head.appendChild(base);
+  }
+});
+</script>
+
+</head>
+<body><ul>
+<li><h3>libchrome package</h3></li>
+<li><a href="libchrome.html#generate_mojom_downgraded_files">generate_mojom_downgraded_files</a></li>
+<li><a href="libchrome.html#generate_mojom_headers">generate_mojom_headers</a></li>
+<li><a href="libchrome.html#generate_mojom_pickles">generate_mojom_pickles</a></li>
+<li><a href="libchrome.html#generate_mojom_srcjar">generate_mojom_srcjar</a></li>
+<li><a href="libchrome.html#generate_mojom_srcs">generate_mojom_srcs</a></li>
+</ul>
+
+<div style="margin-left:30ch;padding:1px 16px;">
+
+	
+	<p>
+  <h2 id="generate_mojom_downgraded_files">generate_mojom_downgraded_files</h2>
+  
+<div class="breadcrumb">
+    
+				<a href=libchrome.html#generate_mojom_downgraded_files.name>name</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.srcs>srcs</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.device_specific>device_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.dist>dist</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.dists>dists</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.enabled>enabled</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.host_required>host_required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.init_rc>init_rc</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.licenses>licenses</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.owner>owner</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.product_specific>product_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.proprietary>proprietary</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.ramdisk>ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.recovery>recovery</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.required>required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.soc_specific>soc_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.target.android>target.android</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.target.host>target.host</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.target_required>target_required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.vendor>vendor</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_downgraded_files.visibility>visibility</a></div>
+    <div class="simple" id="generate_mojom_downgraded_files.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, list of input files
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="generate_mojom_downgraded_files.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_downgraded_files.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_downgraded_files.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_downgraded_files.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_downgraded_files.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_downgraded_files.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_downgraded_files.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_downgraded_files.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_downgraded_files.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="generate_mojom_downgraded_files.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="generate_mojom_downgraded_files.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_downgraded_files.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="generate_mojom_downgraded_files.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_downgraded_files.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="generate_mojom_headers">generate_mojom_headers</h2>
+  
+<div class="breadcrumb">
+    
+				<a href=libchrome.html#generate_mojom_headers.name>name</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.srcs>srcs</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.device_specific>device_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.dist>dist</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.dists>dists</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.enabled>enabled</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.flags>flags</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.host_required>host_required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.includes>includes</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.init_rc>init_rc</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.licenses>licenses</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.owner>owner</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.pickles>pickles</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.product_specific>product_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.proprietary>proprietary</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.ramdisk>ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.recovery>recovery</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.required>required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.soc_specific>soc_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.srcjar>srcjar</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.target.android>target.android</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.target.host>target.host</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.target_required>target_required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.templates>templates</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.typemaps>typemaps</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.use_once_callback>use_once_callback</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.vendor>vendor</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_headers.visibility>visibility</a></div>
+    <div class="simple" id="generate_mojom_headers.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="generate_mojom_headers.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, list of input files
+
+</div>
+    <div class="simple" id="generate_mojom_headers.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="generate_mojom_headers.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_headers.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="generate_mojom_headers.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="generate_mojom_headers.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="generate_mojom_headers.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="generate_mojom_headers.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="generate_mojom_headers.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="generate_mojom_headers.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="generate_mojom_headers.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="generate_mojom_headers.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="generate_mojom_headers.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="generate_mojom_headers.flags">
+        <span class="fixed">&nbsp;</span><b>flags </b>
+        <i>string</i>, Additional flags to pass to the bindings generation script
+
+</div>
+    <div class="simple" id="generate_mojom_headers.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_headers.includes">
+        <span class="fixed">&nbsp;</span><b>includes </b>
+        <i>list of string</i>, list of include paths
+
+</div>
+    <div class="simple" id="generate_mojom_headers.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_headers.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="generate_mojom_headers.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="generate_mojom_headers.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="generate_mojom_headers.pickles">
+        <span class="fixed">&nbsp;</span><b>pickles </b>
+        <i>list of string</i>, list of pickles modules that will be imported
+
+</div>
+    <div class="simple" id="generate_mojom_headers.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="generate_mojom_headers.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_headers.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_headers.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_headers.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_headers.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_headers.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_headers.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_headers.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_headers.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_headers.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_headers.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_headers.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_headers.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_headers.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_headers.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_headers.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_headers.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_headers.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_headers.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_headers.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="generate_mojom_headers.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="generate_mojom_headers.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_headers.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="generate_mojom_headers.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_headers.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="generate_mojom_headers.srcjar">
+        <span class="fixed">&nbsp;</span><b>srcjar </b>
+        <i>string</i>, name of the output .srcjar
+
+</div>
+    <div class="simple" id="generate_mojom_headers.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="generate_mojom_headers.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="generate_mojom_headers.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_headers.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="generate_mojom_headers.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_headers.templates">
+        <span class="fixed">&nbsp;</span><b>templates </b>
+        <i>string</i>, name of the templates module
+
+</div>
+    <div class="simple" id="generate_mojom_headers.typemaps">
+        <span class="fixed">&nbsp;</span><b>typemaps </b>
+        <i>list of string</i>, list of typemaps modules that will be imported
+
+</div>
+    <div class="simple" id="generate_mojom_headers.use_once_callback">
+        <span class="fixed">&nbsp;</span><b>use_once_callback </b>
+        <i>bool</i>, If true, set --use_once_callback flag to the generator.
+This works only on C++ generation.
+
+</div>
+    <div class="simple" id="generate_mojom_headers.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="generate_mojom_headers.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_headers.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_headers.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="generate_mojom_pickles">generate_mojom_pickles</h2>
+  
+<div class="breadcrumb">
+    
+				<a href=libchrome.html#generate_mojom_pickles.name>name</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.srcs>srcs</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.device_specific>device_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.dist>dist</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.dists>dists</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.enabled>enabled</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.host_required>host_required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.init_rc>init_rc</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.licenses>licenses</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.owner>owner</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.product_specific>product_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.proprietary>proprietary</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.ramdisk>ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.recovery>recovery</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.required>required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.soc_specific>soc_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.target.android>target.android</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.target.host>target.host</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.target_required>target_required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.vendor>vendor</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_pickles.visibility>visibility</a></div>
+    <div class="simple" id="generate_mojom_pickles.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, list of input files
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="generate_mojom_pickles.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="generate_mojom_pickles.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="generate_mojom_pickles.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_pickles.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_pickles.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_pickles.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_pickles.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_pickles.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_pickles.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_pickles.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_pickles.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_pickles.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_pickles.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_pickles.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_pickles.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_pickles.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_pickles.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_pickles.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_pickles.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_pickles.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_pickles.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_pickles.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="generate_mojom_pickles.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="generate_mojom_pickles.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="generate_mojom_pickles.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_pickles.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="generate_mojom_pickles.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_pickles.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="generate_mojom_srcjar">generate_mojom_srcjar</h2>
+  
+<div class="breadcrumb">
+    
+				<a href=libchrome.html#generate_mojom_srcjar.name>name</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.srcs>srcs</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.device_specific>device_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.dist>dist</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.dists>dists</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.enabled>enabled</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.flags>flags</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.host_required>host_required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.includes>includes</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.init_rc>init_rc</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.licenses>licenses</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.owner>owner</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.pickles>pickles</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.product_specific>product_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.proprietary>proprietary</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.ramdisk>ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.recovery>recovery</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.required>required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.soc_specific>soc_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.srcjar>srcjar</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.target.android>target.android</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.target.host>target.host</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.target_required>target_required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.templates>templates</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.typemaps>typemaps</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.use_once_callback>use_once_callback</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.vendor>vendor</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcjar.visibility>visibility</a></div>
+    <div class="simple" id="generate_mojom_srcjar.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, list of input files
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="generate_mojom_srcjar.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="generate_mojom_srcjar.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.flags">
+        <span class="fixed">&nbsp;</span><b>flags </b>
+        <i>string</i>, Additional flags to pass to the bindings generation script
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.includes">
+        <span class="fixed">&nbsp;</span><b>includes </b>
+        <i>list of string</i>, list of include paths
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.pickles">
+        <span class="fixed">&nbsp;</span><b>pickles </b>
+        <i>list of string</i>, list of pickles modules that will be imported
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="generate_mojom_srcjar.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcjar.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcjar.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcjar.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcjar.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcjar.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcjar.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcjar.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcjar.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="generate_mojom_srcjar.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.srcjar">
+        <span class="fixed">&nbsp;</span><b>srcjar </b>
+        <i>string</i>, name of the output .srcjar
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="generate_mojom_srcjar.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="generate_mojom_srcjar.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcjar.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="generate_mojom_srcjar.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.templates">
+        <span class="fixed">&nbsp;</span><b>templates </b>
+        <i>string</i>, name of the templates module
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.typemaps">
+        <span class="fixed">&nbsp;</span><b>typemaps </b>
+        <i>list of string</i>, list of typemaps modules that will be imported
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.use_once_callback">
+        <span class="fixed">&nbsp;</span><b>use_once_callback </b>
+        <i>bool</i>, If true, set --use_once_callback flag to the generator.
+This works only on C++ generation.
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_srcjar.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="generate_mojom_srcs">generate_mojom_srcs</h2>
+  
+<div class="breadcrumb">
+    
+				<a href=libchrome.html#generate_mojom_srcs.name>name</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.srcs>srcs</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.device_specific>device_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.dist>dist</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.dists>dists</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.enabled>enabled</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.flags>flags</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.host_required>host_required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.includes>includes</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.init_rc>init_rc</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.licenses>licenses</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.owner>owner</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.pickles>pickles</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.product_specific>product_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.proprietary>proprietary</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.ramdisk>ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.recovery>recovery</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.required>required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.soc_specific>soc_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.srcjar>srcjar</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.target.android>target.android</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.target.host>target.host</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.target_required>target_required</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.templates>templates</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.typemaps>typemaps</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.use_once_callback>use_once_callback</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.vendor>vendor</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=libchrome.html#generate_mojom_srcs.visibility>visibility</a></div>
+    <div class="simple" id="generate_mojom_srcs.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, list of input files
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="generate_mojom_srcs.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="generate_mojom_srcs.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.flags">
+        <span class="fixed">&nbsp;</span><b>flags </b>
+        <i>string</i>, Additional flags to pass to the bindings generation script
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.includes">
+        <span class="fixed">&nbsp;</span><b>includes </b>
+        <i>list of string</i>, list of include paths
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.pickles">
+        <span class="fixed">&nbsp;</span><b>pickles </b>
+        <i>list of string</i>, list of pickles modules that will be imported
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="generate_mojom_srcs.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcs.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcs.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcs.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcs.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcs.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_srcs.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_srcs.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_srcs.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="generate_mojom_srcs.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcs.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcs.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcs.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcs.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcs.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcs.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcs.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcs.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="generate_mojom_srcs.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="generate_mojom_srcs.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="generate_mojom_srcs.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.srcjar">
+        <span class="fixed">&nbsp;</span><b>srcjar </b>
+        <i>string</i>, name of the output .srcjar
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="generate_mojom_srcs.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="generate_mojom_srcs.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="generate_mojom_srcs.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="generate_mojom_srcs.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.templates">
+        <span class="fixed">&nbsp;</span><b>templates </b>
+        <i>string</i>, name of the templates module
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.typemaps">
+        <span class="fixed">&nbsp;</span><b>typemaps </b>
+        <i>list of string</i>, list of typemaps modules that will be imported
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.use_once_callback">
+        <span class="fixed">&nbsp;</span><b>use_once_callback </b>
+        <i>bool</i>, If true, set --use_once_callback flag to the generator.
+This works only on C++ generation.
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="generate_mojom_srcs.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div></div>
+<script>
+  accordions = document.getElementsByClassName('accordion');
+  for (i=0; i < accordions.length; ++i) {
+    accordions[i].addEventListener("click", function() {
+      var panel = this.nextElementSibling;
+      var child = this.firstElementChild;
+      if (panel.style.display === "block") {
+          panel.style.display = "none";
+          child.textContent = '\u2295';
+      } else {
+          panel.style.display = "block";
+          child.textContent = '\u2296';
+      }
+    });
+  }
+</script>
+</body>

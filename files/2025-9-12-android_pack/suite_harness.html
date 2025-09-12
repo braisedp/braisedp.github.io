@@ -1,0 +1,1000 @@
+
+<html>
+<head>
+<title>Build Docs</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<style>
+.accordion,.simple{margin-left:1.5em;text-indent:-1.5em;margin-top:.25em}
+.collapsible{border-width:0 0 0 1;margin-left:.25em;padding-left:.25em;border-style:solid;
+  border-color:grey;display:none;}
+span.fixed{display: block; float: left; clear: left; width: 1em;}
+ul {
+	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 30ch;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+</style>
+
+<script type="text/javascript">
+window.addEventListener('message', (e) => {
+  if (e != null && e.data != null && e.data.type === "SET_BASE" && e.data.base != null) {
+    const existingBase = document.querySelector('base');
+    if (existingBase != null) {
+      existingBase.parentElement.removeChild(existingBase);
+    }
+
+    const base = document.createElement('base');
+    base.setAttribute('href', e.data.base);
+    document.head.appendChild(base);
+  }
+});
+</script>
+
+</head>
+<body><ul>
+<li><h3>suite_harness package</h3></li>
+<li><a href="suite_harness.html#tradefed_binary_host">tradefed_binary_host</a></li>
+</ul>
+
+<div style="margin-left:30ch;padding:1px 16px;">
+
+	
+	<p>
+  <h2 id="tradefed_binary_host">tradefed_binary_host</h2>
+  tradefedBinaryFactory creates an empty module for the tradefed_binary module type,
+which is a java_binary with some additional processing in tradefedBinaryLoadHook.
+
+<div class="breadcrumb">
+    
+				<a href=suite_harness.html#tradefed_binary_host.name>name</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.srcs>srcs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.exclude_srcs>exclude_srcs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.defaults>defaults</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.arch>arch</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.bazel_module>bazel_module</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.common_srcs>common_srcs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.device_specific>device_specific</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.dist>dist</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.dists>dists</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.enabled>enabled</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.enforce_uses_libs>enforce_uses_libs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.errorprone>errorprone</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.exclude_java_resource_dirs>exclude_java_resource_dirs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.exclude_java_resources>exclude_java_resources</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.exclude_uses_libs>exclude_uses_libs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.exported_plugins>exported_plugins</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.full_name>full_name</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.hiddenapi_additional_annotations>hiddenapi_additional_annotations</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.host_required>host_required</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.include_srcs>include_srcs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.init_rc>init_rc</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.installable>installable</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.jacoco>jacoco</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.jarjar_rules>jarjar_rules</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.java_resource_dirs>java_resource_dirs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.java_resources>java_resources</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.java_version>java_version</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.javac_shard_size>javac_shard_size</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.javacflags>javacflags</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.jni_libs>jni_libs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.kotlincflags>kotlincflags</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.libs>libs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.licenses>licenses</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.main_class>main_class</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.manifest>manifest</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.multilib>multilib</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.openjdk9>openjdk9</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.optional_uses_libs>optional_uses_libs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.owner>owner</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.patch_module>patch_module</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.permitted_packages>permitted_packages</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.plugins>plugins</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.prepend_platform_version_name>prepend_platform_version_name</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.product_specific>product_specific</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.product_variables.platform_sdk_version_or_codename>product_variables.platform_sdk_version_or_codename</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.proprietary>proprietary</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.proto>proto</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.provides_uses_lib>provides_uses_lib</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.ramdisk>ramdisk</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.recovery>recovery</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.required>required</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.services>services</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.short_name>short_name</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.soc_specific>soc_specific</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.static_kotlin_stdlib>static_kotlin_stdlib</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.static_libs>static_libs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.target>target</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.target.android>target.android</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.target.host>target.host</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.target_required>target_required</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.use_tools_jar>use_tools_jar</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.uses_libs>uses_libs</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.vendor>vendor</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.version>version</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.visibility>visibility</a>
+				,&nbsp;<a href=suite_harness.html#tradefed_binary_host.wrapper>wrapper</a></div>
+    <div class="simple" id="tradefed_binary_host.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, list of source files used to compile the Java module.  May be .java, .kt, .logtags, .proto,
+or .aidl files.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.exclude_srcs">
+        <span class="fixed">&nbsp;</span><b>exclude_srcs </b>
+        <i>list of string</i>, list of source files that should not be used to build the Java module.
+This is most useful in the arch/multilib variants to remove non-common files
+
+</div>
+    <div class="simple" id="tradefed_binary_host.defaults">
+        <span class="fixed">&nbsp;</span><b>defaults </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="tradefed_binary_host.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="tradefed_binary_host.bazel_module">
+        <span class="fixed">&#x2295</span><b>bazel_module</b>
+        <i>bazelModuleProperties</i></div>
+      <div class="collapsible">In &#34;Bazel mixed build&#34; mode, this represents the Bazel target replacing
+this Soong module.
+
+ 
+        
+    <div class="simple" id="tradefed_binary_host.label">
+        <span class="fixed">&nbsp;</span><b>label </b>
+        <i>string</i>, The label of the Bazel target replacing this Soong module. When run in conversion mode, this
+will import the handcrafted build target into the autogenerated file. Note: this may result in
+a conflict due to duplicate targets if bp2build_available is also set.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.bp2build_available">
+        <span class="fixed">&nbsp;</span><b>bp2build_available </b>
+        <i>bool</i>, If true, bp2build will generate the converted Bazel target for this module. Note: this may
+cause a conflict due to the duplicate targets if label is also set.
+
+This is a bool pointer to support tristates: true, false, not set.
+
+To opt in a module, set bazel_module: { bp2build_available: true }
+To opt out a module, set bazel_module: { bp2build_available: false }
+To defer the default setting for the directory, do not set the value.
+
+</div></div>
+    <div class="simple" id="tradefed_binary_host.common_srcs">
+        <span class="fixed">&nbsp;</span><b>common_srcs </b>
+        <i>list of string</i>, list Kotlin of source files containing Kotlin code that should be treated as common code in
+a codebase that supports Kotlin multiplatform.  See
+https://kotlinlang.org/docs/reference/multiplatform.html.  May be only be .kt files.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="tradefed_binary_host.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="tradefed_binary_host.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="tradefed_binary_host.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="tradefed_binary_host.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="tradefed_binary_host.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="tradefed_binary_host.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="tradefed_binary_host.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="tradefed_binary_host.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="tradefed_binary_host.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.enforce_uses_libs">
+        <span class="fixed">&nbsp;</span><b>enforce_uses_libs </b>
+        <i>bool</i>, If true, the list of uses_libs and optional_uses_libs modules must match the AndroidManifest.xml file.  Defaults
+to true if either uses_libs or optional_uses_libs is set.  Will unconditionally default to true in the future.
+
+</div>
+    <div class="accordion"  id="tradefed_binary_host.errorprone">
+        <span class="fixed">&#x2295</span><b>errorprone</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.javacflags">
+        <span class="fixed">&nbsp;</span><b>javacflags </b>
+        <i>list of string</i>, List of javac flags that should only be used when running errorprone.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.extra_check_modules">
+        <span class="fixed">&nbsp;</span><b>extra_check_modules </b>
+        <i>list of string</i>, List of java_plugin modules that provide extra errorprone checks.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, This property can be in 3 states. When set to true, errorprone will
+be run during the regular build. When set to false, errorprone will
+never be run. When unset, errorprone will be run when the RUN_ERROR_PRONE
+environment variable is true. Setting this to false will improve build
+performance more than adding -XepDisableAllChecks in javacflags.
+
+</div></div>
+    <div class="simple" id="tradefed_binary_host.exclude_java_resource_dirs">
+        <span class="fixed">&nbsp;</span><b>exclude_java_resource_dirs </b>
+        <i>list of string</i>, list of directories that should be excluded from java_resource_dirs
+
+</div>
+    <div class="simple" id="tradefed_binary_host.exclude_java_resources">
+        <span class="fixed">&nbsp;</span><b>exclude_java_resources </b>
+        <i>list of string</i>, list of files that should be excluded from java_resources and java_resource_dirs
+
+</div>
+    <div class="simple" id="tradefed_binary_host.exclude_uses_libs">
+        <span class="fixed">&nbsp;</span><b>exclude_uses_libs </b>
+        <i>list of string</i>, A list of shared library names to exclude from the classpath of the APK. Adding a library here
+will prevent it from being used when precompiling the APK and prevent it from being implicitly
+added to the APK&#39;s manifest&#39;s &lt;uses-library&gt; elements.
+
+Care must be taken when using this as it could result in runtime errors if the APK actually
+uses classes provided by the library and which are not provided in any other way.
+
+This is primarily intended for use by various CTS tests that check the runtime handling of the
+android.test.base shared library (and related libraries) but which depend on some common
+libraries that depend on the android.test.base library. Without this those tests will end up
+with a &lt;uses-library android:name=&#34;android.test.base&#34;/&gt; in their manifest which would either
+render the tests worthless (as they would be testing the wrong behavior), or would break the
+test altogether by providing access to classes that the tests were not expecting. Those tests
+provide the android.test.base statically and use jarjar to rename them so they do not collide
+with the classes provided by the android.test.base library.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.exported_plugins">
+        <span class="fixed">&nbsp;</span><b>exported_plugins </b>
+        <i>list of string</i>, List of modules to export to libraries that directly depend on this library as annotation
+processors.  Note that if the plugins set generates_api: true this will disable the turbine
+optimization on modules that depend on this module, which will reduce parallelism and cause
+more recompilation.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.full_name">
+        <span class="fixed">&nbsp;</span><b>full_name </b>
+        <i>string</i>
+</div>
+    <div class="simple" id="tradefed_binary_host.hiddenapi_additional_annotations">
+        <span class="fixed">&nbsp;</span><b>hiddenapi_additional_annotations </b>
+        <i>list of string</i>, A list of java_library instances that provide additional hiddenapi annotations for the library.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="tradefed_binary_host.include_srcs">
+        <span class="fixed">&nbsp;</span><b>include_srcs </b>
+        <i>bool</i>, If set to true, include sources used to compile the module in to the final jar
+
+</div>
+    <div class="simple" id="tradefed_binary_host.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="tradefed_binary_host.installable">
+        <span class="fixed">&nbsp;</span><b>installable </b>
+        <i>bool</i>, If set to true, allow this module to be dexed and installed on devices.  Has no
+effect on host modules, which are always considered installable.
+
+<i>Default: true</i></div>
+    <div class="accordion"  id="tradefed_binary_host.jacoco">
+        <span class="fixed">&#x2295</span><b>jacoco</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.include_filter">
+        <span class="fixed">&nbsp;</span><b>include_filter </b>
+        <i>list of string</i>, List of classes to include for instrumentation with jacoco to collect coverage
+information at runtime when building with coverage enabled.  If unset defaults to all
+classes.
+Supports &#39;*&#39; as the last character of an entry in the list as a wildcard match.
+If preceded by &#39;.&#39; it matches all classes in the package and subpackages, otherwise
+it matches classes in the package that have the class name as a prefix.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.exclude_filter">
+        <span class="fixed">&nbsp;</span><b>exclude_filter </b>
+        <i>list of string</i>, List of classes to exclude from instrumentation with jacoco to collect coverage
+information at runtime when building with coverage enabled.  Overrides classes selected
+by the include_filter property.
+Supports &#39;*&#39; as the last character of an entry in the list as a wildcard match.
+If preceded by &#39;.&#39; it matches all classes in the package and subpackages, otherwise
+it matches classes in the package that have the class name as a prefix.
+
+</div></div>
+    <div class="simple" id="tradefed_binary_host.jarjar_rules">
+        <span class="fixed">&nbsp;</span><b>jarjar_rules </b>
+        <i>string</i>, if not blank, run jarjar using the specified rules file
+
+</div>
+    <div class="simple" id="tradefed_binary_host.java_resource_dirs">
+        <span class="fixed">&nbsp;</span><b>java_resource_dirs </b>
+        <i>list of string</i>, list of directories containing Java resources
+
+</div>
+    <div class="simple" id="tradefed_binary_host.java_resources">
+        <span class="fixed">&nbsp;</span><b>java_resources </b>
+        <i>list of string</i>, list of files to use as Java resources
+
+</div>
+    <div class="simple" id="tradefed_binary_host.java_version">
+        <span class="fixed">&nbsp;</span><b>java_version </b>
+        <i>string</i>, If not blank, set the java version passed to javac as -source and -target
+
+</div>
+    <div class="simple" id="tradefed_binary_host.javac_shard_size">
+        <span class="fixed">&nbsp;</span><b>javac_shard_size </b>
+        <i>int64</i>, The number of Java source entries each Javac instance can process
+
+</div>
+    <div class="simple" id="tradefed_binary_host.javacflags">
+        <span class="fixed">&nbsp;</span><b>javacflags </b>
+        <i>list of string</i>, list of module-specific flags that will be used for javac compiles
+
+</div>
+    <div class="simple" id="tradefed_binary_host.jni_libs">
+        <span class="fixed">&nbsp;</span><b>jni_libs </b>
+        <i>list of string</i>, Names of modules containing JNI libraries that should be installed alongside the host
+variant of the binary.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.kotlincflags">
+        <span class="fixed">&nbsp;</span><b>kotlincflags </b>
+        <i>list of string</i>, list of module-specific flags that will be used for kotlinc compiles
+
+</div>
+    <div class="simple" id="tradefed_binary_host.libs">
+        <span class="fixed">&nbsp;</span><b>libs </b>
+        <i>list of string</i>, list of java libraries that will be in the classpath
+
+</div>
+    <div class="simple" id="tradefed_binary_host.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.main_class">
+        <span class="fixed">&nbsp;</span><b>main_class </b>
+        <i>string</i>, Name of the class containing main to be inserted into the manifest as Main-Class.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.manifest">
+        <span class="fixed">&nbsp;</span><b>manifest </b>
+        <i>string</i>, manifest file to be included in resulting jar
+
+</div>
+    <div class="simple" id="tradefed_binary_host.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="tradefed_binary_host.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="accordion"  id="tradefed_binary_host.openjdk9">
+        <span class="fixed">&#x2295</span><b>openjdk9</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, List of source files that should only be used when passing -source 1.9 or higher
+
+</div>
+    <div class="simple" id="tradefed_binary_host.javacflags">
+        <span class="fixed">&nbsp;</span><b>javacflags </b>
+        <i>list of string</i>, List of javac flags that should only be used when passing -source 1.9 or higher
+
+</div></div>
+    <div class="simple" id="tradefed_binary_host.optional_uses_libs">
+        <span class="fixed">&nbsp;</span><b>optional_uses_libs </b>
+        <i>list of string</i>, A list of shared library modules that will be listed in uses-library tags in the AndroidManifest.xml file with
+required=false.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="tradefed_binary_host.patch_module">
+        <span class="fixed">&nbsp;</span><b>patch_module </b>
+        <i>string</i>, When compiling language level 9+ .java code in packages that are part of
+a system module, patch_module names the module that your sources and
+dependencies should be patched into. The Android runtime currently
+doesn&#39;t implement the JEP 261 module system so this option is only
+supported at compile time. It should only be needed to compile tests in
+packages that exist in libcore and which are inconvenient to move
+elsewhere.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.permitted_packages">
+        <span class="fixed">&nbsp;</span><b>permitted_packages </b>
+        <i>list of string</i>, If not empty, classes are restricted to the specified packages and their sub-packages.
+This restriction is checked after applying jarjar rules and including static libs.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.plugins">
+        <span class="fixed">&nbsp;</span><b>plugins </b>
+        <i>list of string</i>, List of modules to use as annotation processors
+
+</div>
+    <div class="simple" id="tradefed_binary_host.prepend_platform_version_name">
+        <span class="fixed">&nbsp;</span><b>prepend_platform_version_name </b>
+        <i>bool</i>
+</div>
+    <div class="simple" id="tradefed_binary_host.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="tradefed_binary_host.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="tradefed_binary_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="tradefed_binary_host.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="tradefed_binary_host.exclude_srcs">
+        <span class="fixed">&#x2295</span><b>exclude_srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="tradefed_binary_host.static_libs">
+        <span class="fixed">&#x2295</span><b>static_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="tradefed_binary_host.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="tradefed_binary_host.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="tradefed_binary_host.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="tradefed_binary_host.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="tradefed_binary_host.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="tradefed_binary_host.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="tradefed_binary_host.static_libs">
+        <span class="fixed">&#x2295</span><b>static_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="tradefed_binary_host.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="tradefed_binary_host.exclude_srcs">
+        <span class="fixed">&#x2295</span><b>exclude_srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="tradefed_binary_host.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="tradefed_binary_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="tradefed_binary_host.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="tradefed_binary_host.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="tradefed_binary_host.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="tradefed_binary_host.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="tradefed_binary_host.exclude_srcs">
+        <span class="fixed">&#x2295</span><b>exclude_srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="tradefed_binary_host.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="tradefed_binary_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="tradefed_binary_host.product_variables.platform_sdk_version_or_codename">
+        <span class="fixed">&#x2295</span><b>product_variables.platform_sdk_version_or_codename</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="tradefed_binary_host.java_resource_dirs">
+        <span class="fixed">&#x2295</span><b>java_resource_dirs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="tradefed_binary_host.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="tradefed_binary_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="tradefed_binary_host.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="accordion"  id="tradefed_binary_host.proto">
+        <span class="fixed">&#x2295</span><b>proto</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.type">
+        <span class="fixed">&nbsp;</span><b>type </b>
+        <i>string</i>, Proto generator type.  C++: full or lite.  Java: micro, nano, stream, or lite.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.plugin">
+        <span class="fixed">&nbsp;</span><b>plugin </b>
+        <i>string</i>, Proto plugin to use as the generator.  Must be a cc_binary_host module.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.include_dirs">
+        <span class="fixed">&nbsp;</span><b>include_dirs </b>
+        <i>list of string</i>, list of directories that will be added to the protoc include paths.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.local_include_dirs">
+        <span class="fixed">&nbsp;</span><b>local_include_dirs </b>
+        <i>list of string</i>, list of directories relative to the bp file that will
+be added to the protoc include paths.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.canonical_path_from_root">
+        <span class="fixed">&nbsp;</span><b>canonical_path_from_root </b>
+        <i>bool</i>, whether to identify the proto files from the root of the
+source tree (the original method in Android, useful for
+android-specific protos), or relative from where they were
+specified (useful for external/third party protos).
+
+This defaults to true today, but is expected to default to
+false in the future.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.output_params">
+        <span class="fixed">&nbsp;</span><b>output_params </b>
+        <i>list of string</i>, List of extra options that will be passed to the proto generator.
+
+</div></div>
+    <div class="simple" id="tradefed_binary_host.provides_uses_lib">
+        <span class="fixed">&nbsp;</span><b>provides_uses_lib </b>
+        <i>string</i>, Optional name of the &lt;uses-library&gt; provided by this module. This is needed for non-SDK
+libraries, because SDK ones are automatically picked up by Soong. The &lt;uses-library&gt; name
+normally is the same as the module name, but there are exceptions.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="tradefed_binary_host.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="tradefed_binary_host.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="tradefed_binary_host.services">
+        <span class="fixed">&nbsp;</span><b>services </b>
+        <i>list of string</i>, List of files to include in the META-INF/services folder of the resulting jar.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.short_name">
+        <span class="fixed">&nbsp;</span><b>short_name </b>
+        <i>string</i>
+</div>
+    <div class="simple" id="tradefed_binary_host.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="tradefed_binary_host.static_kotlin_stdlib">
+        <span class="fixed">&nbsp;</span><b>static_kotlin_stdlib </b>
+        <i>bool</i>, If true, package the kotlin stdlib into the jar.  Defaults to true.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.static_libs">
+        <span class="fixed">&nbsp;</span><b>static_libs </b>
+        <i>list of string</i>, list of java libraries that will be compiled into the resulting jar
+
+</div>
+    <div class="simple" id="tradefed_binary_host.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="tradefed_binary_host.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="tradefed_binary_host.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="tradefed_binary_host.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="tradefed_binary_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="tradefed_binary_host.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="tradefed_binary_host.use_tools_jar">
+        <span class="fixed">&nbsp;</span><b>use_tools_jar </b>
+        <i>bool</i>, Add host jdk tools.jar to bootclasspath
+
+</div>
+    <div class="simple" id="tradefed_binary_host.uses_libs">
+        <span class="fixed">&nbsp;</span><b>uses_libs </b>
+        <i>list of string</i>, A list of shared library modules that will be listed in uses-library tags in the AndroidManifest.xml file.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="tradefed_binary_host.version">
+        <span class="fixed">&nbsp;</span><b>version </b>
+        <i>string</i>
+</div>
+    <div class="simple" id="tradefed_binary_host.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="tradefed_binary_host.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+    <div class="simple" id="tradefed_binary_host.wrapper">
+        <span class="fixed">&nbsp;</span><b>wrapper </b>
+        <i>string</i>, installable script to execute the resulting jar
+
+</div></div>
+<script>
+  accordions = document.getElementsByClassName('accordion');
+  for (i=0; i < accordions.length; ++i) {
+    accordions[i].addEventListener("click", function() {
+      var panel = this.nextElementSibling;
+      var child = this.firstElementChild;
+      if (panel.style.display === "block") {
+          panel.style.display = "none";
+          child.textContent = '\u2295';
+      } else {
+          panel.style.display = "block";
+          child.textContent = '\u2296';
+      }
+    });
+  }
+</script>
+</body>

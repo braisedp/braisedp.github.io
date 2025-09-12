@@ -1,0 +1,1424 @@
+
+<html>
+<head>
+<title>Build Docs</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<style>
+.accordion,.simple{margin-left:1.5em;text-indent:-1.5em;margin-top:.25em}
+.collapsible{border-width:0 0 0 1;margin-left:.25em;padding-left:.25em;border-style:solid;
+  border-color:grey;display:none;}
+span.fixed{display: block; float: left; clear: left; width: 1em;}
+ul {
+	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 30ch;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+</style>
+
+<script type="text/javascript">
+window.addEventListener('message', (e) => {
+  if (e != null && e.data != null && e.data.type === "SET_BASE" && e.data.base != null) {
+    const existingBase = document.querySelector('base');
+    if (existingBase != null) {
+      existingBase.parentElement.removeChild(existingBase);
+    }
+
+    const base = document.createElement('base');
+    base.setAttribute('href', e.data.base);
+    document.head.appendChild(base);
+  }
+});
+</script>
+
+</head>
+<body><ul>
+<li><h3>soong_wayland_protocol_codegen package</h3></li>
+<li><a href="soong_wayland_protocol_codegen.html#wayland_protocol_codegen">wayland_protocol_codegen</a></li>
+<li><a href="soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults">wayland_protocol_codegen_defaults</a></li>
+</ul>
+
+<div style="margin-left:30ch;padding:1px 16px;">
+
+	
+	<p>
+  <h2 id="wayland_protocol_codegen">wayland_protocol_codegen</h2>
+  Factory for code generation modules
+
+<div class="breadcrumb">
+    
+				<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.name>name</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.srcs>srcs</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.exclude_srcs>exclude_srcs</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.defaults>defaults</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.bazel_module>bazel_module</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.cmd>cmd</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.device_specific>device_specific</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.dist>dist</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.dists>dists</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.enabled>enabled</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.export_include_dirs>export_include_dirs</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.host_required>host_required</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.init_rc>init_rc</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.licenses>licenses</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.output>output</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.owner>owner</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.prefix>prefix</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.product_specific>product_specific</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.product_variables.platform_sdk_extension_version>product_variables.platform_sdk_extension_version</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.product_variables.platform_sdk_version>product_variables.platform_sdk_version</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.proprietary>proprietary</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.ramdisk>ramdisk</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.recovery>recovery</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.required>required</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.soc_specific>soc_specific</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.suffix>suffix</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.target.android>target.android</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.target.host>target.host</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.target_required>target_required</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.tool_files>tool_files</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.tools>tools</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.vendor>vendor</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen.visibility>visibility</a></div>
+    <div class="simple" id="wayland_protocol_codegen.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, List of input files.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.exclude_srcs">
+        <span class="fixed">&nbsp;</span><b>exclude_srcs </b>
+        <i>list of string</i>, Input files to exclude.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.defaults">
+        <span class="fixed">&nbsp;</span><b>defaults </b>
+        <i>list of string</i>
+</div>
+    <div class="accordion"  id="wayland_protocol_codegen.bazel_module">
+        <span class="fixed">&#x2295</span><b>bazel_module</b>
+        <i>bazelModuleProperties</i></div>
+      <div class="collapsible">In &#34;Bazel mixed build&#34; mode, this represents the Bazel target replacing
+this Soong module.
+
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.label">
+        <span class="fixed">&nbsp;</span><b>label </b>
+        <i>string</i>, The label of the Bazel target replacing this Soong module. When run in conversion mode, this
+will import the handcrafted build target into the autogenerated file. Note: this may result in
+a conflict due to duplicate targets if bp2build_available is also set.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.bp2build_available">
+        <span class="fixed">&nbsp;</span><b>bp2build_available </b>
+        <i>bool</i>, If true, bp2build will generate the converted Bazel target for this module. Note: this may
+cause a conflict due to the duplicate targets if label is also set.
+
+This is a bool pointer to support tristates: true, false, not set.
+
+To opt in a module, set bazel_module: { bp2build_available: true }
+To opt out a module, set bazel_module: { bp2build_available: false }
+To defer the default setting for the directory, do not set the value.
+
+</div></div>
+    <div class="simple" id="wayland_protocol_codegen.cmd">
+        <span class="fixed">&nbsp;</span><b>cmd </b>
+        <i>string</i>, The command to run on one or more input files. Cmd supports
+substitution of a few variables (the actual substitution is implemented
+in GenerateAndroidBuildActions below)
+
+Available variables for substitution:
+
+<pre>
+
+	- $(location)
+		the path to the first entry in tools or tool_files
+	- $(location &lt;label&gt;)
+		the path to the tool, tool_file, input or output with name &lt;label&gt;. Use
+		$(location) if &lt;label&gt; refers to a rule that outputs exactly one file.
+	- $(locations &lt;label&gt;)
+		the paths to the tools, tool_files, inputs or outputs with name
+		&lt;label&gt;. Use $(locations) if &lt;label&gt; refers to a rule that outputs two
+		or more files.
+	- $(in)
+		one or more input files
+	- $(out)
+		a single output file
+	- $(genDir)
+		the sandbox directory for this tool; contains $(out)
+	- $$
+		a literal &#39;$&#39;
+
+</pre>
+All files used must be declared as inputs (to ensure proper up-to-date
+checks). Use &#34;$(in)&#34; directly in Cmd to ensure that all inputs used are
+declared.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="wayland_protocol_codegen.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="wayland_protocol_codegen.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.export_include_dirs">
+        <span class="fixed">&nbsp;</span><b>export_include_dirs </b>
+        <i>list of string</i>, List of directories to export generated headers from.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.output">
+        <span class="fixed">&nbsp;</span><b>output </b>
+        <i>string</i>, The output filename template.
+
+This template string allows the output file name to be generated for
+each source file, using some limited properties of the source file.
+
+<pre>
+
+	$(in:base): The base filename, no path or extension
+	$(in:base.ext): The filename, no path
+	$(in:path/base): The filename with path but no extension
+	$(in:path/base.ext): The full source filename
+	$(in): An alias for $(in:base) for the base filename, no extension
+
+</pre>
+Note that the path that is maintained is the relative path used when
+including the source in an Android.bp file.
+
+The template allows arbitrary prefixes and suffixes to be added to the
+output filename. For example, &#34;a_$(in).d&#34; would take an source filename
+of &#34;b.c&#34; and turn it into &#34;a_b.d&#34;.
+
+The output template does not have to generate a unique filename,
+however the implementation will raise an error if the same output file
+is generated by more than one source file.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.prefix">
+        <span class="fixed">&nbsp;</span><b>prefix </b>
+        <i>string</i>, The string to prepend to every protocol filename to generate the
+corresponding output filename. The empty string by default.
+Deprecated. Prefer &#34;Output&#34; instead.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="wayland_protocol_codegen.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen.exclude_srcs">
+        <span class="fixed">&#x2295</span><b>exclude_srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.exclude_srcs">
+        <span class="fixed">&#x2295</span><b>exclude_srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.exclude_srcs">
+        <span class="fixed">&#x2295</span><b>exclude_srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.product_variables.platform_sdk_extension_version">
+        <span class="fixed">&#x2295</span><b>product_variables.platform_sdk_extension_version</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen.cmd">
+        <span class="fixed">&#x2295</span><b>cmd</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.product_variables.platform_sdk_version">
+        <span class="fixed">&#x2295</span><b>product_variables.platform_sdk_version</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen.cmd">
+        <span class="fixed">&#x2295</span><b>cmd</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="wayland_protocol_codegen.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, The suffix to append to every protocol filename to generate the
+corresponding output filename. The empty string by default.
+Deprecated. Prefer &#34;Output&#34; instead.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="accordion"  id="wayland_protocol_codegen.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="wayland_protocol_codegen.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="wayland_protocol_codegen.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.tool_files">
+        <span class="fixed">&nbsp;</span><b>tool_files </b>
+        <i>list of string</i>, Local source files that are used as scripts or other input files needed
+by a tool.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.tools">
+        <span class="fixed">&nbsp;</span><b>tools </b>
+        <i>list of string</i>, name of the modules (if any) that produces the host executable. Leave
+empty for prebuilts or scripts that do not need a module to build them.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="wayland_protocol_codegen_defaults">wayland_protocol_codegen_defaults</h2>
+  
+<div class="breadcrumb">
+    
+				<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.name>name</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.srcs>srcs</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.exclude_srcs>exclude_srcs</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.defaults>defaults</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.host_supported>host_supported</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.device_supported>device_supported</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.apex_available>apex_available</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.arch>arch</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.bazel_module>bazel_module</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.cmd>cmd</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.defaults_visibility>defaults_visibility</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.device_specific>device_specific</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.dist>dist</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.dists>dists</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.enabled>enabled</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.export_include_dirs>export_include_dirs</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.host_required>host_required</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.init_rc>init_rc</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.licenses>licenses</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.multilib>multilib</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.output>output</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.owner>owner</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.prefix>prefix</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.product_specific>product_specific</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.product_variables.platform_sdk_extension_version>product_variables.platform_sdk_extension_version</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.product_variables.platform_sdk_version>product_variables.platform_sdk_version</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.proprietary>proprietary</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.ramdisk>ramdisk</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.recovery>recovery</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.required>required</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.soc_specific>soc_specific</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.suffix>suffix</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.target>target</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.target.android>target.android</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.target.host>target.host</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.target_required>target_required</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.tool_files>tool_files</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.tools>tools</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.vendor>vendor</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=soong_wayland_protocol_codegen.html#wayland_protocol_codegen_defaults.visibility>visibility</a></div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, List of input files.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.exclude_srcs">
+        <span class="fixed">&nbsp;</span><b>exclude_srcs </b>
+        <i>list of string</i>, Input files to exclude.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.defaults">
+        <span class="fixed">&nbsp;</span><b>defaults </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.host_supported">
+        <span class="fixed">&nbsp;</span><b>host_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the host.  Defaults to false.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.device_supported">
+        <span class="fixed">&nbsp;</span><b>device_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the device.  Defaults to true.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.apex_available">
+        <span class="fixed">&nbsp;</span><b>apex_available </b>
+        <i>list of string</i>, Availability of this module in APEXes. Only the listed APEXes can contain this module. If
+the module has stubs then other APEXes and the platform may access it through them
+(subject to visibility).
+
+&#34;//apex_available:anyapex&#34; is a pseudo APEX name that matches to any APEX.
+&#34;//apex_available:platform&#34; refers to non-APEX partitions like &#34;system.img&#34;.
+&#34;com.android.gki.*&#34; matches any APEX module name with the prefix &#34;com.android.gki.&#34;.
+Default is [&#34;//apex_available:platform&#34;].
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.bazel_module">
+        <span class="fixed">&#x2295</span><b>bazel_module</b>
+        <i>bazelModuleProperties</i></div>
+      <div class="collapsible">In &#34;Bazel mixed build&#34; mode, this represents the Bazel target replacing
+this Soong module.
+
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.label">
+        <span class="fixed">&nbsp;</span><b>label </b>
+        <i>string</i>, The label of the Bazel target replacing this Soong module. When run in conversion mode, this
+will import the handcrafted build target into the autogenerated file. Note: this may result in
+a conflict due to duplicate targets if bp2build_available is also set.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.bp2build_available">
+        <span class="fixed">&nbsp;</span><b>bp2build_available </b>
+        <i>bool</i>, If true, bp2build will generate the converted Bazel target for this module. Note: this may
+cause a conflict due to the duplicate targets if label is also set.
+
+This is a bool pointer to support tristates: true, false, not set.
+
+To opt in a module, set bazel_module: { bp2build_available: true }
+To opt out a module, set bazel_module: { bp2build_available: false }
+To defer the default setting for the directory, do not set the value.
+
+</div></div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.cmd">
+        <span class="fixed">&nbsp;</span><b>cmd </b>
+        <i>string</i>, The command to run on one or more input files. Cmd supports
+substitution of a few variables (the actual substitution is implemented
+in GenerateAndroidBuildActions below)
+
+Available variables for substitution:
+
+<pre>
+
+	- $(location)
+		the path to the first entry in tools or tool_files
+	- $(location &lt;label&gt;)
+		the path to the tool, tool_file, input or output with name &lt;label&gt;. Use
+		$(location) if &lt;label&gt; refers to a rule that outputs exactly one file.
+	- $(locations &lt;label&gt;)
+		the paths to the tools, tool_files, inputs or outputs with name
+		&lt;label&gt;. Use $(locations) if &lt;label&gt; refers to a rule that outputs two
+		or more files.
+	- $(in)
+		one or more input files
+	- $(out)
+		a single output file
+	- $(genDir)
+		the sandbox directory for this tool; contains $(out)
+	- $$
+		a literal &#39;$&#39;
+
+</pre>
+All files used must be declared as inputs (to ensure proper up-to-date
+checks). Use &#34;$(in)&#34; directly in Cmd to ensure that all inputs used are
+declared.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.defaults_visibility">
+        <span class="fixed">&nbsp;</span><b>defaults_visibility </b>
+        <i>list of string</i>, Controls the visibility of the defaults module itself.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.export_include_dirs">
+        <span class="fixed">&nbsp;</span><b>export_include_dirs </b>
+        <i>list of string</i>, List of directories to export generated headers from.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.output">
+        <span class="fixed">&nbsp;</span><b>output </b>
+        <i>string</i>, The output filename template.
+
+This template string allows the output file name to be generated for
+each source file, using some limited properties of the source file.
+
+<pre>
+
+	$(in:base): The base filename, no path or extension
+	$(in:base.ext): The filename, no path
+	$(in:path/base): The filename with path but no extension
+	$(in:path/base.ext): The full source filename
+	$(in): An alias for $(in:base) for the base filename, no extension
+
+</pre>
+Note that the path that is maintained is the relative path used when
+including the source in an Android.bp file.
+
+The template allows arbitrary prefixes and suffixes to be added to the
+output filename. For example, &#34;a_$(in).d&#34; would take an source filename
+of &#34;b.c&#34; and turn it into &#34;a_b.d&#34;.
+
+The output template does not have to generate a unique filename,
+however the implementation will raise an error if the same output file
+is generated by more than one source file.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.prefix">
+        <span class="fixed">&nbsp;</span><b>prefix </b>
+        <i>string</i>, The string to prepend to every protocol filename to generate the
+corresponding output filename. The empty string by default.
+Deprecated. Prefer &#34;Output&#34; instead.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.exclude_srcs">
+        <span class="fixed">&#x2295</span><b>exclude_srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.exclude_srcs">
+        <span class="fixed">&#x2295</span><b>exclude_srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.exclude_srcs">
+        <span class="fixed">&#x2295</span><b>exclude_srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.product_variables.platform_sdk_extension_version">
+        <span class="fixed">&#x2295</span><b>product_variables.platform_sdk_extension_version</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.cmd">
+        <span class="fixed">&#x2295</span><b>cmd</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.product_variables.platform_sdk_version">
+        <span class="fixed">&#x2295</span><b>product_variables.platform_sdk_version</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.cmd">
+        <span class="fixed">&#x2295</span><b>cmd</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, The suffix to append to every protocol filename to generate the
+corresponding output filename. The empty string by default.
+Deprecated. Prefer &#34;Output&#34; instead.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="wayland_protocol_codegen_defaults.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="wayland_protocol_codegen_defaults.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.tool_files">
+        <span class="fixed">&nbsp;</span><b>tool_files </b>
+        <i>list of string</i>, Local source files that are used as scripts or other input files needed
+by a tool.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.tools">
+        <span class="fixed">&nbsp;</span><b>tools </b>
+        <i>list of string</i>, name of the modules (if any) that produces the host executable. Leave
+empty for prebuilts or scripts that do not need a module to build them.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="wayland_protocol_codegen_defaults.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div></div>
+<script>
+  accordions = document.getElementsByClassName('accordion');
+  for (i=0; i < accordions.length; ++i) {
+    accordions[i].addEventListener("click", function() {
+      var panel = this.nextElementSibling;
+      var child = this.firstElementChild;
+      if (panel.style.display === "block") {
+          panel.style.display = "none";
+          child.textContent = '\u2295';
+      } else {
+          panel.style.display = "block";
+          child.textContent = '\u2296';
+      }
+    });
+  }
+</script>
+</body>

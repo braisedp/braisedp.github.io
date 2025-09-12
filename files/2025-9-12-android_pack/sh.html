@@ -1,0 +1,2341 @@
+
+<html>
+<head>
+<title>Build Docs</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<style>
+.accordion,.simple{margin-left:1.5em;text-indent:-1.5em;margin-top:.25em}
+.collapsible{border-width:0 0 0 1;margin-left:.25em;padding-left:.25em;border-style:solid;
+  border-color:grey;display:none;}
+span.fixed{display: block; float: left; clear: left; width: 1em;}
+ul {
+	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 30ch;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+</style>
+
+<script type="text/javascript">
+window.addEventListener('message', (e) => {
+  if (e != null && e.data != null && e.data.type === "SET_BASE" && e.data.base != null) {
+    const existingBase = document.querySelector('base');
+    if (existingBase != null) {
+      existingBase.parentElement.removeChild(existingBase);
+    }
+
+    const base = document.createElement('base');
+    base.setAttribute('href', e.data.base);
+    document.head.appendChild(base);
+  }
+});
+</script>
+
+</head>
+<body><ul>
+<li><h3>sh package</h3></li>
+<li><a href="sh.html#sh_binary">sh_binary</a></li>
+<li><a href="sh.html#sh_binary_host">sh_binary_host</a></li>
+<li><a href="sh.html#sh_test">sh_test</a></li>
+<li><a href="sh.html#sh_test_host">sh_test_host</a></li>
+</ul>
+
+<div style="margin-left:30ch;padding:1px 16px;">
+
+	
+	<p>
+  <h2 id="sh_binary">sh_binary</h2>
+  sh_binary is for a shell script or batch file to be installed as an
+executable binary to &lt;partition&gt;/bin.
+
+<div class="breadcrumb">
+    
+				<a href=sh.html#sh_binary.name>name</a>
+				,&nbsp;<a href=sh.html#sh_binary.src>src</a>
+				,&nbsp;<a href=sh.html#sh_binary.host_supported>host_supported</a>
+				,&nbsp;<a href=sh.html#sh_binary.device_supported>device_supported</a>
+				,&nbsp;<a href=sh.html#sh_binary.arch>arch</a>
+				,&nbsp;<a href=sh.html#sh_binary.bazel_module>bazel_module</a>
+				,&nbsp;<a href=sh.html#sh_binary.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=sh.html#sh_binary.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_binary.device_specific>device_specific</a>
+				,&nbsp;<a href=sh.html#sh_binary.dist>dist</a>
+				,&nbsp;<a href=sh.html#sh_binary.dists>dists</a>
+				,&nbsp;<a href=sh.html#sh_binary.enabled>enabled</a>
+				,&nbsp;<a href=sh.html#sh_binary.filename>filename</a>
+				,&nbsp;<a href=sh.html#sh_binary.filename_from_src>filename_from_src</a>
+				,&nbsp;<a href=sh.html#sh_binary.host_required>host_required</a>
+				,&nbsp;<a href=sh.html#sh_binary.init_rc>init_rc</a>
+				,&nbsp;<a href=sh.html#sh_binary.installable>installable</a>
+				,&nbsp;<a href=sh.html#sh_binary.licenses>licenses</a>
+				,&nbsp;<a href=sh.html#sh_binary.multilib>multilib</a>
+				,&nbsp;<a href=sh.html#sh_binary.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=sh.html#sh_binary.owner>owner</a>
+				,&nbsp;<a href=sh.html#sh_binary.product_specific>product_specific</a>
+				,&nbsp;<a href=sh.html#sh_binary.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=sh.html#sh_binary.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=sh.html#sh_binary.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=sh.html#sh_binary.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=sh.html#sh_binary.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=sh.html#sh_binary.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=sh.html#sh_binary.proprietary>proprietary</a>
+				,&nbsp;<a href=sh.html#sh_binary.ramdisk>ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_binary.ramdisk_available>ramdisk_available</a>
+				,&nbsp;<a href=sh.html#sh_binary.recovery>recovery</a>
+				,&nbsp;<a href=sh.html#sh_binary.recovery_available>recovery_available</a>
+				,&nbsp;<a href=sh.html#sh_binary.required>required</a>
+				,&nbsp;<a href=sh.html#sh_binary.soc_specific>soc_specific</a>
+				,&nbsp;<a href=sh.html#sh_binary.sub_dir>sub_dir</a>
+				,&nbsp;<a href=sh.html#sh_binary.symlinks>symlinks</a>
+				,&nbsp;<a href=sh.html#sh_binary.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=sh.html#sh_binary.target>target</a>
+				,&nbsp;<a href=sh.html#sh_binary.target.android>target.android</a>
+				,&nbsp;<a href=sh.html#sh_binary.target.host>target.host</a>
+				,&nbsp;<a href=sh.html#sh_binary.target_required>target_required</a>
+				,&nbsp;<a href=sh.html#sh_binary.vendor>vendor</a>
+				,&nbsp;<a href=sh.html#sh_binary.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_binary.vendor_ramdisk_available>vendor_ramdisk_available</a>
+				,&nbsp;<a href=sh.html#sh_binary.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=sh.html#sh_binary.visibility>visibility</a></div>
+    <div class="simple" id="sh_binary.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="sh_binary.src">
+        <span class="fixed">&nbsp;</span><b>src </b>
+        <i>string</i>, Source file of this prebuilt.
+
+</div>
+    <div class="simple" id="sh_binary.host_supported">
+        <span class="fixed">&nbsp;</span><b>host_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the host.  Defaults to false.
+
+</div>
+    <div class="simple" id="sh_binary.device_supported">
+        <span class="fixed">&nbsp;</span><b>device_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the device.  Defaults to true.
+
+</div>
+    <div class="simple" id="sh_binary.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="sh_binary.bazel_module">
+        <span class="fixed">&#x2295</span><b>bazel_module</b>
+        <i>bazelModuleProperties</i></div>
+      <div class="collapsible">In &#34;Bazel mixed build&#34; mode, this represents the Bazel target replacing
+this Soong module.
+
+ 
+        
+    <div class="simple" id="sh_binary.label">
+        <span class="fixed">&nbsp;</span><b>label </b>
+        <i>string</i>, The label of the Bazel target replacing this Soong module. When run in conversion mode, this
+will import the handcrafted build target into the autogenerated file. Note: this may result in
+a conflict due to duplicate targets if bp2build_available is also set.
+
+</div>
+    <div class="simple" id="sh_binary.bp2build_available">
+        <span class="fixed">&nbsp;</span><b>bp2build_available </b>
+        <i>bool</i>, If true, bp2build will generate the converted Bazel target for this module. Note: this may
+cause a conflict due to the duplicate targets if label is also set.
+
+This is a bool pointer to support tristates: true, false, not set.
+
+To opt in a module, set bazel_module: { bp2build_available: true }
+To opt out a module, set bazel_module: { bp2build_available: false }
+To defer the default setting for the directory, do not set the value.
+
+</div></div>
+    <div class="simple" id="sh_binary.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="sh_binary.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="sh_binary.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="sh_binary.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="sh_binary.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="sh_binary.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="sh_binary.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="sh_binary.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="sh_binary.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="sh_binary.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="sh_binary.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="sh_binary.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="sh_binary.filename">
+        <span class="fixed">&nbsp;</span><b>filename </b>
+        <i>string</i>, optional name for the installed file. If unspecified, name of the module is used as the file name
+
+</div>
+    <div class="simple" id="sh_binary.filename_from_src">
+        <span class="fixed">&nbsp;</span><b>filename_from_src </b>
+        <i>bool</i>, when set to true, and filename property is not set, the name for the installed file
+is the same as the file name of the source file.
+
+</div>
+    <div class="simple" id="sh_binary.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="sh_binary.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="sh_binary.installable">
+        <span class="fixed">&nbsp;</span><b>installable </b>
+        <i>bool</i>, Whether this module is directly installable to one of the partitions. Default: true.
+
+</div>
+    <div class="simple" id="sh_binary.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="sh_binary.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="sh_binary.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="sh_binary.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="sh_binary.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="sh_binary.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_binary.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_binary.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_binary.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_binary.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="sh_binary.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_binary.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary.src">
+        <span class="fixed">&#x2295</span><b>src</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="sh_binary.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_binary.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="sh_binary.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="sh_binary.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="sh_binary.ramdisk_available">
+        <span class="fixed">&nbsp;</span><b>ramdisk_available </b>
+        <i>bool</i>, Make this module available when building for ramdisk.
+On device without a dedicated recovery partition, the module is only
+available after switching root into
+/first_stage_ramdisk. To expose the module before switching root, install
+the recovery variant instead.
+
+</div>
+    <div class="simple" id="sh_binary.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="sh_binary.recovery_available">
+        <span class="fixed">&nbsp;</span><b>recovery_available </b>
+        <i>bool</i>, Make this module available when building for recovery.
+
+</div>
+    <div class="simple" id="sh_binary.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="sh_binary.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="sh_binary.sub_dir">
+        <span class="fixed">&nbsp;</span><b>sub_dir </b>
+        <i>string</i>, optional subdirectory under which this file is installed into
+
+</div>
+    <div class="simple" id="sh_binary.symlinks">
+        <span class="fixed">&nbsp;</span><b>symlinks </b>
+        <i>list of string</i>, install symlinks to the binary
+
+</div>
+    <div class="simple" id="sh_binary.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="sh_binary.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="sh_binary.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="sh_binary.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="sh_binary.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="sh_binary.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="sh_binary.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="sh_binary.vendor_ramdisk_available">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk_available </b>
+        <i>bool</i>, Make this module available when building for vendor ramdisk.
+On device without a dedicated recovery partition, the module is only
+available after switching root into
+/first_stage_ramdisk. To expose the module before switching root, install
+the recovery variant instead.
+
+</div>
+    <div class="simple" id="sh_binary.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="sh_binary.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="sh_binary_host">sh_binary_host</h2>
+  sh_binary_host is for a shell script to be installed as an executable binary
+to $(HOST_OUT)/bin.
+
+<div class="breadcrumb">
+    
+				<a href=sh.html#sh_binary_host.name>name</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.src>src</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.arch>arch</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.bazel_module>bazel_module</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.device_specific>device_specific</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.dist>dist</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.dists>dists</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.enabled>enabled</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.filename>filename</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.filename_from_src>filename_from_src</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.host_required>host_required</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.init_rc>init_rc</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.installable>installable</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.licenses>licenses</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.multilib>multilib</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.owner>owner</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.product_specific>product_specific</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.proprietary>proprietary</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.ramdisk>ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.ramdisk_available>ramdisk_available</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.recovery>recovery</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.recovery_available>recovery_available</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.required>required</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.soc_specific>soc_specific</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.sub_dir>sub_dir</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.symlinks>symlinks</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.target>target</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.target.android>target.android</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.target.host>target.host</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.target_required>target_required</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.vendor>vendor</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.vendor_ramdisk_available>vendor_ramdisk_available</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=sh.html#sh_binary_host.visibility>visibility</a></div>
+    <div class="simple" id="sh_binary_host.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="sh_binary_host.src">
+        <span class="fixed">&nbsp;</span><b>src </b>
+        <i>string</i>, Source file of this prebuilt.
+
+</div>
+    <div class="simple" id="sh_binary_host.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="sh_binary_host.bazel_module">
+        <span class="fixed">&#x2295</span><b>bazel_module</b>
+        <i>bazelModuleProperties</i></div>
+      <div class="collapsible">In &#34;Bazel mixed build&#34; mode, this represents the Bazel target replacing
+this Soong module.
+
+ 
+        
+    <div class="simple" id="sh_binary_host.label">
+        <span class="fixed">&nbsp;</span><b>label </b>
+        <i>string</i>, The label of the Bazel target replacing this Soong module. When run in conversion mode, this
+will import the handcrafted build target into the autogenerated file. Note: this may result in
+a conflict due to duplicate targets if bp2build_available is also set.
+
+</div>
+    <div class="simple" id="sh_binary_host.bp2build_available">
+        <span class="fixed">&nbsp;</span><b>bp2build_available </b>
+        <i>bool</i>, If true, bp2build will generate the converted Bazel target for this module. Note: this may
+cause a conflict due to the duplicate targets if label is also set.
+
+This is a bool pointer to support tristates: true, false, not set.
+
+To opt in a module, set bazel_module: { bp2build_available: true }
+To opt out a module, set bazel_module: { bp2build_available: false }
+To defer the default setting for the directory, do not set the value.
+
+</div></div>
+    <div class="simple" id="sh_binary_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="sh_binary_host.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="sh_binary_host.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="sh_binary_host.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="sh_binary_host.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="sh_binary_host.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="sh_binary_host.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="sh_binary_host.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="sh_binary_host.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="sh_binary_host.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="sh_binary_host.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="sh_binary_host.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="sh_binary_host.filename">
+        <span class="fixed">&nbsp;</span><b>filename </b>
+        <i>string</i>, optional name for the installed file. If unspecified, name of the module is used as the file name
+
+</div>
+    <div class="simple" id="sh_binary_host.filename_from_src">
+        <span class="fixed">&nbsp;</span><b>filename_from_src </b>
+        <i>bool</i>, when set to true, and filename property is not set, the name for the installed file
+is the same as the file name of the source file.
+
+</div>
+    <div class="simple" id="sh_binary_host.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="sh_binary_host.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="sh_binary_host.installable">
+        <span class="fixed">&nbsp;</span><b>installable </b>
+        <i>bool</i>, Whether this module is directly installable to one of the partitions. Default: true.
+
+</div>
+    <div class="simple" id="sh_binary_host.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="sh_binary_host.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="sh_binary_host.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="sh_binary_host.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="sh_binary_host.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="sh_binary_host.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_binary_host.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary_host.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_binary_host.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_binary_host.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_binary_host.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="sh_binary_host.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_binary_host.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary_host.src">
+        <span class="fixed">&#x2295</span><b>src</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="sh_binary_host.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_binary_host.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_binary_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="sh_binary_host.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="sh_binary_host.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="sh_binary_host.ramdisk_available">
+        <span class="fixed">&nbsp;</span><b>ramdisk_available </b>
+        <i>bool</i>, Make this module available when building for ramdisk.
+On device without a dedicated recovery partition, the module is only
+available after switching root into
+/first_stage_ramdisk. To expose the module before switching root, install
+the recovery variant instead.
+
+</div>
+    <div class="simple" id="sh_binary_host.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="sh_binary_host.recovery_available">
+        <span class="fixed">&nbsp;</span><b>recovery_available </b>
+        <i>bool</i>, Make this module available when building for recovery.
+
+</div>
+    <div class="simple" id="sh_binary_host.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="sh_binary_host.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="sh_binary_host.sub_dir">
+        <span class="fixed">&nbsp;</span><b>sub_dir </b>
+        <i>string</i>, optional subdirectory under which this file is installed into
+
+</div>
+    <div class="simple" id="sh_binary_host.symlinks">
+        <span class="fixed">&nbsp;</span><b>symlinks </b>
+        <i>list of string</i>, install symlinks to the binary
+
+</div>
+    <div class="simple" id="sh_binary_host.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="sh_binary_host.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="sh_binary_host.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="sh_binary_host.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_binary_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="sh_binary_host.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="sh_binary_host.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="sh_binary_host.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="sh_binary_host.vendor_ramdisk_available">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk_available </b>
+        <i>bool</i>, Make this module available when building for vendor ramdisk.
+On device without a dedicated recovery partition, the module is only
+available after switching root into
+/first_stage_ramdisk. To expose the module before switching root, install
+the recovery variant instead.
+
+</div>
+    <div class="simple" id="sh_binary_host.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="sh_binary_host.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="sh_test">sh_test</h2>
+  sh_test defines a shell script based test module.
+
+<div class="breadcrumb">
+    
+				<a href=sh.html#sh_test.name>name</a>
+				,&nbsp;<a href=sh.html#sh_test.src>src</a>
+				,&nbsp;<a href=sh.html#sh_test.host_supported>host_supported</a>
+				,&nbsp;<a href=sh.html#sh_test.device_supported>device_supported</a>
+				,&nbsp;<a href=sh.html#sh_test.arch>arch</a>
+				,&nbsp;<a href=sh.html#sh_test.auto_gen_config>auto_gen_config</a>
+				,&nbsp;<a href=sh.html#sh_test.bazel_module>bazel_module</a>
+				,&nbsp;<a href=sh.html#sh_test.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=sh.html#sh_test.data>data</a>
+				,&nbsp;<a href=sh.html#sh_test.data_bins>data_bins</a>
+				,&nbsp;<a href=sh.html#sh_test.data_device_bins>data_device_bins</a>
+				,&nbsp;<a href=sh.html#sh_test.data_device_libs>data_device_libs</a>
+				,&nbsp;<a href=sh.html#sh_test.data_libs>data_libs</a>
+				,&nbsp;<a href=sh.html#sh_test.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_test.device_specific>device_specific</a>
+				,&nbsp;<a href=sh.html#sh_test.dist>dist</a>
+				,&nbsp;<a href=sh.html#sh_test.dists>dists</a>
+				,&nbsp;<a href=sh.html#sh_test.enabled>enabled</a>
+				,&nbsp;<a href=sh.html#sh_test.filename>filename</a>
+				,&nbsp;<a href=sh.html#sh_test.filename_from_src>filename_from_src</a>
+				,&nbsp;<a href=sh.html#sh_test.host_required>host_required</a>
+				,&nbsp;<a href=sh.html#sh_test.init_rc>init_rc</a>
+				,&nbsp;<a href=sh.html#sh_test.installable>installable</a>
+				,&nbsp;<a href=sh.html#sh_test.licenses>licenses</a>
+				,&nbsp;<a href=sh.html#sh_test.multilib>multilib</a>
+				,&nbsp;<a href=sh.html#sh_test.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=sh.html#sh_test.owner>owner</a>
+				,&nbsp;<a href=sh.html#sh_test.per_testcase_directory>per_testcase_directory</a>
+				,&nbsp;<a href=sh.html#sh_test.product_specific>product_specific</a>
+				,&nbsp;<a href=sh.html#sh_test.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=sh.html#sh_test.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=sh.html#sh_test.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=sh.html#sh_test.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=sh.html#sh_test.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=sh.html#sh_test.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=sh.html#sh_test.proprietary>proprietary</a>
+				,&nbsp;<a href=sh.html#sh_test.ramdisk>ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_test.ramdisk_available>ramdisk_available</a>
+				,&nbsp;<a href=sh.html#sh_test.recovery>recovery</a>
+				,&nbsp;<a href=sh.html#sh_test.recovery_available>recovery_available</a>
+				,&nbsp;<a href=sh.html#sh_test.require_root>require_root</a>
+				,&nbsp;<a href=sh.html#sh_test.required>required</a>
+				,&nbsp;<a href=sh.html#sh_test.soc_specific>soc_specific</a>
+				,&nbsp;<a href=sh.html#sh_test.sub_dir>sub_dir</a>
+				,&nbsp;<a href=sh.html#sh_test.symlinks>symlinks</a>
+				,&nbsp;<a href=sh.html#sh_test.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=sh.html#sh_test.target>target</a>
+				,&nbsp;<a href=sh.html#sh_test.target.android>target.android</a>
+				,&nbsp;<a href=sh.html#sh_test.target.host>target.host</a>
+				,&nbsp;<a href=sh.html#sh_test.target_required>target_required</a>
+				,&nbsp;<a href=sh.html#sh_test.test_config>test_config</a>
+				,&nbsp;<a href=sh.html#sh_test.test_config_template>test_config_template</a>
+				,&nbsp;<a href=sh.html#sh_test.test_options>test_options</a>
+				,&nbsp;<a href=sh.html#sh_test.test_suites>test_suites</a>
+				,&nbsp;<a href=sh.html#sh_test.vendor>vendor</a>
+				,&nbsp;<a href=sh.html#sh_test.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_test.vendor_ramdisk_available>vendor_ramdisk_available</a>
+				,&nbsp;<a href=sh.html#sh_test.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=sh.html#sh_test.visibility>visibility</a></div>
+    <div class="simple" id="sh_test.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="sh_test.src">
+        <span class="fixed">&nbsp;</span><b>src </b>
+        <i>string</i>, Source file of this prebuilt.
+
+</div>
+    <div class="simple" id="sh_test.host_supported">
+        <span class="fixed">&nbsp;</span><b>host_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the host.  Defaults to false.
+
+</div>
+    <div class="simple" id="sh_test.device_supported">
+        <span class="fixed">&nbsp;</span><b>device_supported </b>
+        <i>bool</i>, If set to true, build a variant of the module for the device.  Defaults to true.
+
+</div>
+    <div class="simple" id="sh_test.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="sh_test.auto_gen_config">
+        <span class="fixed">&nbsp;</span><b>auto_gen_config </b>
+        <i>bool</i>, Flag to indicate whether or not to create test config automatically. If AndroidTest.xml
+doesn&#39;t exist next to the Android.bp, this attribute doesn&#39;t need to be set to true
+explicitly.
+
+</div>
+    <div class="accordion"  id="sh_test.bazel_module">
+        <span class="fixed">&#x2295</span><b>bazel_module</b>
+        <i>bazelModuleProperties</i></div>
+      <div class="collapsible">In &#34;Bazel mixed build&#34; mode, this represents the Bazel target replacing
+this Soong module.
+
+ 
+        
+    <div class="simple" id="sh_test.label">
+        <span class="fixed">&nbsp;</span><b>label </b>
+        <i>string</i>, The label of the Bazel target replacing this Soong module. When run in conversion mode, this
+will import the handcrafted build target into the autogenerated file. Note: this may result in
+a conflict due to duplicate targets if bp2build_available is also set.
+
+</div>
+    <div class="simple" id="sh_test.bp2build_available">
+        <span class="fixed">&nbsp;</span><b>bp2build_available </b>
+        <i>bool</i>, If true, bp2build will generate the converted Bazel target for this module. Note: this may
+cause a conflict due to the duplicate targets if label is also set.
+
+This is a bool pointer to support tristates: true, false, not set.
+
+To opt in a module, set bazel_module: { bp2build_available: true }
+To opt out a module, set bazel_module: { bp2build_available: false }
+To defer the default setting for the directory, do not set the value.
+
+</div></div>
+    <div class="simple" id="sh_test.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="sh_test.data">
+        <span class="fixed">&nbsp;</span><b>data </b>
+        <i>list of string</i>, list of files or filegroup modules that provide data that should be installed alongside
+the test.
+
+</div>
+    <div class="simple" id="sh_test.data_bins">
+        <span class="fixed">&nbsp;</span><b>data_bins </b>
+        <i>list of string</i>, list of binary modules that should be installed alongside the test
+
+</div>
+    <div class="simple" id="sh_test.data_device_bins">
+        <span class="fixed">&nbsp;</span><b>data_device_bins </b>
+        <i>list of string</i>, list of device binary modules that should be installed alongside the test.
+Only available for host sh_test modules.
+
+</div>
+    <div class="simple" id="sh_test.data_device_libs">
+        <span class="fixed">&nbsp;</span><b>data_device_libs </b>
+        <i>list of string</i>, list of device library modules that should be installed alongside the test.
+Only available for host sh_test modules.
+
+</div>
+    <div class="simple" id="sh_test.data_libs">
+        <span class="fixed">&nbsp;</span><b>data_libs </b>
+        <i>list of string</i>, list of library modules that should be installed alongside the test
+
+</div>
+    <div class="simple" id="sh_test.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="sh_test.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="sh_test.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="sh_test.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="sh_test.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="sh_test.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="sh_test.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="sh_test.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="sh_test.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="sh_test.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="sh_test.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="sh_test.filename">
+        <span class="fixed">&nbsp;</span><b>filename </b>
+        <i>string</i>, optional name for the installed file. If unspecified, name of the module is used as the file name
+
+</div>
+    <div class="simple" id="sh_test.filename_from_src">
+        <span class="fixed">&nbsp;</span><b>filename_from_src </b>
+        <i>bool</i>, when set to true, and filename property is not set, the name for the installed file
+is the same as the file name of the source file.
+
+</div>
+    <div class="simple" id="sh_test.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="sh_test.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="sh_test.installable">
+        <span class="fixed">&nbsp;</span><b>installable </b>
+        <i>bool</i>, Whether this module is directly installable to one of the partitions. Default: true.
+
+</div>
+    <div class="simple" id="sh_test.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="sh_test.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="sh_test.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="sh_test.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="sh_test.per_testcase_directory">
+        <span class="fixed">&nbsp;</span><b>per_testcase_directory </b>
+        <i>bool</i>, Install the test into a folder named for the module in all test suites.
+
+</div>
+    <div class="simple" id="sh_test.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="sh_test.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_test.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_test.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_test.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_test.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="sh_test.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_test.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test.src">
+        <span class="fixed">&#x2295</span><b>src</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="sh_test.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_test.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="sh_test.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="sh_test.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="sh_test.ramdisk_available">
+        <span class="fixed">&nbsp;</span><b>ramdisk_available </b>
+        <i>bool</i>, Make this module available when building for ramdisk.
+On device without a dedicated recovery partition, the module is only
+available after switching root into
+/first_stage_ramdisk. To expose the module before switching root, install
+the recovery variant instead.
+
+</div>
+    <div class="simple" id="sh_test.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="sh_test.recovery_available">
+        <span class="fixed">&nbsp;</span><b>recovery_available </b>
+        <i>bool</i>, Make this module available when building for recovery.
+
+</div>
+    <div class="simple" id="sh_test.require_root">
+        <span class="fixed">&nbsp;</span><b>require_root </b>
+        <i>bool</i>, Add RootTargetPreparer to auto generated test config. This guarantees the test to run
+with root permission.
+
+</div>
+    <div class="simple" id="sh_test.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="sh_test.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="sh_test.sub_dir">
+        <span class="fixed">&nbsp;</span><b>sub_dir </b>
+        <i>string</i>, optional subdirectory under which this file is installed into
+
+</div>
+    <div class="simple" id="sh_test.symlinks">
+        <span class="fixed">&nbsp;</span><b>symlinks </b>
+        <i>list of string</i>, install symlinks to the binary
+
+</div>
+    <div class="simple" id="sh_test.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="sh_test.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="sh_test.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="sh_test.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="sh_test.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="sh_test.test_config">
+        <span class="fixed">&nbsp;</span><b>test_config </b>
+        <i>string</i>, the name of the test configuration (for example &#34;AndroidTest.xml&#34;) that should be
+installed with the module.
+
+</div>
+    <div class="simple" id="sh_test.test_config_template">
+        <span class="fixed">&nbsp;</span><b>test_config_template </b>
+        <i>string</i>, the name of the test configuration template (for example &#34;AndroidTestTemplate.xml&#34;) that
+should be installed with the module.
+
+</div>
+    <div class="accordion"  id="sh_test.test_options">
+        <span class="fixed">&#x2295</span><b>test_options</b>
+        <i>*ast.SelectorExpr</i></div>
+      <div class="collapsible">Test options.
+
+ 
+        
+    <div class="simple" id="sh_test.unit_test">
+        <span class="fixed">&nbsp;</span><b>unit_test </b>
+        <i>bool</i>, If the test is a hostside (no device required) unittest that shall be run
+during presubmit check.
+
+</div>
+    <div class="simple" id="sh_test.tags">
+        <span class="fixed">&nbsp;</span><b>tags </b>
+        <i>list of string</i>, Tags provide additional metadata to customize test execution by downstream
+test runners. The tags have no special meaning to Soong.
+
+</div></div>
+    <div class="simple" id="sh_test.test_suites">
+        <span class="fixed">&nbsp;</span><b>test_suites </b>
+        <i>list of string</i>, list of compatibility suites (for example &#34;cts&#34;, &#34;vts&#34;) that the module should be
+installed into.
+
+</div>
+    <div class="simple" id="sh_test.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="sh_test.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="sh_test.vendor_ramdisk_available">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk_available </b>
+        <i>bool</i>, Make this module available when building for vendor ramdisk.
+On device without a dedicated recovery partition, the module is only
+available after switching root into
+/first_stage_ramdisk. To expose the module before switching root, install
+the recovery variant instead.
+
+</div>
+    <div class="simple" id="sh_test.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="sh_test.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+	
+	<p>
+  <h2 id="sh_test_host">sh_test_host</h2>
+  sh_test_host defines a shell script based test module that runs on a host.
+
+<div class="breadcrumb">
+    
+				<a href=sh.html#sh_test_host.name>name</a>
+				,&nbsp;<a href=sh.html#sh_test_host.src>src</a>
+				,&nbsp;<a href=sh.html#sh_test_host.arch>arch</a>
+				,&nbsp;<a href=sh.html#sh_test_host.auto_gen_config>auto_gen_config</a>
+				,&nbsp;<a href=sh.html#sh_test_host.bazel_module>bazel_module</a>
+				,&nbsp;<a href=sh.html#sh_test_host.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=sh.html#sh_test_host.data>data</a>
+				,&nbsp;<a href=sh.html#sh_test_host.data_bins>data_bins</a>
+				,&nbsp;<a href=sh.html#sh_test_host.data_device_bins>data_device_bins</a>
+				,&nbsp;<a href=sh.html#sh_test_host.data_device_libs>data_device_libs</a>
+				,&nbsp;<a href=sh.html#sh_test_host.data_libs>data_libs</a>
+				,&nbsp;<a href=sh.html#sh_test_host.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_test_host.device_specific>device_specific</a>
+				,&nbsp;<a href=sh.html#sh_test_host.dist>dist</a>
+				,&nbsp;<a href=sh.html#sh_test_host.dists>dists</a>
+				,&nbsp;<a href=sh.html#sh_test_host.enabled>enabled</a>
+				,&nbsp;<a href=sh.html#sh_test_host.filename>filename</a>
+				,&nbsp;<a href=sh.html#sh_test_host.filename_from_src>filename_from_src</a>
+				,&nbsp;<a href=sh.html#sh_test_host.host_required>host_required</a>
+				,&nbsp;<a href=sh.html#sh_test_host.init_rc>init_rc</a>
+				,&nbsp;<a href=sh.html#sh_test_host.installable>installable</a>
+				,&nbsp;<a href=sh.html#sh_test_host.licenses>licenses</a>
+				,&nbsp;<a href=sh.html#sh_test_host.multilib>multilib</a>
+				,&nbsp;<a href=sh.html#sh_test_host.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=sh.html#sh_test_host.owner>owner</a>
+				,&nbsp;<a href=sh.html#sh_test_host.per_testcase_directory>per_testcase_directory</a>
+				,&nbsp;<a href=sh.html#sh_test_host.product_specific>product_specific</a>
+				,&nbsp;<a href=sh.html#sh_test_host.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=sh.html#sh_test_host.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=sh.html#sh_test_host.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=sh.html#sh_test_host.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=sh.html#sh_test_host.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=sh.html#sh_test_host.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=sh.html#sh_test_host.proprietary>proprietary</a>
+				,&nbsp;<a href=sh.html#sh_test_host.ramdisk>ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_test_host.ramdisk_available>ramdisk_available</a>
+				,&nbsp;<a href=sh.html#sh_test_host.recovery>recovery</a>
+				,&nbsp;<a href=sh.html#sh_test_host.recovery_available>recovery_available</a>
+				,&nbsp;<a href=sh.html#sh_test_host.require_root>require_root</a>
+				,&nbsp;<a href=sh.html#sh_test_host.required>required</a>
+				,&nbsp;<a href=sh.html#sh_test_host.soc_specific>soc_specific</a>
+				,&nbsp;<a href=sh.html#sh_test_host.sub_dir>sub_dir</a>
+				,&nbsp;<a href=sh.html#sh_test_host.symlinks>symlinks</a>
+				,&nbsp;<a href=sh.html#sh_test_host.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=sh.html#sh_test_host.target>target</a>
+				,&nbsp;<a href=sh.html#sh_test_host.target.android>target.android</a>
+				,&nbsp;<a href=sh.html#sh_test_host.target.host>target.host</a>
+				,&nbsp;<a href=sh.html#sh_test_host.target_required>target_required</a>
+				,&nbsp;<a href=sh.html#sh_test_host.test_config>test_config</a>
+				,&nbsp;<a href=sh.html#sh_test_host.test_config_template>test_config_template</a>
+				,&nbsp;<a href=sh.html#sh_test_host.test_options>test_options</a>
+				,&nbsp;<a href=sh.html#sh_test_host.test_suites>test_suites</a>
+				,&nbsp;<a href=sh.html#sh_test_host.vendor>vendor</a>
+				,&nbsp;<a href=sh.html#sh_test_host.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=sh.html#sh_test_host.vendor_ramdisk_available>vendor_ramdisk_available</a>
+				,&nbsp;<a href=sh.html#sh_test_host.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=sh.html#sh_test_host.visibility>visibility</a></div>
+    <div class="simple" id="sh_test_host.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="sh_test_host.src">
+        <span class="fixed">&nbsp;</span><b>src </b>
+        <i>string</i>, Source file of this prebuilt.
+
+</div>
+    <div class="simple" id="sh_test_host.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="sh_test_host.auto_gen_config">
+        <span class="fixed">&nbsp;</span><b>auto_gen_config </b>
+        <i>bool</i>, Flag to indicate whether or not to create test config automatically. If AndroidTest.xml
+doesn&#39;t exist next to the Android.bp, this attribute doesn&#39;t need to be set to true
+explicitly.
+
+</div>
+    <div class="accordion"  id="sh_test_host.bazel_module">
+        <span class="fixed">&#x2295</span><b>bazel_module</b>
+        <i>bazelModuleProperties</i></div>
+      <div class="collapsible">In &#34;Bazel mixed build&#34; mode, this represents the Bazel target replacing
+this Soong module.
+
+ 
+        
+    <div class="simple" id="sh_test_host.label">
+        <span class="fixed">&nbsp;</span><b>label </b>
+        <i>string</i>, The label of the Bazel target replacing this Soong module. When run in conversion mode, this
+will import the handcrafted build target into the autogenerated file. Note: this may result in
+a conflict due to duplicate targets if bp2build_available is also set.
+
+</div>
+    <div class="simple" id="sh_test_host.bp2build_available">
+        <span class="fixed">&nbsp;</span><b>bp2build_available </b>
+        <i>bool</i>, If true, bp2build will generate the converted Bazel target for this module. Note: this may
+cause a conflict due to the duplicate targets if label is also set.
+
+This is a bool pointer to support tristates: true, false, not set.
+
+To opt in a module, set bazel_module: { bp2build_available: true }
+To opt out a module, set bazel_module: { bp2build_available: false }
+To defer the default setting for the directory, do not set the value.
+
+</div></div>
+    <div class="simple" id="sh_test_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="sh_test_host.data">
+        <span class="fixed">&nbsp;</span><b>data </b>
+        <i>list of string</i>, list of files or filegroup modules that provide data that should be installed alongside
+the test.
+
+</div>
+    <div class="simple" id="sh_test_host.data_bins">
+        <span class="fixed">&nbsp;</span><b>data_bins </b>
+        <i>list of string</i>, list of binary modules that should be installed alongside the test
+
+</div>
+    <div class="simple" id="sh_test_host.data_device_bins">
+        <span class="fixed">&nbsp;</span><b>data_device_bins </b>
+        <i>list of string</i>, list of device binary modules that should be installed alongside the test.
+Only available for host sh_test modules.
+
+</div>
+    <div class="simple" id="sh_test_host.data_device_libs">
+        <span class="fixed">&nbsp;</span><b>data_device_libs </b>
+        <i>list of string</i>, list of device library modules that should be installed alongside the test.
+Only available for host sh_test modules.
+
+</div>
+    <div class="simple" id="sh_test_host.data_libs">
+        <span class="fixed">&nbsp;</span><b>data_libs </b>
+        <i>list of string</i>, list of library modules that should be installed alongside the test
+
+</div>
+    <div class="simple" id="sh_test_host.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="sh_test_host.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="sh_test_host.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="sh_test_host.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="sh_test_host.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="sh_test_host.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="sh_test_host.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="sh_test_host.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="sh_test_host.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="sh_test_host.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="sh_test_host.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="sh_test_host.filename">
+        <span class="fixed">&nbsp;</span><b>filename </b>
+        <i>string</i>, optional name for the installed file. If unspecified, name of the module is used as the file name
+
+</div>
+    <div class="simple" id="sh_test_host.filename_from_src">
+        <span class="fixed">&nbsp;</span><b>filename_from_src </b>
+        <i>bool</i>, when set to true, and filename property is not set, the name for the installed file
+is the same as the file name of the source file.
+
+</div>
+    <div class="simple" id="sh_test_host.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="sh_test_host.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="sh_test_host.installable">
+        <span class="fixed">&nbsp;</span><b>installable </b>
+        <i>bool</i>, Whether this module is directly installable to one of the partitions. Default: true.
+
+</div>
+    <div class="simple" id="sh_test_host.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="sh_test_host.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="sh_test_host.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="sh_test_host.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="sh_test_host.per_testcase_directory">
+        <span class="fixed">&nbsp;</span><b>per_testcase_directory </b>
+        <i>bool</i>, Install the test into a folder named for the module in all test suites.
+
+</div>
+    <div class="simple" id="sh_test_host.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="sh_test_host.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_test_host.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test_host.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_test_host.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_test_host.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="sh_test_host.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="sh_test_host.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_test_host.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test_host.src">
+        <span class="fixed">&#x2295</span><b>src</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*string</i></div></div></div>
+    <div class="accordion"  id="sh_test_host.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="sh_test_host.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="sh_test_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="sh_test_host.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="sh_test_host.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="sh_test_host.ramdisk_available">
+        <span class="fixed">&nbsp;</span><b>ramdisk_available </b>
+        <i>bool</i>, Make this module available when building for ramdisk.
+On device without a dedicated recovery partition, the module is only
+available after switching root into
+/first_stage_ramdisk. To expose the module before switching root, install
+the recovery variant instead.
+
+</div>
+    <div class="simple" id="sh_test_host.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="sh_test_host.recovery_available">
+        <span class="fixed">&nbsp;</span><b>recovery_available </b>
+        <i>bool</i>, Make this module available when building for recovery.
+
+</div>
+    <div class="simple" id="sh_test_host.require_root">
+        <span class="fixed">&nbsp;</span><b>require_root </b>
+        <i>bool</i>, Add RootTargetPreparer to auto generated test config. This guarantees the test to run
+with root permission.
+
+</div>
+    <div class="simple" id="sh_test_host.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="simple" id="sh_test_host.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="simple" id="sh_test_host.sub_dir">
+        <span class="fixed">&nbsp;</span><b>sub_dir </b>
+        <i>string</i>, optional subdirectory under which this file is installed into
+
+</div>
+    <div class="simple" id="sh_test_host.symlinks">
+        <span class="fixed">&nbsp;</span><b>symlinks </b>
+        <i>list of string</i>, install symlinks to the binary
+
+</div>
+    <div class="simple" id="sh_test_host.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="sh_test_host.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="sh_test_host.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="sh_test_host.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="sh_test_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="sh_test_host.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="sh_test_host.test_config">
+        <span class="fixed">&nbsp;</span><b>test_config </b>
+        <i>string</i>, the name of the test configuration (for example &#34;AndroidTest.xml&#34;) that should be
+installed with the module.
+
+</div>
+    <div class="simple" id="sh_test_host.test_config_template">
+        <span class="fixed">&nbsp;</span><b>test_config_template </b>
+        <i>string</i>, the name of the test configuration template (for example &#34;AndroidTestTemplate.xml&#34;) that
+should be installed with the module.
+
+</div>
+    <div class="accordion"  id="sh_test_host.test_options">
+        <span class="fixed">&#x2295</span><b>test_options</b>
+        <i>*ast.SelectorExpr</i></div>
+      <div class="collapsible">Test options.
+
+ 
+        
+    <div class="simple" id="sh_test_host.unit_test">
+        <span class="fixed">&nbsp;</span><b>unit_test </b>
+        <i>bool</i>, If the test is a hostside (no device required) unittest that shall be run
+during presubmit check.
+
+<i>Default: true</i></div>
+    <div class="simple" id="sh_test_host.tags">
+        <span class="fixed">&nbsp;</span><b>tags </b>
+        <i>list of string</i>, Tags provide additional metadata to customize test execution by downstream
+test runners. The tags have no special meaning to Soong.
+
+</div></div>
+    <div class="simple" id="sh_test_host.test_suites">
+        <span class="fixed">&nbsp;</span><b>test_suites </b>
+        <i>list of string</i>, list of compatibility suites (for example &#34;cts&#34;, &#34;vts&#34;) that the module should be
+installed into.
+
+</div>
+    <div class="simple" id="sh_test_host.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="sh_test_host.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="sh_test_host.vendor_ramdisk_available">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk_available </b>
+        <i>bool</i>, Make this module available when building for vendor ramdisk.
+On device without a dedicated recovery partition, the module is only
+available after switching root into
+/first_stage_ramdisk. To expose the module before switching root, install
+the recovery variant instead.
+
+</div>
+    <div class="simple" id="sh_test_host.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="sh_test_host.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div></div>
+<script>
+  accordions = document.getElementsByClassName('accordion');
+  for (i=0; i < accordions.length; ++i) {
+    accordions[i].addEventListener("click", function() {
+      var panel = this.nextElementSibling;
+      var child = this.firstElementChild;
+      if (panel.style.display === "block") {
+          panel.style.display = "none";
+          child.textContent = '\u2295';
+      } else {
+          panel.style.display = "block";
+          child.textContent = '\u2296';
+      }
+    });
+  }
+</script>
+</body>

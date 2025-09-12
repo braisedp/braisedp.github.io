@@ -120,7 +120,7 @@ hidl_package_root{
 ![generated so](../images/2025-8-26-car_property/so.png)
 
 进入`out/soong/.intermediates/vendor/braisedp/interfaces/automotive/vehicle/2.0/`，可以看到生成如下内容：
-![generated inter](../images/2025-8-26-car_property/intermediate.png)
+<!-- ![generated inter](../images/2025-8-26-car_property/intermediate.png) -->
 
 进入`out/soong/.intermediates/vendor/braisedp/interfaces/automotive/vehicle/2.0/vendor.braisedp.hardware.automotive.vehicle@2.0_genc++_headers/gen/vendor/braisedp/hardware/automotive/vehicle/2.0/`下，发现生成了`.h`文件:
 ![generated header](../images/2025-8-26-car_property/header.png)

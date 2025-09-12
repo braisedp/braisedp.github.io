@@ -1,0 +1,1194 @@
+
+<html>
+<head>
+<title>Build Docs</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<style>
+.accordion,.simple{margin-left:1.5em;text-indent:-1.5em;margin-top:.25em}
+.collapsible{border-width:0 0 0 1;margin-left:.25em;padding-left:.25em;border-style:solid;
+  border-color:grey;display:none;}
+span.fixed{display: block; float: left; clear: left; width: 1em;}
+ul {
+	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 30ch;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+</style>
+
+<script type="text/javascript">
+window.addEventListener('message', (e) => {
+  if (e != null && e.data != null && e.data.type === "SET_BASE" && e.data.base != null) {
+    const existingBase = document.querySelector('base');
+    if (existingBase != null) {
+      existingBase.parentElement.removeChild(existingBase);
+    }
+
+    const base = document.createElement('base');
+    base.setAttribute('href', e.data.base);
+    document.head.appendChild(base);
+  }
+});
+</script>
+
+</head>
+<body><ul>
+<li><h3>rustprebuilts package</h3></li>
+<li><a href="rustprebuilts.html#rust_stdlib_prebuilt_host">rust_stdlib_prebuilt_host</a></li>
+</ul>
+
+<div style="margin-left:30ch;padding:1px 16px;">
+
+	
+	<p>
+  <h2 id="rust_stdlib_prebuilt_host">rust_stdlib_prebuilt_host</h2>
+  
+<div class="breadcrumb">
+    
+				<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.name>name</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.srcs>srcs</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.defaults>defaults</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.afdo>afdo</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.apex_available>apex_available</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.arch>arch</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.bootstrap>bootstrap</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.cargo_env_compat>cargo_env_compat</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.cargo_pkg_version>cargo_pkg_version</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.cfgs>cfgs</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.clippy_lints>clippy_lints</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.compile_multilib>compile_multilib</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.crate_name>crate_name</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.debug_ramdisk>debug_ramdisk</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.device_specific>device_specific</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.dist>dist</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.dists>dists</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.double_loadable>double_loadable</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.dylib>dylib</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.dylibs>dylibs</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.edition>edition</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.enabled>enabled</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.exclude_from_recovery_snapshot>exclude_from_recovery_snapshot</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.exclude_from_vendor_snapshot>exclude_from_vendor_snapshot</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.features>features</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.flags>flags</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.host_required>host_required</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.include_dirs>include_dirs</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.init_rc>init_rc</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.installable>installable</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.ld_flags>ld_flags</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.licenses>licenses</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.link_dirs>link_dirs</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.lints>lints</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.min_sdk_version>min_sdk_version</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.multilib>multilib</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.native_bridge_supported>native_bridge_supported</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.native_coverage>native_coverage</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.no_stdlibs>no_stdlibs</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.odm_available>odm_available</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.owner>owner</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.prefer>prefer</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.prefer_rlib>prefer_rlib</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.proc_macros>proc_macros</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.product_available>product_available</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.product_specific>product_specific</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.product_variables.always_use_prebuilt_sdks>product_variables.always_use_prebuilt_sdks</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.product_variables.arc>product_variables.arc</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.product_variables.debuggable>product_variables.debuggable</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.product_variables.eng>product_variables.eng</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.product_variables.flatten_apex>product_variables.flatten_apex</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.product_variables.malloc_not_svelte>product_variables.malloc_not_svelte</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.product_variables.native_coverage>product_variables.native_coverage</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.product_variables.pdk>product_variables.pdk</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.product_variables.unbundled_build>product_variables.unbundled_build</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.proprietary>proprietary</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.ramdisk>ramdisk</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.ramdisk_available>ramdisk_available</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.recovery>recovery</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.recovery_available>recovery_available</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.relative_install_path>relative_install_path</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.required>required</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.rlib>rlib</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.rlibs>rlibs</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.rustlibs>rustlibs</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.sanitize>sanitize</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.shared>shared</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.shared_libs>shared_libs</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.soc_specific>soc_specific</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.static>static</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.static_libs>static_libs</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.stdlibs>stdlibs</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.stem>stem</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.strip>strip</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.suffix>suffix</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.sysroot>sysroot</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.system_ext_specific>system_ext_specific</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.target>target</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.target.android>target.android</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.target.host>target.host</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.target_required>target_required</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.use_source_config_var>use_source_config_var</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.vendor>vendor</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.vendor_available>vendor_available</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.vendor_ramdisk>vendor_ramdisk</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.vendor_ramdisk_available>vendor_ramdisk_available</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.vintf_fragments>vintf_fragments</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.visibility>visibility</a>
+				,&nbsp;<a href=rustprebuilts.html#rust_stdlib_prebuilt_host.whole_static_libs>whole_static_libs</a></div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.name">
+        <span class="fixed">&nbsp;</span><b>name </b>
+        <i>string</i>, The name of the module.  Must be unique across all modules.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>, path to the prebuilt file
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.defaults">
+        <span class="fixed">&nbsp;</span><b>defaults </b>
+        <i>list of string</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.afdo">
+        <span class="fixed">&nbsp;</span><b>afdo </b>
+        <i>bool</i>, Afdo allows developers self-service enroll for
+automatic feedback-directed optimization using profile data.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.apex_available">
+        <span class="fixed">&nbsp;</span><b>apex_available </b>
+        <i>list of string</i>, Availability of this module in APEXes. Only the listed APEXes can contain this module. If
+the module has stubs then other APEXes and the platform may access it through them
+(subject to visibility).
+
+&#34;//apex_available:anyapex&#34; is a pseudo APEX name that matches to any APEX.
+&#34;//apex_available:platform&#34; refers to non-APEX partitions like &#34;system.img&#34;.
+&#34;com.android.gki.*&#34; matches any APEX module name with the prefix &#34;com.android.gki.&#34;.
+Default is [&#34;//apex_available:platform&#34;].
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.arch">
+        <span class="fixed">&nbsp;</span><b>arch </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.bootstrap">
+        <span class="fixed">&nbsp;</span><b>bootstrap </b>
+        <i>bool</i>, Allows this module to use non-APEX version of libraries. Useful
+for building binaries that are started before APEXes are activated.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.cargo_env_compat">
+        <span class="fixed">&nbsp;</span><b>cargo_env_compat </b>
+        <i>bool</i>, Enables emitting certain Cargo environment variables. Only intended to be used for compatibility purposes.
+Will set CARGO_CRATE_NAME to the crate_name property&#39;s value.
+Will set CARGO_BIN_NAME to the output filename value without the extension.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.cargo_pkg_version">
+        <span class="fixed">&nbsp;</span><b>cargo_pkg_version </b>
+        <i>string</i>, If cargo_env_compat is true, sets the CARGO_PKG_VERSION env var to this value.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.cfgs">
+        <span class="fixed">&nbsp;</span><b>cfgs </b>
+        <i>list of string</i>, list of configuration options to enable for this crate. To enable features, use the &#34;features&#34; property.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.clippy_lints">
+        <span class="fixed">&nbsp;</span><b>clippy_lints </b>
+        <i>string</i>, name of the lint set that should be used to validate this module.
+
+Possible values are &#34;default&#34; (for using a sensible set of lints
+depending on the module&#39;s location), &#34;android&#34; (for the strictest
+lint set that applies to all Android platform code), &#34;vendor&#34; (for a
+relaxed set) and &#34;none&#34; (to disable the execution of clippy).  The
+default value is &#34;default&#34;. See also the `lints` property.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>, control whether this module compiles for 32-bit, 64-bit, or both.  Possible values
+are &#34;32&#34; (compile for 32-bit only), &#34;64&#34; (compile for 64-bit only), &#34;both&#34; (compile for both
+architectures), or &#34;first&#34; (compile for 64-bit on a 64-bit platform, and 32-bit on a 32-bit
+platform).
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.crate_name">
+        <span class="fixed">&nbsp;</span><b>crate_name </b>
+        <i>string</i>, crate name, required for modules which produce Rust libraries: rust_library, rust_ffi and SourceProvider
+modules which create library variants (rust_bindgen). This must be the expected extern crate name used in
+source, and is required to conform to an enforced format matching library output files (if the output file is
+lib&lt;someName&gt;&lt;suffix&gt;, the crate_name property must be &lt;someName&gt;).
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.debug_ramdisk">
+        <span class="fixed">&nbsp;</span><b>debug_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to debug ramdisk
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.device_specific">
+        <span class="fixed">&nbsp;</span><b>device_specific </b>
+        <i>bool</i>, whether this module is specific to a device, not only for SoC, but also for off-chip
+peripherals. When set to true, it is installed into /odm (or /vendor/odm if odm partition
+does not exist, or /system/vendor/odm if both odm and vendor partitions do not exist).
+This implies `soc_specific:true`.
+
+</div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.dist">
+        <span class="fixed">&#x2295</span><b>dist</b>
+        <i>Dist</i></div>
+      <div class="collapsible">configuration to distribute output files from this module to the distribution
+directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.targets">
+        <span class="fixed">&nbsp;</span><b>targets </b>
+        <i>list of string</i>, Copy the output of this module to the $DIST_DIR when `dist` is specified on the
+command line and any of these targets are also on the command line, or otherwise
+built
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.dest">
+        <span class="fixed">&nbsp;</span><b>dest </b>
+        <i>string</i>, The name of the output artifact. This defaults to the basename of the output of
+the module.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.dir">
+        <span class="fixed">&nbsp;</span><b>dir </b>
+        <i>string</i>, The directory within the dist directory to store the artifact. Defaults to the
+top level directory (&#34;&#34;).
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, A suffix to add to the artifact file name (before any extension).
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.append_artifact_with_product">
+        <span class="fixed">&nbsp;</span><b>append_artifact_with_product </b>
+        <i>bool</i>, If true, then the artifact file will be appended with _&lt;product name&gt;. For
+example, if the product is coral and the module is an android_app module
+of name foo, then the artifact would be foo_coral.apk. If false, there is
+no change to the artifact file name.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.tag">
+        <span class="fixed">&nbsp;</span><b>tag </b>
+        <i>string</i>, A string tag to select the OutputFiles associated with the tag.
+
+If no tag is specified then it will select the default dist paths provided
+by the module type. If a tag of &#34;&#34; is specified then it will return the
+default output files provided by the modules, i.e. the result of calling
+OutputFiles(&#34;&#34;).
+
+</div></div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.dists">
+        <span class="fixed">&nbsp;</span><b>dists </b>
+        <i>list of Dist</i>, a list of configurations to distribute output files from this module to the
+distribution directory (default: $OUT/dist, configurable with $DIST_DIR)
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.double_loadable">
+        <span class="fixed">&nbsp;</span><b>double_loadable </b>
+        <i>bool</i>, whether this module is capable of being loaded with other instance
+(possibly an older version) of the same module in the same process.
+Currently, a shared library that is a member of VNDK (vndk: {enabled: true})
+can be double loaded in a vendor process if the library is also a
+(direct and indirect) dependency of an LLNDK library. Such libraries must be
+explicitly marked as `double_loadable: true` by the owner, or the dependency
+from the LLNDK lib should be cut if the lib is not designed to be double loaded.
+
+</div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.dylib">
+        <span class="fixed">&#x2295</span><b>dylib</b>
+        <i>VariantLibraryProperties</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>
+</div></div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.dylibs">
+        <span class="fixed">&nbsp;</span><b>dylibs </b>
+        <i>list of string</i>, list of rust dylib crate dependencies
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.edition">
+        <span class="fixed">&nbsp;</span><b>edition </b>
+        <i>string</i>, specific rust edition that should be used if the default version is not desired
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>, emit build rules for this module
+
+Disabling a module should only be done for those modules that cannot be built
+in the current environment. Modules that can build in the current environment
+but are not usually required (e.g. superceded by a prebuilt) should not be
+disabled as that will prevent them from being built by the checkbuild target
+and so prevent early detection of changes that have broken those modules.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.exclude_from_recovery_snapshot">
+        <span class="fixed">&nbsp;</span><b>exclude_from_recovery_snapshot </b>
+        <i>bool</i>, Normally Soong uses the directory structure to decide which modules
+should be included (framework) or excluded (non-framework) from the
+different snapshots (vendor, recovery, etc.), but this property
+allows a partner to exclude a module normally thought of as a
+framework module from the recovery snapshot.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.exclude_from_vendor_snapshot">
+        <span class="fixed">&nbsp;</span><b>exclude_from_vendor_snapshot </b>
+        <i>bool</i>, Normally Soong uses the directory structure to decide which modules
+should be included (framework) or excluded (non-framework) from the
+different snapshots (vendor, recovery, etc.), but this property
+allows a partner to exclude a module normally thought of as a
+framework module from the vendor snapshot.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.features">
+        <span class="fixed">&nbsp;</span><b>features </b>
+        <i>list of string</i>, list of features to enable for this crate
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.flags">
+        <span class="fixed">&nbsp;</span><b>flags </b>
+        <i>list of string</i>, flags to pass to rustc. To enable configuration options or features, use the &#34;cfgs&#34; or &#34;features&#34; properties.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.host_required">
+        <span class="fixed">&nbsp;</span><b>host_required </b>
+        <i>list of string</i>, names of other modules to install on host if this module is installed
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.include_dirs">
+        <span class="fixed">&nbsp;</span><b>include_dirs </b>
+        <i>list of string</i>, path to include directories to pass to cc_* modules, only relevant for static/shared variants.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.init_rc">
+        <span class="fixed">&nbsp;</span><b>init_rc </b>
+        <i>list of string</i>, init.rc files to be installed if this module is installed
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.installable">
+        <span class="fixed">&nbsp;</span><b>installable </b>
+        <i>bool</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.ld_flags">
+        <span class="fixed">&nbsp;</span><b>ld_flags </b>
+        <i>list of string</i>, flags to pass to the linker
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.licenses">
+        <span class="fixed">&nbsp;</span><b>licenses </b>
+        <i>list of string</i>, Describes the licenses applicable to this module. Must reference license modules.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.link_dirs">
+        <span class="fixed">&nbsp;</span><b>link_dirs </b>
+        <i>list of string</i>, directories containing associated rlib dependencies
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.lints">
+        <span class="fixed">&nbsp;</span><b>lints </b>
+        <i>string</i>, name of the lint set that should be used to validate this module.
+
+Possible values are &#34;default&#34; (for using a sensible set of lints
+depending on the module&#39;s location), &#34;android&#34; (for the strictest
+lint set that applies to all Android platform code), &#34;vendor&#34; (for
+a relaxed set) and &#34;none&#34; (for ignoring all lint warnings and
+errors). The default value is &#34;default&#34;.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.min_sdk_version">
+        <span class="fixed">&nbsp;</span><b>min_sdk_version </b>
+        <i>string</i>, Minimum sdk version that the artifact should support when it runs as part of mainline modules(APEX).
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.multilib">
+        <span class="fixed">&nbsp;</span><b>multilib </b>
+        <i>interface</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.native_bridge_supported">
+        <span class="fixed">&nbsp;</span><b>native_bridge_supported </b>
+        <i>bool</i>, Whether this module is built for non-native architectures (also known as native bridge binary)
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.native_coverage">
+        <span class="fixed">&nbsp;</span><b>native_coverage </b>
+        <i>bool</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.no_stdlibs">
+        <span class="fixed">&nbsp;</span><b>no_stdlibs </b>
+        <i>bool</i>, whether to suppress inclusion of standard crates - defaults to false
+
+<i>Default: true</i></div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.odm_available">
+        <span class="fixed">&nbsp;</span><b>odm_available </b>
+        <i>bool</i>, This is the same as the &#34;vendor_available&#34; except that the install path
+of the vendor variant is /odm or /vendor/odm.
+By replacing &#34;vendor_available: true&#34; with &#34;odm_available: true&#34;, the
+module will install its vendor variant to the /odm partition or /vendor/odm.
+As the modules with &#34;odm_available: true&#34; still create the vendor variants,
+they can link to the other vendor modules as the vendor_available modules do.
+Also, the vendor modules can link to odm_available modules.
+
+It may not be used for VNDK modules.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.owner">
+        <span class="fixed">&nbsp;</span><b>owner </b>
+        <i>string</i>, vendor who owns this module
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.prefer">
+        <span class="fixed">&nbsp;</span><b>prefer </b>
+        <i>bool</i>, When prefer is set to true the prebuilt will be used instead of any source module with
+a matching name.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.prefer_rlib">
+        <span class="fixed">&nbsp;</span><b>prefer_rlib </b>
+        <i>bool</i>, Change the rustlibs linkage to select rlib linkage by default for device targets.
+Also link libstd as an rlib as well on device targets.
+Note: This is the default behavior for host targets.
+
+This is primarily meant for rust_binary and rust_ffi modules where the default
+linkage of libstd might need to be overridden in some use cases. This should
+generally be avoided with other module types since it may cause collisions at
+linkage if all dependencies of the root binary module do not link against libstd
+the same way.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.proc_macros">
+        <span class="fixed">&nbsp;</span><b>proc_macros </b>
+        <i>list of string</i>, list of rust proc_macro crate dependencies
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.product_available">
+        <span class="fixed">&nbsp;</span><b>product_available </b>
+        <i>bool</i>, whether this module should be allowed to be directly depended by other
+modules with `product_specific: true` or `product_available: true`.
+If set to true, an additional product variant will be built separately
+that is limited to the set of libraries and headers that are exposed to
+/product modules.
+
+The product variant may be used with a different (newer) /system,
+so it shouldn&#39;t have any unversioned runtime dependencies, or
+make assumptions about the system that may not be true in the
+future.
+
+If set to false, this module becomes inaccessible from /product modules.
+
+Different from the &#39;vendor_available&#39; property, the modules with
+vndk: {enabled: true} don&#39;t have to define &#39;product_available&#39;. The VNDK
+library without &#39;product_available&#39; may not be depended on by any other
+modules that has product variants including the product available VNDKs.
+
+Nothing happens if BOARD_VNDK_VERSION isn&#39;t set in the BoardConfig.mk
+and PRODUCT_PRODUCT_VNDK_VERSION isn&#39;t set.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.product_specific">
+        <span class="fixed">&nbsp;</span><b>product_specific </b>
+        <i>bool</i>, whether this module is specific to a software configuration of a product (e.g. country,
+network operator, etc). When set to true, it is installed into /product (or
+/system/product if product partition does not exist).
+
+</div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.product_variables.always_use_prebuilt_sdks">
+        <span class="fixed">&#x2295</span><b>product_variables.always_use_prebuilt_sdks</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.product_variables.arc">
+        <span class="fixed">&#x2295</span><b>product_variables.arc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.include_dirs">
+        <span class="fixed">&#x2295</span><b>include_dirs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.shared_libs">
+        <span class="fixed">&#x2295</span><b>shared_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.static_libs">
+        <span class="fixed">&#x2295</span><b>static_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.whole_static_libs">
+        <span class="fixed">&#x2295</span><b>whole_static_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.product_variables.debuggable">
+        <span class="fixed">&#x2295</span><b>product_variables.debuggable</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.init_rc">
+        <span class="fixed">&#x2295</span><b>init_rc</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.required">
+        <span class="fixed">&#x2295</span><b>required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.host_required">
+        <span class="fixed">&#x2295</span><b>host_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.target_required">
+        <span class="fixed">&#x2295</span><b>target_required</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.strip.all">
+        <span class="fixed">&#x2295</span><b>strip.all</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.strip.keep_symbols">
+        <span class="fixed">&#x2295</span><b>strip.keep_symbols</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.strip.keep_symbols_and_debug_frame">
+        <span class="fixed">&#x2295</span><b>strip.keep_symbols_and_debug_frame</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.static_libs">
+        <span class="fixed">&#x2295</span><b>static_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.whole_static_libs">
+        <span class="fixed">&#x2295</span><b>whole_static_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.shared_libs">
+        <span class="fixed">&#x2295</span><b>shared_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.product_variables.eng">
+        <span class="fixed">&#x2295</span><b>product_variables.eng</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.sanitize.address">
+        <span class="fixed">&#x2295</span><b>sanitize.address</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.product_variables.flatten_apex">
+        <span class="fixed">&#x2295</span><b>product_variables.flatten_apex</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.product_variables.malloc_not_svelte">
+        <span class="fixed">&#x2295</span><b>product_variables.malloc_not_svelte</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.shared_libs">
+        <span class="fixed">&#x2295</span><b>shared_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.whole_static_libs">
+        <span class="fixed">&#x2295</span><b>whole_static_libs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.product_variables.native_coverage">
+        <span class="fixed">&#x2295</span><b>product_variables.native_coverage</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.srcs">
+        <span class="fixed">&#x2295</span><b>srcs</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>[]string</i></div></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.product_variables.pdk">
+        <span class="fixed">&#x2295</span><b>product_variables.pdk</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.product_variables.unbundled_build">
+        <span class="fixed">&#x2295</span><b>product_variables.unbundled_build</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.enabled">
+        <span class="fixed">&#x2295</span><b>enabled</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.">
+        <span class="fixed">&nbsp;</span><b> </b>
+        <i>*bool</i></div></div></div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.proprietary">
+        <span class="fixed">&nbsp;</span><b>proprietary </b>
+        <i>bool</i>, whether this is a proprietary vendor module, and should be installed into /vendor
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.ramdisk">
+        <span class="fixed">&nbsp;</span><b>ramdisk </b>
+        <i>bool</i>, Whether this module is installed to ramdisk
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.ramdisk_available">
+        <span class="fixed">&nbsp;</span><b>ramdisk_available </b>
+        <i>bool</i>, Make this module available when building for ramdisk.
+On device without a dedicated recovery partition, the module is only
+available after switching root into
+/first_stage_ramdisk. To expose the module before switching root, install
+the recovery variant instead.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.recovery">
+        <span class="fixed">&nbsp;</span><b>recovery </b>
+        <i>bool</i>, Whether this module is installed to recovery partition
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.recovery_available">
+        <span class="fixed">&nbsp;</span><b>recovery_available </b>
+        <i>bool</i>, Make this module available when building for recovery
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.relative_install_path">
+        <span class="fixed">&nbsp;</span><b>relative_install_path </b>
+        <i>string</i>, install to a subdirectory of the default install path for the module
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.required">
+        <span class="fixed">&nbsp;</span><b>required </b>
+        <i>list of string</i>, names of other modules to install if this module is installed
+
+</div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.rlib">
+        <span class="fixed">&#x2295</span><b>rlib</b>
+        <i>VariantLibraryProperties</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>
+</div></div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.rlibs">
+        <span class="fixed">&nbsp;</span><b>rlibs </b>
+        <i>list of string</i>, list of rust rlib crate dependencies
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.rustlibs">
+        <span class="fixed">&nbsp;</span><b>rustlibs </b>
+        <i>list of string</i>, list of rust automatic crate dependencies
+
+</div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.sanitize">
+        <span class="fixed">&#x2295</span><b>sanitize</b>
+        <i></i></div>
+      <div class="collapsible">enable AddressSanitizer, HWAddressSanitizer, and others.
+
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.address">
+        <span class="fixed">&nbsp;</span><b>address </b>
+        <i>bool</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.hwaddress">
+        <span class="fixed">&nbsp;</span><b>hwaddress </b>
+        <i>bool</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.memtag_heap">
+        <span class="fixed">&nbsp;</span><b>memtag_heap </b>
+        <i>bool</i>, Memory-tagging, only available on arm64
+if diag.memtag unset or false, enables async memory tagging
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.fuzzer">
+        <span class="fixed">&nbsp;</span><b>fuzzer </b>
+        <i>bool</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.never">
+        <span class="fixed">&nbsp;</span><b>never </b>
+        <i>bool</i>
+</div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.diag">
+        <span class="fixed">&#x2295</span><b>diag</b>
+        <i></i></div>
+      <div class="collapsible">Sanitizers to run in the diagnostic mode (as opposed to the release mode).
+Replaces abort() on error with a human-readable error message.
+Address and Thread sanitizers always run in diagnostic mode.
+
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.memtag_heap">
+        <span class="fixed">&nbsp;</span><b>memtag_heap </b>
+        <i>bool</i>, Memory-tagging, only available on arm64
+requires sanitizer.memtag: true
+if set, enables sync memory tagging
+
+</div></div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.shared">
+        <span class="fixed">&#x2295</span><b>shared</b>
+        <i>VariantLibraryProperties</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>
+</div></div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.shared_libs">
+        <span class="fixed">&nbsp;</span><b>shared_libs </b>
+        <i>list of string</i>, list of C shared library dependencies
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.soc_specific">
+        <span class="fixed">&nbsp;</span><b>soc_specific </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+
+</div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.static">
+        <span class="fixed">&#x2295</span><b>static</b>
+        <i>VariantLibraryProperties</i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.enabled">
+        <span class="fixed">&nbsp;</span><b>enabled </b>
+        <i>bool</i>
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.srcs">
+        <span class="fixed">&nbsp;</span><b>srcs </b>
+        <i>list of string</i>
+</div></div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.static_libs">
+        <span class="fixed">&nbsp;</span><b>static_libs </b>
+        <i>list of string</i>, list of C static library dependencies. These dependencies do not normally propagate to dependents
+and may need to be redeclared. See whole_static_libs for bundling static dependencies into a library.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.stdlibs">
+        <span class="fixed">&nbsp;</span><b>stdlibs </b>
+        <i>list of string</i>, list of Rust system library dependencies.
+
+This is usually only needed when `no_stdlibs` is true, in which case it can be used to depend on system crates
+like `core` and `alloc`.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.stem">
+        <span class="fixed">&nbsp;</span><b>stem </b>
+        <i>string</i>, sets name of the output
+
+</div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.strip">
+        <span class="fixed">&#x2295</span><b>strip</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.none">
+        <span class="fixed">&nbsp;</span><b>none </b>
+        <i>bool</i>, none forces all stripping to be disabled.
+Device modules default to stripping enabled leaving mini debuginfo.
+Host modules default to stripping disabled, but can be enabled by setting any other
+strip boolean property.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.all">
+        <span class="fixed">&nbsp;</span><b>all </b>
+        <i>bool</i>, all forces stripping everything, including the mini debug info.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.keep_symbols">
+        <span class="fixed">&nbsp;</span><b>keep_symbols </b>
+        <i>bool</i>, keep_symbols enables stripping but keeps all symbols.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.keep_symbols_list">
+        <span class="fixed">&nbsp;</span><b>keep_symbols_list </b>
+        <i>list of string</i>, keep_symbols_list specifies a list of symbols to keep if keep_symbols is enabled.
+If it is unset then all symbols are kept.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.keep_symbols_and_debug_frame">
+        <span class="fixed">&nbsp;</span><b>keep_symbols_and_debug_frame </b>
+        <i>bool</i>, keep_symbols_and_debug_frame enables stripping but keeps all symbols and debug frames.
+
+</div></div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.suffix">
+        <span class="fixed">&nbsp;</span><b>suffix </b>
+        <i>string</i>, append to name of output
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.sysroot">
+        <span class="fixed">&nbsp;</span><b>sysroot </b>
+        <i>bool</i>, Whether this library is part of the Rust toolchain sysroot.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.system_ext_specific">
+        <span class="fixed">&nbsp;</span><b>system_ext_specific </b>
+        <i>bool</i>, whether this module extends system. When set to true, it is installed into /system_ext
+(or /system/system_ext if system_ext partition does not exist).
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.target">
+        <span class="fixed">&nbsp;</span><b>target </b>
+        <i>interface</i>
+</div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.target.android">
+        <span class="fixed">&#x2295</span><b>target.android</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="accordion"  id="rust_stdlib_prebuilt_host.target.host">
+        <span class="fixed">&#x2295</span><b>target.host</b>
+        <i></i></div>
+      <div class="collapsible">
+ 
+        
+    <div class="simple" id="rust_stdlib_prebuilt_host.compile_multilib">
+        <span class="fixed">&nbsp;</span><b>compile_multilib </b>
+        <i>string</i>
+</div></div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.target_required">
+        <span class="fixed">&nbsp;</span><b>target_required </b>
+        <i>list of string</i>, names of other modules to install on target if this module is installed
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.use_source_config_var">
+        <span class="fixed">&nbsp;</span><b>use_source_config_var </b>
+        <i>ConfigVarProperties</i>, When specified this names a Soong config variable that controls the prefer property.
+
+If the value of the named Soong config variable is true then prefer is set to false and vice
+versa. If the Soong config variable is not set then it defaults to false, so prefer defaults
+to true.
+
+If specified then the prefer property is ignored in favor of the value of the Soong config
+variable.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.vendor">
+        <span class="fixed">&nbsp;</span><b>vendor </b>
+        <i>bool</i>, whether this module is specific to an SoC (System-On-a-Chip). When set to true,
+it is installed into /vendor (or /system/vendor if vendor partition does not exist).
+Use `soc_specific` instead for better meaning.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.vendor_available">
+        <span class="fixed">&nbsp;</span><b>vendor_available </b>
+        <i>bool</i>, whether this module should be allowed to be directly depended by other
+modules with `vendor: true`, `proprietary: true`, or `vendor_available:true`.
+If set to true, two variants will be built separately, one like
+normal, and the other limited to the set of libraries and headers
+that are exposed to /vendor modules.
+
+The vendor variant may be used with a different (newer) /system,
+so it shouldn&#39;t have any unversioned runtime dependencies, or
+make assumptions about the system that may not be true in the
+future.
+
+If set to false, this module becomes inaccessible from /vendor modules.
+
+The modules with vndk: {enabled: true} must define &#39;vendor_available&#39;
+to &#39;true&#39;.
+
+Nothing happens if BOARD_VNDK_VERSION isn&#39;t set in the BoardConfig.mk
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.vendor_ramdisk">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk </b>
+        <i>bool</i>, Whether this module is installed to vendor ramdisk
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.vendor_ramdisk_available">
+        <span class="fixed">&nbsp;</span><b>vendor_ramdisk_available </b>
+        <i>bool</i>, Make this module available when building for vendor ramdisk.
+On device without a dedicated recovery partition, the module is only
+available after switching root into
+/first_stage_ramdisk. To expose the module before switching root, install
+the recovery variant instead
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.vintf_fragments">
+        <span class="fixed">&nbsp;</span><b>vintf_fragments </b>
+        <i>list of string</i>, VINTF manifest fragments to be installed if this module is installed
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.visibility">
+        <span class="fixed">&nbsp;</span><b>visibility </b>
+        <i>list of string</i>, Controls the visibility of this module to other modules. Allowable values are one or more of
+these formats:
+
+<pre>
+
+ [&#34;//visibility:public&#34;]: Anyone can use this module.
+ [&#34;//visibility:private&#34;]: Only rules in the module&#39;s package (not its subpackages) can use
+     this module.
+ [&#34;//visibility:override&#34;]: Discards any rules inherited from defaults or a creating module.
+     Can only be used at the beginning of a list of visibility rules.
+ [&#34;//some/package:__pkg__&#34;, &#34;//other/package:__pkg__&#34;]: Only modules in some/package and
+     other/package (defined in some/package/*.bp and other/package/*.bp) have access to
+     this module. Note that sub-packages do not have access to the rule; for example,
+     //some/package/foo:bar or //other/package/testing:bla wouldn&#39;t have access. __pkg__
+     is a special module and must be used verbatim. It represents all of the modules in the
+     package.
+ [&#34;//project:__subpackages__&#34;, &#34;//other:__subpackages__&#34;]: Only modules in packages project
+     or other or in one of their sub-packages have access to this module. For example,
+     //project:rule, //project/library:lib or //other/testing/internal:munge are allowed
+     to depend on this rule (but not //independent:evil)
+ [&#34;//project&#34;]: This is shorthand for [&#34;//project:__pkg__&#34;]
+ [&#34;:__subpackages__&#34;]: This is shorthand for [&#34;//project:__subpackages__&#34;] where
+     //project is the module&#39;s package. e.g. using [&#34;:__subpackages__&#34;] in
+     packages/apps/Settings/Android.bp is equivalent to
+     //packages/apps/Settings:__subpackages__.
+ [&#34;//visibility:legacy_public&#34;]: The default visibility, behaves as //visibility:public
+     for now. It is an error if it is used in a module.
+
+</pre>
+If a module does not specify the `visibility` property then it uses the
+`default_visibility` property of the `package` module in the module&#39;s package.
+
+If the `default_visibility` property is not set for the module&#39;s package then
+it will use the `default_visibility` of its closest ancestor package for which
+a `default_visibility` property is specified.
+
+If no `default_visibility` property can be found then the module uses the
+global default of `//visibility:legacy_public`.
+
+The `visibility` property has no effect on a defaults module although it does
+apply to any non-defaults module that uses it. To set the visibility of a
+defaults module, use the `defaults_visibility` property on the defaults module;
+not to be confused with the `default_visibility` property on the package module.
+
+See https://android.googlesource.com/platform/build/soong/+/master/README.md#visibility for
+more details.
+
+</div>
+    <div class="simple" id="rust_stdlib_prebuilt_host.whole_static_libs">
+        <span class="fixed">&nbsp;</span><b>whole_static_libs </b>
+        <i>list of string</i>, Similar to static_libs, but will bundle the static library dependency into a library. This is helpful
+to avoid having to redeclare the dependency for dependents of this library, but in some cases may also
+result in bloat if multiple dependencies all include the same static library whole.
+
+The common use case for this is when the static library is unlikely to be a dependency of other modules to avoid
+having to redeclare the static library dependency for every dependent module.
+If you are not sure what to, for rust_library modules most static dependencies should go in static_libraries,
+and for rust_ffi modules most static dependencies should go into whole_static_libraries.
+
+For rust_ffi static variants, these libraries will be included in the resulting static library archive.
+
+For rust_library rlib variants, these libraries will be bundled into the resulting rlib library. This will
+include all of the static libraries symbols in any dylibs or binaries which use this rlib as well.
+
+</div></div>
+<script>
+  accordions = document.getElementsByClassName('accordion');
+  for (i=0; i < accordions.length; ++i) {
+    accordions[i].addEventListener("click", function() {
+      var panel = this.nextElementSibling;
+      var child = this.firstElementChild;
+      if (panel.style.display === "block") {
+          panel.style.display = "none";
+          child.textContent = '\u2295';
+      } else {
+          panel.style.display = "block";
+          child.textContent = '\u2296';
+      }
+    });
+  }
+</script>
+</body>

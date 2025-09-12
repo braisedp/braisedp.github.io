@@ -108,7 +108,8 @@ return new com.example.mybindertest.HelloService.Stub.Proxy(obj);
 ```
 如果没有找到一个本地的HelloService接口的实例，则返回一个`HelloService.Stub.Proxy`的对象，如下：
 ![helloSerivce](../images/2025-6-19-binder_test/helloService.png)
- 执行`helloService.sayHello`方法：
+
+执行`helloService.sayHello`方法：
 ```java
   public java.lang.String sayHello() throws android.os.RemoteException  
   {  
@@ -140,8 +141,10 @@ final boolean result = transactNative(code, data, reply, flags);
 public native boolean transactNative(int code, Parcel data, Parcel reply,  
         int flags) throws RemoteException;
 ```
-可以看到该方法为一个native方法
+可以看到该方法为一个native方法。
+
 2. 给MyService的sayHello方法打上断点，观察其调用栈，可以看到：
+
 ![sayHello.png](../images/2025-6-19-binder_test/sayHello.png)
 查看`Binder.execTransact`方法
 ```java
@@ -224,6 +227,7 @@ private final HelloService.Stub mBinder = new HelloService.Stub() {
 1. 删除`AndroidManifest.xml`中将`MyService`和`ClientActivity`设置到两个进程的设置
 2. 调试`onServiceConnected`方法，可以看到，传入的`service`类型变为`HelloService$Stub`类型
 ![Stub](../images/2025-6-19-binder_test/service_instance_of_Stub.png)
+
 根据`HelloService.Stub.asInterface()`方法，此时`queryLocalInterface`返回该`Stub`类型对象
 ```java
 android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);  
@@ -234,11 +238,3 @@ if (((iin!=null)&&(iin instanceof com.example.mybindertest.HelloService))) {
    于是，当调用`helloService.sayHello`方法时，实际上是直接调用了在`MyService`中创建的`Stub`类型对象`mbinder`中重写的`sayHello`方法
 
 
-### 问题记录
-
-| 问题                                                                                            | 原因                                              | 解决方法                                                        |
-| --------------------------------------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------- |
-| Activity不能运行                                                                                  | 未指定layout                                       | 指定layout                                                    |
-| IllegalArgumentException                                                                      | bindService时未显式使用intent                         | 使用`Intent(this,HelloService.class)`的方式显式使用intent            |
-| MyService没有启动                                                                                 | 在intent中设置Service的class时设置为`HelloService.class` | 修改为`MyService.class`                                        |
-| onServiceConnected(ComponentName name, IBinder service) 没有返回BinderProxy对象而是返回MyService.Stub对象 | `service`和`activity`运行在同一个进程中                   | 在AndroidManifest.xml中配置`android:process`选项，设置两者在不同的process中 |
