@@ -263,3 +263,347 @@ private:
     std::unique_ptr<Deleter<T>> mDeleter;
 };
 ```
+### AIDL实现
+#### 时序图
+```mermaid
+sequenceDiagram
+participant CS as CarService
+participant VH as XXXVehicleHal
+participant VHw as XXXVehicleHalware
+participant H as PendingRequestHandler
+participant VPS as VehiclePropertyStore
+CS->>+VH : getValues
+par 
+activate VH
+VH->>VH: getOrCreateClient
+deactivate VH
+VH->>+VHw: getValues
+deactivate VH
+VHw->>+H: addRequest
+deactivate VHw
+deactivate H
+and
+activate H
+H->>H:handleRequestOnce
+H->>+VHw: handleGetValueRequest
+
+activate VHw
+VHw->>VHw:getValue
+VHw->>+VPS: readValue
+VPS-->>VHw: propertyValue
+deactivate VPS
+VHw-->>H: propertyValue
+deactivate VHw
+deactivate VHw
+end
+H-->>CS: callback
+deactivate H
+```
+
+#### 详细步骤
+```cpp
+ScopedAStatus XXXVehicleHal::getValues(const CallbackType& callback,
+                                            const GetValueRequests& requests) {
+                                    
+    ...
+    std::vector<GetValueRequest> hardwareRequests;
+    ...
+
+    std::shared_ptr<GetValuesClient> client;
+    {
+        ...
+
+        client = getOrCreateClient(&mGetValuesClients, callback, mPendingRequestPool);
+    }
+
+    ...
+
+    if (StatusCode status =
+                mVehicleHardware->getValues(client->getResultCallback(), hardwareRequests);
+        status != StatusCode::OK) {
+            ...
+    }
+    return ScopedAStatus::ok();
+}
+```
+
+```cpp
+StatusCode XXXVehicleHardware::getValues(std::shared_ptr<const GetValuesCallback> callback,
+                                        const std::vector<GetValueRequest>& requests) const {
+    for (auto& request : requests) {
+        ...
+        mPendingGetValueRequests.addRequest(request, callback);
+    }
+
+    return StatusCode::OK;
+}
+```
+
+```cpp
+template <class CallbackType, class RequestType>
+void XXXVehicleHardware::PendingRequestHandler<CallbackType, RequestType>::addRequest(
+        RequestType request, std::shared_ptr<const CallbackType> callback) {
+    mRequests.push({
+            request,
+            callback,
+    });
+}
+```
+
+```cpp
+template <>
+void XXXeVehicleHardware::PendingRequestHandler<FakeVehicleHardware::GetValuesCallback,
+                                                GetValueRequest>::handleRequestsOnce() {
+    std::unordered_map<std::shared_ptr<const GetValuesCallback>, std::vector<GetValueResult>>
+            callbackToResults;
+    for (const auto& rwc : mRequests.flush()) {
+        ...
+        auto result = mHardware->handleGetValueRequest(rwc.request);
+        ...
+    }
+    for (const auto& [callback, results] : callbackToResults) {
+        ...
+        (*callback)(std::move(results));
+        ...
+    }
+}
+```
+
+```cpp
+GetValueResult XXXVehicleHardware::handleGetValueRequest(const GetValueRequest& request) {
+    GetValueResult getValueResult;
+    getValueResult.requestId = request.requestId;
+
+    auto result = getValue(request.prop);
+    ...
+    return getValueResult;
+}
+```
+
+```cpp
+XXXVehicleHardware::ValueResultType FakeVehicleHardware::getValue(
+        const VehiclePropValue& value) const {
+    ...
+
+    auto readResult = mServerSidePropStore->readValue(value);
+    ...
+
+    return std::move(readResult);
+}
+```
+
+```cpp
+VehiclePropertyStore::ValueResultType VehiclePropertyStore::readValue(
+        const VehiclePropValue& propValue) const {
+    std::scoped_lock<std::mutex> g(mLock);
+
+    int32_t propId = propValue.prop;
+    const VehiclePropertyStore::Record* record = getRecordLocked(propId);
+    ...
+
+    VehiclePropertyStore::RecordId recId = getRecordIdLocked(propValue, *record);
+    return readValueLocked(recId, *record);
+}
+```
+
+## set
+
+### HIDL实现
+#### 时序图
+```mermaid
+sequenceDiagram
+participant CS as CarService
+participant VHM as VehicleHalManager
+participant VH as XXXVehicleHal
+participant Hw as Connector/others
+CS->>VHM: set
+VHM->>VHM: handlePropertySetEvent
+VHM->>VH: set
+VH->>Hw: set value
+```
+
+#### 详细步骤
+
+```cpp
+Return<StatusCode> VehicleHalManager::set(const VehiclePropValue &value) {
+    auto prop = value.prop;
+    ...
+
+    handlePropertySetEvent(value);
+
+    auto status = mHal->set(value);
+
+    return Return<StatusCode>(status);
+}
+```
+
+```cpp
+void VehicleHalManager::handlePropertySetEvent(const VehiclePropValue& value) {
+    auto clients =
+        mSubscriptionManager.getSubscribedClients(value.prop, SubscribeFlags::EVENTS_FROM_ANDROID);
+    for (const auto& client : clients) {
+        client->getCallback()->onPropertySet(value);
+    }
+}
+```
+
+```cpp
+StatusCode XXXVehicleHal::set(const VehiclePropValue &propValue)
+{
+    constexpr bool updateStatus = false;
+    ...
+    auto currentPropValue = mPropStore->readValueOrNull(propValue);
+
+    ...
+
+    /**
+    * 这里需要实现与硬件的交互
+    */
+
+    return StatusCode::OK;
+}
+```
+
+```cpp
+void XXXVehicleHal::onPropertyValue(const VehiclePropValue &value, bool updateStatus)
+{
+    VehiclePropValuePtr updatedPropValue = getValuePool()->obtain(value);
+
+    if (mPropStore->writeValue(*updatedPropValue, updateStatus))
+    {
+        getEmulatorOrDie()->doSetValueFromClient(*updatedPropValue);
+        doHalEvent(std::move(updatedPropValue));
+    }
+}
+```
+
+### AIDL实现
+#### 时序图
+
+```mermaid
+sequenceDiagram
+participant CS as CarService
+participant VH as XXXVehicleHal
+participant VHw as XXXVehicleHalware
+participant H as PendingRequestHandler
+participant VPVP as VehiclePropValuePool
+participant VPS as VehiclePropertyStore
+CS->>+VH : setValues
+par 
+activate VH
+VH->>VH: getOrCreateClient
+deactivate VH
+VH->>+VHw: setValues
+deactivate VH
+VHw->>+H: addRequest
+deactivate VHw
+deactivate H
+and
+activate H
+H->>H:handleRequestOnce
+H->>+VHw: handleSetValueRequest
+
+activate VHw
+VHw->>VHw:setValue
+VHw->>+VPVP: obtain
+VPVP-->>VHw: recyclable property value
+deactivate VPVP
+VHw->>+VPS: writeValue
+deactivate VPS
+VHw-->>H: {}
+deactivate VHw
+deactivate VHw
+end
+H-->>CS: callback
+deactivate H
+```
+
+#### 详细步骤
+```cpp
+ScopedAStatus XXXVehicleHal::setValues(const CallbackType& callback,
+                                            const SetValueRequests& requests) {
+    ...
+    std::vector<SetValueRequest> hardwareRequests;
+    ...
+    std::unordered_set<int64_t> hardwareRequestIds;
+    for (const auto& request : hardwareRequests) {
+        hardwareRequestIds.insert(request.requestId);
+    }
+
+    std::shared_ptr<SetValuesClient> client;
+    {
+        ...
+        client = getOrCreateClient(&mSetValuesClients, callback, mPendingRequestPool);
+    }
+
+    ...
+
+    if (StatusCode status =
+                mVehicleHardware->setValues(client->getResultCallback(), hardwareRequests);
+        status != StatusCode::OK) {
+            ...
+    }
+
+    return ScopedAStatus::ok();
+}
+```
+
+```cpp
+StatusCode XXXVehicleHardware::setValues(std::shared_ptr<const SetValuesCallback> callback,
+                                        const std::vector<SetValueRequest>& requests) {
+    for (auto& request : requests) {
+        mPendingSetValueRequests.addRequest(request, callback);
+    }
+
+    return StatusCode::OK;
+}
+```
+
+```cpp
+void XXXVehicleHardware::PendingRequestHandler<FakeVehicleHardware::SetValuesCallback,
+                                                SetValueRequest>::handleRequestsOnce() {
+    std::unordered_map<std::shared_ptr<const SetValuesCallback>, std::vector<SetValueResult>>
+            callbackToResults;
+    for (const auto& rwc : mRequests.flush()) {
+        ...
+        auto result = mHardware->handleSetValueRequest(rwc.request);
+        ...
+
+    }
+    for (const auto& [callback, results] : callbackToResults) {
+        ...
+        (*callback)(std::move(results));
+        ...
+    }
+}
+```
+
+```cpp
+SetValueResult XXXVehicleHardware::handleSetValueRequest(const SetValueRequest& request) {
+    SetValueResult setValueResult;
+    setValueResult.requestId = request.requestId;
+
+    if (auto result = setValue(request.value); !result.ok()) {
+        ...
+    } else {
+        ...
+    }
+
+    return setValueResult;
+}
+```
+
+```cpp
+VhalResult<void> XXXVehicleHardware::setValue(const VehiclePropValue& value) {
+    ...
+
+    auto updatedValue = mValuePool->obtain(value);
+    int64_t timestamp = elapsedRealtimeNano();
+    updatedValue->timestamp = timestamp;
+
+    auto writeResult = mServerSidePropStore->writeValue(std::move(updatedValue));
+    ...
+
+    return {};
+}
+```
