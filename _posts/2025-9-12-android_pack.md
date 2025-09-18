@@ -95,7 +95,7 @@ android_app{
 <tr><td><code>sdk_version</code></td><td>sdk版本，默认system_current</td></tr>
 <tr><td rowspan = "2"> <code>ndk</code></td><td><code>enabled</code></td><td>是否开启</td></tr>
 <tr> <td><code>sdk_version</code></td><td>sdk版本，默认current</td></tr>
-<tr><td> hidl </td><td><code>gen_java</code> <td>是否生成.jar库</td><td/><td/></tr>
+<tr><td> hidl </td><td><code>gen_java</code></td> <td>是否生成.jar库</td><td/><td/></tr>
 </table>
 
 上表给出了一些bp文件中的常见字段，所有字段的示意可见[soong docs](../files/2025-9-12-android_pack/soong_build.html)。
