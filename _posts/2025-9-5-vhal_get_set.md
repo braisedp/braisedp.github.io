@@ -186,7 +186,6 @@ bool isDisposable(VehiclePropertyType type, size_t vecSize) const {
 ```cpp
 VehiclePropValuePool::RecyclableType VehiclePropValuePool::obtainRecylable(
         VehiclePropertyType type, size_t vecSize) {
-    // VehiclePropertyType is not overlapping with vectorSize.
     int32_t key = static_cast<int32_t>(type)
                 | static_cast<int32_t>(vecSize);
 

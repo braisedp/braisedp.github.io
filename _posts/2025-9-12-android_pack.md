@@ -78,24 +78,24 @@ android_app{
 ### Android.bp 常见字段总结
 
 <table>
-<tr><td rowspan="7" > <b>打包目标</b> </td> <td> <code>java_library</code></td> <td>打包成.jar包</td></td></td></td></tr>
-<tr><td> <code>cc_library(_static/_shared/_header)</code> </td><td>打包成.lib/.so/头文件库</td></td></td></td></tr>
-<tr><td> <code>cc_binary</code> </td><td>打包成native程序</td></td></td></td></tr>
-<tr><td> <code>java_binary</code> </td><td>打包成java程序</td></td></td></td></tr>
-<tr><td> <code>android_app</code> </td><td>打包成Android应用程序</td></td></td></td></tr>
-<tr><td> <code>aidl_interface</code> </td><td>hidl打包成.jar/.so</td></td></td></td></tr>
-<tr><td> <code>hidl_interface</code> </td><td>aidl打包成.jar/.so</td></td></td></td></tr>
-<tr><td rowspan="2"> <b>文件路径</b></td><td> <code>srcs</code> </td><td>需要打包的文件path</td></td></td></td></tr>
-<tr><td> <code>excluded_srcs</code> </td><td>在打包时不可包含的文件path</td></td></td></td></tr>
-<tr><td rowspan="2"> <b>依赖的库</b></td><td> <code>static_libs</code> </td><td>依赖的静态库/.jar包</td></td></td></td></tr>
-<tr><td> <code>shared_libs</code> </td><td>依赖的动态库</td></td></td></td></tr>
-<tr><td rowspan="2"> <b>分区选项</b></td><td> <code>vendor</code> </td><td>是否打包到vendor分区</td></td></td></td></tr>
-<tr><td> <code>system_ext</code> </td><td>是否打包到ext分区</td></td></td></td></tr>
+<tr><td rowspan="7" > <b>打包目标</b> </td> <td> <code>java_library</code></td> <td>打包成.jar包</td><td/><td/><td/></tr>
+<tr><td> <code>cc_library(_static/_shared/_header)</code> </td><td>打包成.lib/.so/头文件库</td><td/><td/><td/></tr>
+<tr><td> <code>cc_binary</code> </td><td>打包成native程序</td><td/><td/><td/></tr>
+<tr><td> <code>java_binary</code> </td><td>打包成java程序</td><td/><td/><td/></tr>
+<tr><td> <code>android_app</code> </td><td>打包成Android应用程序</td><td/><td/><td/></tr>
+<tr><td> <code>aidl_interface</code> </td><td>hidl打包成.jar/.so</td><td/><td/><td/></tr>
+<tr><td> <code>hidl_interface</code> </td><td>aidl打包成.jar/.so</td><td/><td/><td/></tr>
+<tr><td rowspan="2"> <b>文件路径</b></td><td> <code>srcs</code> </td><td>需要打包的文件path</td><td/><td/><td/></tr>
+<tr><td> <code>excluded_srcs</code> </td><td>在打包时不可包含的文件path</td><td/><td/><td/></tr>
+<tr><td rowspan="2"> <b>依赖的库</b></td><td> <code>static_libs</code> </td><td>依赖的静态库/.jar包</td><td/><td/><td/></tr>
+<tr><td> <code>shared_libs</code> </td><td>依赖的动态库</td><td/><td/><td/></tr>
+<tr><td rowspan="2"> <b>分区选项</b></td><td> <code>vendor</code> </td><td>是否打包到vendor分区</td><td/><td/><td/></tr>
+<tr><td> <code>system_ext</code> </td><td>是否打包到ext分区</td><td/><td/><td/></tr>
 <tr><td rowspan="5"> <b>语言选项</b></td><td rowspan="4"> aidl </td><td rowspan="4"><code>back_end</code> </td><td rowspan = "2"> <code>java</code></td><td><code>enabled</code></td><td>是否开启</td></tr>
 <tr><td><code>sdk_version</code></td><td>sdk版本，默认system_current</td></tr>
 <tr><td rowspan = "2"> <code>ndk</code></td><td><code>enabled</code></td><td>是否开启</td></tr>
 <tr> <td><code>sdk_version</code></td><td>sdk版本，默认current</td></tr>
-<tr><td> hidl </td><td><code>gen_java</code> <td>是否生成.jar库</td></td></td></tr>
+<tr><td> hidl </td><td><code>gen_java</code> <td>是否生成.jar库</td><td/><td/></tr>
 </table>
 
 上表给出了一些bp文件中的常见字段，所有字段的示意可见[soong docs](../files/2025-9-12-android_pack/soong_build.html)。
