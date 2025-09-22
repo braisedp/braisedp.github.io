@@ -10,6 +10,49 @@ toc : true
 
 <!-- more -->
 
+## Binder 内核数据结构
+
+对于用户空间进程间方法调用（IPC），需要内核空间提供一种数据交换的机制，这个机制在内核空间中开辟一段缓冲区，当一个进程想要向另一个进程传输数据时，他将数据发送到这个节点上，而另一个进程也从这个节点上读取数据或者订阅改节点以接受buffer的消息通知。
+
+![ipc](../images/2025-6-17-binder_driver/buffer.svg)
+
+一个服务端可以提供多种不同的服务和不同的方法，一种做法是在传输的协议中附带上服务名+方法名，然后由服务端根据服务名+方法名处理方法调用，另一种方法是在内核中，对于每个service都创建一个对应的实例，在内核中，客户端的service引用与服务端的service实例成一一对应关系。
+
+![ipc 2](../images/2025-6-17-binder_driver/services.svg)
+
+Binder采取了第二种方式，对于每个服务端的服务，Binder都通过一个`binder_node`结构体对应，同样，在客户端，也对应一个`binder_ref`结构体。
+
+IPC需要处理客户端与服务端之间的数据传输，在每一个时间段，多个客户端会调用不同的服务，这样，不同服务节点的状态也会不同，有的节点上会传输数据，有的节点则会等待，于是，需要通过多线程的方式处理这些并发请求。在Binder中，通过`binder_proc`描述一个服务端进程在内核空间中对应的一个binder进程，并通过`binder_thread`描述执行不同操作的binder线程。通过`binder_work`，Binder描述了不同的binder操作。对于IPC的提供者而言，一次IPC操作只有成功和失败两种状态，也就是说一次IPC操作是原子的，要么是成功的，要么其中其中的所有操作都不执行。对于IPC，通过事务化的方式管理IPC操作。在Binder中，通过`binder_transaction`描述一个binder事务。
+
+![ipc proc](../images/2025-6-17-binder_driver/proc.svg)
+
+现在考虑IPC提供给用户空间的api：
+- 一方面，IPC需要提供一个协议，用于用户空间指定数据传输的一些细节，比如传输的数据的长度，传输的对象的类型，还需要提供对象的序列化方式。
+- 另一方面，IPC需要提供一些接口方法，用于用户空间向内核空间读取/写入数据。
+
+在第一点上，Binder通过binder object描述在buffer中传输的对象，有如下结构体：
+```cpp
+struct binder_object{
+    union{
+        struct binder_object_header hdr;
+        struct flat_binder_object fbo;
+        struct binder_fd_object fdo;
+        struct binder_buffer_object bbo;
+        struct binder_fd_array_object fdao;
+    }
+}
+```
+，该结构体描述了在内核buffer中的几种对象类型。其中：
+```cpp
+struct binder_object_header{
+    __u32 type;
+}
+```
+，为所有binder object都有的一个对象头，用于描述binder 对象的类型。
+```cpp
+struct 
+```
+
 ## Binder 数据结构
 
 | 数据结构 | 成员变量 |
