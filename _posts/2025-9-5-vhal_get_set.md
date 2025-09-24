@@ -262,6 +262,22 @@ private:
     std::unique_ptr<Deleter<T>> mDeleter;
 };
 ```
+#### VehiclePropertyStore中始终存储最新值
+
+在`XXXVehicleHal`中存在如下方法，用于给下层在属性值改变时进行调用，可以看到，当下层通知属性值改变时，`XXXVehicleHal`就会将新值写入到`VehiclePropertyStore`中，保证`get`调用获取的始终是最新值。
+
+```cpp
+void XXXVehicleHal::onPropertyValue(const VehiclePropValue &value, bool updateStatus)
+{
+    VehiclePropValuePtr updatedPropValue = getValuePool()->obtain(value);
+
+    if (mPropStore->writeValue(*updatedPropValue, updateStatus))
+    {
+        ...
+    }
+}
+```
+
 ### AIDL实现
 #### 时序图
 ```mermaid
@@ -289,6 +305,8 @@ H->>+VHw: handleGetValueRequest
 activate VHw
 VHw->>VHw:getValue
 VHw->>+VPS: readValue
+activate VPS
+VPS->>VPS: readValueLocked
 VPS-->>VHw: propertyValue
 deactivate VPS
 VHw-->>H: propertyValue
@@ -300,6 +318,8 @@ deactivate H
 ```
 
 #### 详细步骤
+
+**step 1** 在AIDL实现中，Vhal允许多个get请求合并并通过异步的方式返回，于是在第一步，会根据callback创建对应的client用于记录get属性的callback对象。然后将get请求传递给`VehicleHardware`：
 ```cpp
 ScopedAStatus XXXVehicleHal::getValues(const CallbackType& callback,
                                             const GetValueRequests& requests) {
@@ -326,6 +346,7 @@ ScopedAStatus XXXVehicleHal::getValues(const CallbackType& callback,
 }
 ```
 
+**step 2** 收到get请求后，`VehicleHardware`需要记录每个get请求对应的callback用于当请求收到响应时进行回调：
 ```cpp
 StatusCode XXXVehicleHardware::getValues(std::shared_ptr<const GetValuesCallback> callback,
                                         const std::vector<GetValueRequest>& requests) const {
@@ -338,6 +359,8 @@ StatusCode XXXVehicleHardware::getValues(std::shared_ptr<const GetValuesCallback
 }
 ```
 
+**step 3** `PendingRequestHandler`的`addRequest`方法则是将request和callback存入一个map中：
+
 ```cpp
 template <class CallbackType, class RequestType>
 void XXXVehicleHardware::PendingRequestHandler<CallbackType, RequestType>::addRequest(
@@ -348,6 +371,8 @@ void XXXVehicleHardware::PendingRequestHandler<CallbackType, RequestType>::addRe
     });
 }
 ```
+
+**step 4** 在`PendingRequestHandler`创建时，会通过一个thread执行`handleRequestOnce`方法用于异步处理get请求。方法首先会从map不断取出request，执行`VehicleHardware::handleGetValueRequest`方法，然后调用callback用于返回get响应：
 
 ```cpp
 template <>
@@ -368,6 +393,7 @@ void XXXeVehicleHardware::PendingRequestHandler<FakeVehicleHardware::GetValuesCa
 }
 ```
 
+**step 5** 实际执行`getValue`方法，获取最新值并返回：
 ```cpp
 GetValueResult XXXVehicleHardware::handleGetValueRequest(const GetValueRequest& request) {
     GetValueResult getValueResult;
@@ -379,8 +405,9 @@ GetValueResult XXXVehicleHardware::handleGetValueRequest(const GetValueRequest& 
 }
 ```
 
+**step 6** 方法从`VehiclePropertyStore`中读取属性值并返回：
 ```cpp
-XXXVehicleHardware::ValueResultType FakeVehicleHardware::getValue(
+XXXVehicleHardware::ValueResultType XXXVehicleHardware::getValue(
         const VehiclePropValue& value) const {
     ...
 
@@ -391,6 +418,7 @@ XXXVehicleHardware::ValueResultType FakeVehicleHardware::getValue(
 }
 ```
 
+**step 7** `readValue`方法根据属性的找到对应的record 和recordId，并执行`readValueLocked`方法：
 ```cpp
 VehiclePropertyStore::ValueResultType VehiclePropertyStore::readValue(
         const VehiclePropValue& propValue) const {
@@ -402,6 +430,22 @@ VehiclePropertyStore::ValueResultType VehiclePropertyStore::readValue(
 
     VehiclePropertyStore::RecordId recId = getRecordIdLocked(propValue, *record);
     return readValueLocked(recId, *record);
+}
+```
+
+在AIDL实现的`VehiclePropertyStore`中，属性值与属性的存储方式如下：
+
+![VehiclePropertyStore AIDL](../images/2025-9-5-vhal_get_set/AidlVehiclePropertyStore.svg)
+
+**step 8** 这一步会从record中根据recordId找到对应的value，并通过`VehiclePropValuePool`进行对象复用：
+
+```cpp
+VhalResult<VehiclePropValuePool::RecyclableType> VehiclePropertyStore::readValueLocked(
+        const RecordId& recId, const Record& record) const REQUIRES(mLock) {
+    if (auto it = record.values.find(recId); it != record.values.end()) {
+        return mValuePool->obtain(*(it->second));
+    }
+    ...
 }
 ```
 
@@ -423,6 +467,7 @@ VH->>Hw: set value
 
 #### 详细步骤
 
+**step 1** 第一步首先会调用自己的`handlePropertySetEvent`方法，然后将set请求传递到下层：
 ```cpp
 Return<StatusCode> VehicleHalManager::set(const VehiclePropValue &value) {
     auto prop = value.prop;
@@ -436,6 +481,8 @@ Return<StatusCode> VehicleHalManager::set(const VehiclePropValue &value) {
 }
 ```
 
+
+**step 2** 这一步主要会回调订阅了属性的`EVENTS_FROM_ANDROID`事件的callback：
 ```cpp
 void VehicleHalManager::handlePropertySetEvent(const VehiclePropValue& value) {
     auto clients =
@@ -446,6 +493,7 @@ void VehicleHalManager::handlePropertySetEvent(const VehiclePropValue& value) {
 }
 ```
 
+**step 3** 这一步会首先从`VehiclePropertyStore`中读取属性的当前值，然后进行一些下层调用：
 ```cpp
 StatusCode XXXVehicleHal::set(const VehiclePropValue &propValue)
 {
@@ -463,18 +511,6 @@ StatusCode XXXVehicleHal::set(const VehiclePropValue &propValue)
 }
 ```
 
-```cpp
-void XXXVehicleHal::onPropertyValue(const VehiclePropValue &value, bool updateStatus)
-{
-    VehiclePropValuePtr updatedPropValue = getValuePool()->obtain(value);
-
-    if (mPropStore->writeValue(*updatedPropValue, updateStatus))
-    {
-        getEmulatorOrDie()->doSetValueFromClient(*updatedPropValue);
-        doHalEvent(std::move(updatedPropValue));
-    }
-}
-```
 
 ### AIDL实现
 #### 时序图
@@ -518,6 +554,9 @@ deactivate H
 ```
 
 #### 详细步骤
+
+**step 1** set请求允许多个请求合并，并异步执行，然后通过callback返回set响应。与get相同，这一步也会首先创建一个对应的client用于记录一个callback上的不同get请求。然后，向下层传递set请求：
+
 ```cpp
 ScopedAStatus XXXVehicleHal::setValues(const CallbackType& callback,
                                             const SetValueRequests& requests) {
@@ -547,6 +586,7 @@ ScopedAStatus XXXVehicleHal::setValues(const CallbackType& callback,
 }
 ```
 
+**step 2** 与get类似，这一步会将set请求放到一个等待队列中：
 ```cpp
 StatusCode XXXVehicleHardware::setValues(std::shared_ptr<const SetValuesCallback> callback,
                                         const std::vector<SetValueRequest>& requests) {
@@ -557,6 +597,8 @@ StatusCode XXXVehicleHardware::setValues(std::shared_ptr<const SetValuesCallback
     return StatusCode::OK;
 }
 ```
+
+**step 3** 与get类似，这一步会从等待队列中取出所有的set请求，并执行`handleSetValueRequest`方法，然后回调callback：
 
 ```cpp
 void XXXVehicleHardware::PendingRequestHandler<FakeVehicleHardware::SetValuesCallback,
@@ -577,6 +619,8 @@ void XXXVehicleHardware::PendingRequestHandler<FakeVehicleHardware::SetValuesCal
 }
 ```
 
+**step 4** 这一步实际调用了`setValue`方法：
+
 ```cpp
 SetValueResult XXXVehicleHardware::handleSetValueRequest(const SetValueRequest& request) {
     SetValueResult setValueResult;
@@ -592,6 +636,8 @@ SetValueResult XXXVehicleHardware::handleSetValueRequest(const SetValueRequest& 
 }
 ```
 
+
+**step 5** 可以看到`setValue`方法首先会调用`VehiclePropValuePool`的`obtain`方法返回一个复用的对象，然后写入到`VehiclePropertyStore`中，保证了get可以始终获取最新值。最后执行一些下层的操作。
 ```cpp
 VhalResult<void> XXXVehicleHardware::setValue(const VehiclePropValue& value) {
     ...
@@ -602,6 +648,7 @@ VhalResult<void> XXXVehicleHardware::setValue(const VehiclePropValue& value) {
 
     auto writeResult = mServerSidePropStore->writeValue(std::move(updatedValue));
     ...
+    //执行一些与硬件交互
 
     return {};
 }
